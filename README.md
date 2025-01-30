@@ -15,7 +15,7 @@ tekniikoita käytetään ja mitä konkreettisesti on valmiina, kun projekti pä�
     täppäri, desktop)
 
 ## Järjestelmän määrittely
-
+ 
 Määrittelyssä järjestelmää tarkastellaan käyttäjän näkökulmasta. Järjestelmän
 toiminnot hahmotellaan käyttötapausten tai käyttäjätarinoiden kautta, ja kuvataan järjestelmän
 käyttäjäryhmät.
@@ -27,6 +27,14 @@ käyttäjäryhmät.
 
 Kuvauksissa kannattaa harkita, mikä on toteuttajalle ja asiakkaalle oleellista
 tietoa ja keskittyä siihen.
+
+Lipunmyyntijärjestelmän käyttäjärooleja ovat myyjä, asiakas, lipuntarkastaja ja järjestelmän ylläpitäjä. Myyjä myy ja tulostaa liput asiakkaalle lipunmyyntipisteessä. Lisäksi myyjä tulostaa myymättä jääneet liput tapahtumapäivänä ovella myytäväksi. Asiakas ostaa lipun myyjältä lipunmyyntipisteessä. Lipuntarkastaja tarkastaa liput ovella tapahtuman alkaessa lippuun merkityn koodin avulla ja merkitsee tarkastetut liput käytetyiksi. Järjestelmän ylläpitäjä huolehtii sen toiminnasta lippukaupan jokapäiväisessä toiminnassa.
+
+Käyttäjäryhmien tarvitsemat toiminnot kuvataan käyttäjätarinoina seuraavasti: 
+- Myyjä
+- Asiakas
+- Lipuntarkastaja: "Lipuntarkastajana haluan tarkastaa lipun voimassaolon lukemalla lippuun merkityn koodin ja merkitä sen käytetyksi, jotta voin varmistaa, että vain lipun ostaneet pääsevät sisään tapahtumaan."
+- Järjestelmän ylläpitäjä
 
 ## Käyttöliittymä
 
