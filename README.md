@@ -8,12 +8,6 @@ TicketGuru on lipputoimistolle tuleva lipunmyyntijärjestelmä, jossa pystyy myy
 
 Järjestelmää käyttävät pääsääntöisesti lipunmyyjät, lipuntarkastajat sekä järjestelmän ylläpitäjä, mutta tulevaisuudessa lipunmyyntijärjestelmä laajentuu verkkokaupaksi, jolloin sen käyttäjiksi tulevat myös lippuja ostavat asiakkaat.
 
-### Käytettävät teknologiat
-
--   Backend: Java Spring Boot, H2 Database tai PostgreSQL
--   Frontend: React.js
--   Päätelaitteet: Lipunmyyntijärjestelmää pystyy käyttämään tietokoneella, sekä tabletilla ja mobiililaitteella selaimessa.
-
 ## Järjestelmän määrittely
 
 Määrittelyssä järjestelmää tarkastellaan käyttäjän näkökulmasta. Järjestelmän
@@ -29,6 +23,13 @@ Kuvauksissa kannattaa harkita, mikä on toteuttajalle ja asiakkaalle oleellista
 tietoa ja keskittyä siihen.
 
 Lipunmyyntijärjestelmän käyttäjärooleja ovat myyjä, asiakas, lipuntarkastaja ja järjestelmän ylläpitäjä. Myyjä myy ja tulostaa liput asiakkaalle lipunmyyntipisteessä. Lisäksi myyjä tulostaa myymättä jääneet liput tapahtumapäivänä ovella myytäväksi. Asiakas ostaa lipun myyjältä lipunmyyntipisteessä. Lipuntarkastaja tarkastaa liput ovella tapahtuman alkaessa lippuun merkityn koodin avulla ja merkitsee tarkastetut liput käytetyiksi. Järjestelmän ylläpitäjä huolehtii sen toiminnasta lippukaupan jokapäiväisessä toiminnassa.
+
+### Käytettävät teknologiat
+
+-   Frontend: React.js
+-   Backend: Java Spring Boot
+-   Tietokanta: H2 Database tai PostgreSQL
+-   Päätelaitteet: Lipunmyyntijärjestelmää pystyy käyttämään tietokoneella, sekä tabletilla ja mobiililaitteella selaimessa.
 
 Käyttäjäryhmien tarvitsemat toiminnot kuvataan käyttäjätarinoina seuraavasti:
 
