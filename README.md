@@ -10,17 +10,6 @@ Järjestelmää käyttävät pääsääntöisesti lipunmyyjät, lipuntarkastajat
 
 ## Järjestelmän määrittely
 
-Määrittelyssä järjestelmää tarkastellaan käyttäjän näkökulmasta. Järjestelmän
-toiminnot hahmotellaan käyttötapausten tai käyttäjätarinoiden kautta, ja kuvataan järjestelmän
-käyttäjäryhmät.
-
-- Lyhyt kuvaus käyttäjäryhmistä (rooleista)
-- Käyttäjäroolit ja roolien tarvitsemat toiminnot, esim. käyttötapauskaaviona
-  (use case diagram) tai käyttäjätarinoina.
-- Lyhyt kuvaus käyttötapauksista tai käyttäjätarinat
-
-Kuvauksissa kannattaa harkita, mikä on toteuttajalle ja asiakkaalle oleellista
-tietoa ja keskittyä siihen.
 
 Lipunmyyntijärjestelmän käyttäjärooleja ovat myyjä, asiakas, lipuntarkastaja ja järjestelmän ylläpitäjä. Myyjä myy ja tulostaa liput asiakkaalle lipunmyyntipisteessä. Lisäksi myyjä tulostaa myymättä jääneet liput tapahtumapäivänä ovella myytäväksi. Asiakas ostaa lipun myyjältä lipunmyyntipisteessä. Lipuntarkastaja tarkastaa liput ovella tapahtuman alkaessa lippuun merkityn koodin avulla ja merkitsee tarkastetut liput käytetyiksi. Järjestelmän ylläpitäjä huolehtii sen toiminnasta lippukaupan jokapäiväisessä toiminnassa.
 
@@ -31,12 +20,6 @@ Lipunmyyntijärjestelmän käyttäjärooleja ovat myyjä, asiakas, lipuntarkasta
 -   Tietokanta: H2 Database tai PostgreSQL
 -   Päätelaitteet: Lipunmyyntijärjestelmää pystyy käyttämään tietokoneella, sekä tabletilla ja mobiililaitteella selaimessa.
 
-Käyttäjäryhmien tarvitsemat toiminnot kuvataan käyttäjätarinoina seuraavasti:
-
-- Myyjä
-- Asiakas
-- Lipuntarkastaja
-- Järjestelmän ylläpitäjä
 
 ### Käyttäjätarinat
 
