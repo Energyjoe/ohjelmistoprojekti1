@@ -1,6 +1,6 @@
 DROP TABLE IF EXISTS tapahtumaliput CASCADE;
 DROP TABLE IF EXISTS liput CASCADE;
-DROP TABLE IF EXISTS myynti CASCADE;
+DROP TABLE IF EXISTS myynnit CASCADE;
 DROP TABLE IF EXISTS tyontekijat CASCADE;
 DROP TABLE IF EXISTS asiakastyypit CASCADE;
 DROP TABLE IF EXISTS tapahtumat CASCADE;
@@ -60,7 +60,7 @@ CREATE TABLE tyontekijat (
     bcrypthash VARCHAR(60) NOT NULL
 );
 
-CREATE TABLE myynti (
+CREATE TABLE myynnit (
     myynti_id SERIAL PRIMARY KEY,
     tyontekija_id INTEGER NOT NULL,
     FOREIGN KEY (tyontekija_id) REFERENCES tyontekijat(tyontekija_id),
@@ -71,7 +71,7 @@ CREATE TABLE myynti (
 CREATE TABLE liput (   
     lippu_id SERIAL PRIMARY KEY,
     myynti_id INTEGER NOT NULL,
-    FOREIGN KEY (myynti_id) REFERENCES myynti(myynti_id),
+    FOREIGN KEY (myynti_id) REFERENCES myynnit(myynti_id),
     tarkastuskoodi CHAR(8) NOT NULL
 );
 
@@ -119,7 +119,7 @@ INSERT INTO tyontekijat (postinumero, katuosoite, etunimi, sukunimi, email, puhn
 ('02100', 'Urheilupuistontie 3', 'Liisa', 'Lahtinen', 'liisa.lahtinen@ticketguru.fi', '0507654321', '$2a$10$R69vjJEdj2w2WZe6O4o2Oe9Sp4yExoWOs97YPLmK9LmjJBYAcXyca');
 
 -- Insert sample data into myynti
-INSERT INTO myynti (tyontekija_id, myyntiaika, email) VALUES
+INSERT INTO myynnit (tyontekija_id, myyntiaika, email) VALUES
 (1, '2024-02-29 12:00:00', 'asiakas1@example.com'),
 (2, '2024-02-29 13:30:00', 'asiakas2@example.com'),
 (1, '2024-03-01 10:00:00', 'asiakas3@example.com');
