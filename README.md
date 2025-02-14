@@ -73,16 +73,31 @@ Lisäksi kukin järjestelmän tietoelementti ja sen attribuutit kuvataan
 tietohakemistossa. Tietohakemisto tarkoittaa yksinkertaisesti vain jokaisen elementin (taulun) ja niiden
 attribuuttien (kentät/sarakkeet) listausta ja lyhyttä kuvausta esim. tähän tyyliin:
 
-> ### _Tilit_
+
+> ### Tapahtumat
 >
-> _Tilit-taulu sisältää käyttäjätilit. Käyttäjällä voi olla monta tiliä. Tili kuuluu aina vain yhdelle käyttäjälle._
+> _Tapahtumat-taulu sisältää tapahtumaan liittyvät tiedot: tapahtuman nimen, tapahtumapaikan, aloitus- ja lopetusajan ja kuvauksen. Tapahtumalla voi olla yksi tapahtumapaikka, sama tapahtumapaikka voi olla usealla tapahtumalla._
 >
-> | Kenttä     | Tyyppi      | Kuvaus                                             |
-> | ---------- | ----------- | -------------------------------------------------- |
-> | id         | int PK      | Tilin id                                           |
-> | nimimerkki | varchar(30) | Tilin nimimerkki                                   |
-> | avatar     | int FK      | Tilin avatar, viittaus [avatar](#Avatar)-tauluun   |
-> | kayttaja   | int FK      | Viittaus käyttäjään [käyttäjä](#Kayttaja)-taulussa |
+> | Kenttä            | Tyyppi      | Kuvaus                                                |
+> | ----------------- | ----------- | ----------------------------------------------------- |
+> | tapahtumaId       | int PK      | Tapahtuman id                                         |
+> | tapahtumapaikkaId | int FK      | Tapahtumapaikan id, viittaus tapahtumapaikka -tauluun |
+> | tapahtuma         | varchar(50) | Tapahtuman nimi                                       |
+> | aloitusaika       | datetime    | Tapahtuman aloitusaika                                |
+> | lopeutusaika      | datetime    | Tapahtuman lopetusaika                                |
+> | kuvaus            | text        | Kuvaus tapahtumasta                                   |
+
+> ### Tapahtumapaikat
+>
+> _Tapahtumapaikat-taulu sisältää tapahtumapaikkaan liittyvät tiedot: tapahtumapaikan osoitteen, postinumeron, tapahtumapaikan nimen ja kapasiteetin, paljonko tilaan mahtuu ihmisiä. Tapahtumapaikalla voi olla yksi postiosoite, sama postiosoite voi olla usealla tapahtumapaikalla._
+>
+> | Kenttä            | Tyyppi      | Kuvaus                                                     |
+> | ----------------- | ----------- | ---------------------------------------------------------- |
+> | tapahtumapaikkaId | int PK      | Tapahtumapaikan id                                         |
+> | postinumero       | int FK      | Tapahtumapaikan postinumero, viittaus postinumero -tauluun |
+> | tapahtumapaikka   | varchar(50) | Tapahtumapaikan nimi                                       |
+> | katuosoite        | varchar(50) | Paikan katuosoite                                          |
+> | kapasiteetti      | int         | Paljonko ihmisiä tilaan mahtuu                             |
 
 ## Tekninen kuvaus
 
