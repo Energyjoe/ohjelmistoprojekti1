@@ -9,11 +9,16 @@ import jakarta.persistence.Id;
 public class Asiakastyypit {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY) // tietokanta luo uniikin arvon pääavaimelle
+    @GeneratedValue(strategy = GenerationType.AUTO) // tietokanta luo uniikin arvon pääavaimelle
     private Long asiakastyyppiId;
     private String asiakastyyppi; // esim opiskelija, aikuinen, eläkeläinen, lapsi
 
     // Getterit ja setterit
+
+    public Asiakastyypit(Long asiakastyyppiId, String asiakastyyppi) {
+        this.asiakastyyppiId = asiakastyyppiId;
+        this.asiakastyyppi = asiakastyyppi;
+    }
 
     public Long getAsiakastyyppiId() {
         return asiakastyyppiId;
