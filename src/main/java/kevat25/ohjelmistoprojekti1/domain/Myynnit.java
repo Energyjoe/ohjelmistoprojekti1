@@ -15,12 +15,14 @@ public class Myynnit {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long myyntiId;
-    private LocalDate myyntiaika;
-    private String email;
 
     @ManyToOne
     @JoinColumn(name = "tyontekijaId")
     private Tyontekijat tyontekijat;
+
+    private LocalDate myyntiaika;
+    private String email;
+
 
     public Myynnit() {
     }
