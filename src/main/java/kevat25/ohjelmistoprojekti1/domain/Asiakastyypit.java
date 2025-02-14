@@ -1,9 +1,11 @@
 package kevat25.ohjelmistoprojekti1.domain;
 
+import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 
+@Entity
 public class Asiakastyypit {
 
     @Id
@@ -29,4 +31,11 @@ public class Asiakastyypit {
         this.asiakastyyppi = asiakastyyppi;
     }
 
+    @Override
+    public String toString() {
+        return "Asiakastyypit{" +
+                "asiakastyyppiId=" + asiakastyyppiId +
+                ", asiakastyyppi='" + asiakastyyppi + '\'' +
+                '}';
+    }
 }
