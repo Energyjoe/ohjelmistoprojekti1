@@ -28,7 +28,7 @@ public class Tapahtumaliput {
 
     @ManyToOne
     @JoinColumn(name = "tapahtumaId")
-    private Tapahtuma tapahtuma;
+    private Tapahtumat tapahtuma;
 
     // Getterit -.-.-.-.-.-.-.-.-.-.-.-.-.-.-
 
@@ -44,7 +44,7 @@ public class Tapahtumaliput {
         return asiakastyyppi;
     }
 
-    public Tapahtuma getTapahtuma() {
+    public Tapahtumat getTapahtuma() {
         return tapahtuma;
     }
 
@@ -62,7 +62,7 @@ public class Tapahtumaliput {
         this.asiakastyyppi = asiakastyyppi;
     }
 
-    public void setTapahtuma(Tapahtuma tapahtuma) {
+    public void setTapahtuma(Tapahtumat tapahtuma) {
         this.tapahtuma = tapahtuma;
     }
 

@@ -28,6 +28,11 @@ public class Tapahtumapaikat {
     @JoinColumn(postinumero = "postinumero")
     private Postinumerot postinumero;
 
+    //parametriton konstruktori
+    public Tapahtumapaikat() {
+    }
+
+    //parametrillinen konstruktori
     public Tapahtumapaikat (Long tapahtumapaikkaId, String tapahtumapaikka, String katuosoite, String puhnro, String email, int kapasiteetti, Postinumerot postinumero) {
         this.tapahtumapaikkaId = tapahtumapaikkaId;
         this.tapahtumapaikka = tapahtumapaikka;
@@ -37,6 +42,8 @@ public class Tapahtumapaikat {
         this.kapasiteetti = kapasiteetti;
         this.postinumero = postinumero;
     }
+
+    //getterit ja setterit
 
     public Long getTapahtumapaikkaId() {
         return tapahtumapaikkaId;
