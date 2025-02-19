@@ -16,7 +16,8 @@ public class Tapahtumaliput {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long tapahtumalippuId;
-    private BigDecimal hinta;
+    private BigDecimal hinta; // Rahasummien tallentamiseen BigDecimal on suositeltavaa, koska se on tarkka ja
+                              // estää pyöristysvirheitä, joita voi esiintyä double-tyypin kanssa.
 
     // Sarake asiakastyyppiId -.-.-.-.-.-.-.-
 
@@ -28,7 +29,7 @@ public class Tapahtumaliput {
 
     @ManyToOne
     @JoinColumn(name = "tapahtumaId")
-    private Tapahtuma tapahtuma;
+    private Tapahtumat tapahtuma;
 
     // Getterit -.-.-.-.-.-.-.-.-.-.-.-.-.-.-
 
@@ -44,7 +45,7 @@ public class Tapahtumaliput {
         return asiakastyyppi;
     }
 
-    public Tapahtuma getTapahtuma() {
+    public Tapahtumat getTapahtuma() {
         return tapahtuma;
     }
 
@@ -62,7 +63,7 @@ public class Tapahtumaliput {
         this.asiakastyyppi = asiakastyyppi;
     }
 
-    public void setTapahtuma(Tapahtuma tapahtuma) {
+    public void setTapahtuma(Tapahtumat tapahtuma) {
         this.tapahtuma = tapahtuma;
     }
 
