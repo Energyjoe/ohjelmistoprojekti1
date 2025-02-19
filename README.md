@@ -73,6 +73,57 @@ Lisäksi kukin järjestelmän tietoelementti ja sen attribuutit kuvataan
 tietohakemistossa. Tietohakemisto tarkoittaa yksinkertaisesti vain jokaisen elementin (taulun) ja niiden
 attribuuttien (kentät/sarakkeet) listausta ja lyhyttä kuvausta esim. tähän tyyliin:
 
+> ### Asiakastyypit
+>
+> _Asiakastyypit-taulu sisältää tiedot tapahtumalipun asiakastyypeistä: asiakastyyppi (esimerkiksi lapsi, aikuinen, eläkeläinen, opiskelija) sekä asiakastyyppiId. Jokaisella lipulla on yksi asiakastyyppi, yksi asiakastyyppi voi olla usealla tapahtumalipulla._
+>
+> | Kenttä          | Tyyppi      | Kuvaus             |
+> | --------------- | ----------- | ------------------ |
+> | asiakastyyppiId | int PK      | Asiakastyypin id   |
+> | asiakastyyppi   | varchar(20) | Asiakastyypin nimi |
+
+> ### Myynnit
+>
+> _Myynnit-taulu sisältää lipunmyyntiin liittyvät tiedot: myyntiId, tyontekijaId, myyntiaika ja asiakkaan sähköpostin. Jokainen myynti on yhden työntekijän tekemä, yksi työntekijä voi tehdä usean myynnin._
+>
+> | Kenttä       | Tyyppi      | Kuvaus                                        |
+> | ------------ | ----------- | --------------------------------------------- |
+> | myyntiId     | int PK      | Myyntitapahtuman id                           |
+> | tyontekijaId | int FK      | Työntekijän Id, viittaus työntekijät -tauluun |
+> | myyntiaika   | datetime    | Myyntipäivä ja aika                           |
+> | email        | varchar(50) | Asiakkaan sähköpostiosoite                    |
+
+> ### Postinumerot
+>
+> _Postinumerot-taulu sisältää postinumeron tiedot: postinumeron ja paikkakunnan. Postinumeroa käytetään tapahtumapaikan ja työntekijän tiedoissa. Postinumerolla voi olla tapahtumapaikkaa, mutta tapahtumapaikalla voi olla vain yksi postinumero._
+>
+> | Kenttä      | Tyyppi      | Kuvaus            |
+> | ----------- | ----------- | ----------------- |
+> | postinumero | int PK      | Postinumero       |
+> | paikkakunta | varchar(50) | Paikkakunnan nimi |
+
+> ### Tapahtumaliput
+>
+> _Tapahtumaliput-taulu sisältää tapahtumalippuun liittyvät tiedot: tapahtumalippuId, hinta, tapahtumaId ja asiakastyyppi. Tapahtumalipulla voi olla yksi asiakastyyppi, asiakastyyppi voi olla usealla tapahtumalipulla._
+>
+> | Kenttä           | Tyyppi | Kuvaus                                            |
+> | ---------------- | ------ | ------------------------------------------------- |
+> | tapahtumalippuId | int PK | Tapahtumalipun id                                 |
+> | hinta            | int    | Lipunhinta                                        |
+> | tapahtumaId      | int FK | Tapahtuman id, viittaus tapahtumat -tauluun       |
+> | asiakastyyppiId  | int FK | Asiakastyypin id, viittaus asiakastyypit -tauluun |
+
+> ### Tapahtumapaikat
+>
+> _Tapahtumapaikat-taulu sisältää tapahtumapaikkaan liittyvät tiedot: tapahtumapaikan osoitteen, postinumeron, tapahtumapaikan nimen ja kapasiteetin, paljonko tilaan mahtuu ihmisiä. Tapahtumapaikalla voi olla yksi postiosoite, sama postiosoite voi olla usealla tapahtumapaikalla._
+>
+> | Kenttä            | Tyyppi      | Kuvaus                                                     |
+> | ----------------- | ----------- | ---------------------------------------------------------- |
+> | tapahtumapaikkaId | int PK      | Tapahtumapaikan id                                         |
+> | postinumero       | int FK      | Tapahtumapaikan postinumero, viittaus postinumero -tauluun |
+> | tapahtumapaikka   | varchar(50) | Tapahtumapaikan nimi                                       |
+> | katuosoite        | varchar(50) | Paikan katuosoite                                          |
+> | kapasiteetti      | int         | Paljonko ihmisiä tilaan mahtuu                             |
 
 > ### Tapahtumat
 >
@@ -87,17 +138,31 @@ attribuuttien (kentät/sarakkeet) listausta ja lyhyttä kuvausta esim. tähän t
 > | lopeutusaika      | datetime    | Tapahtuman lopetusaika                                |
 > | kuvaus            | text        | Kuvaus tapahtumasta                                   |
 
-> ### Tapahtumapaikat
+> ### Työntekijät
 >
-> _Tapahtumapaikat-taulu sisältää tapahtumapaikkaan liittyvät tiedot: tapahtumapaikan osoitteen, postinumeron, tapahtumapaikan nimen ja kapasiteetin, paljonko tilaan mahtuu ihmisiä. Tapahtumapaikalla voi olla yksi postiosoite, sama postiosoite voi olla usealla tapahtumapaikalla._
+> _Työntekijät-taulu sisältää työntekijään liittyvät tiedot: työntekijäId, postinumero, katuosoite, etunimi, sukunimi, email, puhelinnumero ja bcrypthash eli salattu salasana. Työntekijällä voi olla yksi postinumero, sama postinumero voi olla usealla työntekijällä._
 >
-> | Kenttä            | Tyyppi      | Kuvaus                                                     |
-> | ----------------- | ----------- | ---------------------------------------------------------- |
-> | tapahtumapaikkaId | int PK      | Tapahtumapaikan id                                         |
-> | postinumero       | int FK      | Tapahtumapaikan postinumero, viittaus postinumero -tauluun |
-> | tapahtumapaikka   | varchar(50) | Tapahtumapaikan nimi                                       |
-> | katuosoite        | varchar(50) | Paikan katuosoite                                          |
-> | kapasiteetti      | int         | Paljonko ihmisiä tilaan mahtuu                             |
+> | Kenttä       | Tyyppi      | Kuvaus                                                 |
+> | ------------ | ----------- | ------------------------------------------------------ |
+> | tyontekijaId | int PK      | Työntekijän id                                         |
+> | postinumero  | int FK      | Työntekijän postinumero, viittaus postinumero -tauluun |
+> | katuosoite   | varchar(50) | Työntekijän katuosoite                                 |
+> | etunimi      | varchar(50) | Etunimi                                                |
+> | sukunimi     | varchar(50) | Sukunimi                                               |
+> | email        | varchar(50) | Sähköpostiosoite                                       |
+> | puhnro       | int         | Puhelinnumero                                          |
+> | bcrypthash   | varchar(60) | bcrypt-salattu salasana                                |
+
+> ### Liput
+>
+> _Liput-taulu sisältää lippuun liittyvät tiedot: LippuId, myyntiId, tapahtumalippuId ja tarkastuskoodin, jolla lippu voidaan tarkastaa tapahtumassa. Lipulla voi olla yksi postiosoite, sama postiosoite voi olla usealla tapahtumapaikalla._
+>
+> | Kenttä           | Tyyppi     | Kuvaus                                              |
+> | ---------------- | ---------- | --------------------------------------------------- |
+> | lippuId          | int PK     | Lipun id                                            |
+> | myyntiId         | int FK     | Myyntitapahtuman id, viittaus myynnit -tauluun      |
+> | tapahtumalippuId | int FK     | Tapahtumalipun id, viittaus tapahtumaliput -tauluun |
+> | tarkastuskoodi   | varchar(8) | Lipun tarkastuskoodi                                |
 
 ## Tekninen kuvaus
 
