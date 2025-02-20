@@ -6,7 +6,7 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 
 @Entity
-public class Asiakastyypit {
+public class Asiakastyyppi {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO) // tietokanta luo uniikin arvon pääavaimelle
@@ -15,7 +15,7 @@ public class Asiakastyypit {
 
     // Getterit ja setterit
 
-    public Asiakastyypit(Long asiakastyyppiId, String asiakastyyppi) {
+    public Asiakastyyppi(Long asiakastyyppiId, String asiakastyyppi) {
         this.asiakastyyppiId = asiakastyyppiId;
         this.asiakastyyppi = asiakastyyppi;
     }

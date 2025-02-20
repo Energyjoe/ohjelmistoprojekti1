@@ -30,7 +30,7 @@ public class Tyontekijat {
     private String bcrypthash;
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "tyontekijat")
-    private List<Myynnit> myynnit;
+    private List<Myynti> myynnit;
 
     public Tyontekijat() {
     }
@@ -111,11 +111,11 @@ public class Tyontekijat {
         this.bcrypthash = bcrypthash;
     }
 
-    public List<Myynnit> getMyynnit() {
+    public List<Myynti> getMyynnit() {
         return myynnit;
     }
 
-    public void setMyynnit(List<Myynnit> myynnit) {
+    public void setMyynnit(List<Myynti> myynnit) {
         this.myynnit = myynnit;
     }
 

@@ -10,7 +10,7 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 
 @Entity
-public class Tapahtumaliput {
+public class Tapahtumalippu {
 
     // Sarake tapahtumalippuID ja hinta -.-.-
     @Id
@@ -23,13 +23,13 @@ public class Tapahtumaliput {
 
     @ManyToOne
     @JoinColumn(name = "asiakastyyppiId")
-    private Asiakastyypit asiakastyyppi;
+    private Asiakastyyppi asiakastyyppi;
 
     // Sarake tapahtumaId -.-.-.-.-.-.-.-.-.-
 
     @ManyToOne
     @JoinColumn(name = "tapahtumaId")
-    private Tapahtumat tapahtuma;
+    private Tapahtuma tapahtuma;
 
     // Getterit -.-.-.-.-.-.-.-.-.-.-.-.-.-.-
 
@@ -41,11 +41,11 @@ public class Tapahtumaliput {
         return hinta;
     }
 
-    public Asiakastyypit getAsiakastyyppi() {
+    public Asiakastyyppi getAsiakastyyppi() {
         return asiakastyyppi;
     }
 
-    public Tapahtumat getTapahtuma() {
+    public Tapahtuma getTapahtuma() {
         return tapahtuma;
     }
 
@@ -59,11 +59,11 @@ public class Tapahtumaliput {
         this.hinta = hinta;
     }
 
-    public void setAsiakastyyppi(Asiakastyypit asiakastyyppi) {
+    public void setAsiakastyyppi(Asiakastyyppi asiakastyyppi) {
         this.asiakastyyppi = asiakastyyppi;
     }
 
-    public void setTapahtuma(Tapahtumat tapahtuma) {
+    public void setTapahtuma(Tapahtuma tapahtuma) {
         this.tapahtuma = tapahtuma;
     }
 

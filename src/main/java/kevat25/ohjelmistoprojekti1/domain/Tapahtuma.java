@@ -10,7 +10,7 @@ import jakarta.persistence.FetchType;
 import java.time.LocalDateTime;
 
 @Entity
-public class Tapahtumat {
+public class Tapahtuma {
 
     // Sarake tapahtumaId -.-.-.-.-.-.-.-.-.-
     @Id
@@ -30,14 +30,14 @@ public class Tapahtumat {
     // Sarake tapahtumapaikkaId -.-.-.-.-.-.-.-.-.-
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "tapahtumapaikkaId")
-    private Tapahtumapaikat tapahtumapaikka;
+    private Tapahtumapaikka tapahtumapaikka;
 
      //Parametriton konstruktori -.-.-.-.-.-.-.-.-.-
-     public Tapahtumat() {
+     public Tapahtuma() {
     }
 
     //Parametrillinen konstruktori -.-.-.-.-.-.-.-.-.-
-    public Tapahtumat(String tapahtumaNimi, String tapahtumaKuvaus, LocalDateTime aloitusaika, LocalDateTime lopetusaika, Tapahtumapaikat tapahtumapaikka) {
+    public Tapahtuma(String tapahtumaNimi, String tapahtumaKuvaus, LocalDateTime aloitusaika, LocalDateTime lopetusaika, Tapahtumapaikka tapahtumapaikka) {
         this.tapahtumaNimi = tapahtumaNimi;
         this.tapahtumaKuvaus = tapahtumaKuvaus;
         this.aloitusaika = aloitusaika;
@@ -66,7 +66,7 @@ public class Tapahtumat {
         return lopetusaika;
     }
 
-    public Tapahtumapaikat getTapahtumapaikka() {
+    public Tapahtumapaikka getTapahtumapaikka() {
         return tapahtumapaikka;
     }
 
@@ -92,7 +92,7 @@ public class Tapahtumat {
         this.lopetusaika = lopetusaika;
     }
 
-    public void setTapahtumapaikka(Tapahtumapaikat tapahtumapaikka) {
+    public void setTapahtumapaikka(Tapahtumapaikka tapahtumapaikka) {
         this.tapahtumapaikka = tapahtumapaikka;
     }
 

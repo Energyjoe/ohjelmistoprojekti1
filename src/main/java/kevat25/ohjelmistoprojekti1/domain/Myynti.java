@@ -10,7 +10,7 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 
 @Entity
-public class Myynnit {
+public class Myynti {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -24,10 +24,10 @@ public class Myynnit {
     private String email;
 
 
-    public Myynnit() {
+    public Myynti() {
     }
 
-    public Myynnit(LocalDate myyntiaika, String email, Tyontekijat tyontekijat) {
+    public Myynti(LocalDate myyntiaika, String email, Tyontekijat tyontekijat) {
         this.myyntiaika = myyntiaika;
         this.email = email;
         this.tyontekijat = tyontekijat;

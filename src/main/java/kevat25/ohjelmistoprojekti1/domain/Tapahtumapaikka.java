@@ -1,7 +1,5 @@
 package kevat25.ohjelmistoprojekti1.domain;
 
-import java.math.BigDecimal;
-
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -11,7 +9,7 @@ import jakarta.persistence.ManyToOne;
 import jakarta.persistence.MapsId;
 
 @Entity
-public class Tapahtumapaikat {
+public class Tapahtumapaikka {
 
     //tapahtumapaikkaId
     @Id
@@ -31,11 +29,11 @@ public class Tapahtumapaikat {
     private Postinumero postinumero;
 
     //parametriton konstruktori
-    public Tapahtumapaikat() {
+    public Tapahtumapaikka() {
     }
 
     //parametrillinen konstruktori
-    public Tapahtumapaikat (Long tapahtumapaikkaId, String tapahtumapaikka, String katuosoite, String puhnro, String email, int kapasiteetti, Postinumero postinumero) {
+    public Tapahtumapaikka (Long tapahtumapaikkaId, String tapahtumapaikka, String katuosoite, String puhnro, String email, int kapasiteetti, Postinumero postinumero) {
         this.tapahtumapaikkaId = tapahtumapaikkaId;
         this.tapahtumapaikka = tapahtumapaikka;
         this.katuosoite = katuosoite;
