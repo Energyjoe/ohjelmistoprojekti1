@@ -8,6 +8,7 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.MapsId;
 
 @Entity
 public class Tapahtumapaikat {
@@ -25,7 +26,8 @@ public class Tapahtumapaikat {
 
     //postinumero
     @ManyToOne
-    @JoinColumn(postinumero = "postinumero")
+    @MapsId
+    @JoinColumn(name = "postinumero")
     private Postinumero postinumero;
 
     //parametriton konstruktori
@@ -50,7 +52,7 @@ public class Tapahtumapaikat {
     }
 
     public void setTapahtumapaikkaId(Long tapahtumapaikkaId) {
-        return this.tapahtumapaikkaId = tapahtumapaikkaId;
+        this.tapahtumapaikkaId = tapahtumapaikkaId;
     }
 
     public String getTapahtumapaikka() {
