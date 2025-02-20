@@ -1,5 +1,6 @@
 package kevat25.ohjelmistoprojekti1.domain;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -11,8 +12,10 @@ import jakarta.persistence.Table;
 public class Asiakastyyppi {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO) // tietokanta luo uniikin arvon pääavaimelle
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name = "asiakastyyppi_id") // Use @Column if the field name differs from the column name
     private Long asiakastyyppiId;
+
     private String asiakastyyppi; // esim opiskelija, aikuinen, eläkeläinen, lapsi
 
     // Getterit ja setterit

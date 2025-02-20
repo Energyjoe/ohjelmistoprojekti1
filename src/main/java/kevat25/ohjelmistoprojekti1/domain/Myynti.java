@@ -1,7 +1,9 @@
 package kevat25.ohjelmistoprojekti1.domain;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -16,20 +18,21 @@ public class Myynti {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name = "myynti_id")
     private Long myyntiId;
 
     @ManyToOne
-    @JoinColumn(name = "tyontekijaId")
+    @JoinColumn(name = "tyontekija_id")
     private Tyontekija tyontekijat;
 
-    private LocalDate myyntiaika;
+    private LocalDateTime myyntiaika;
     private String email;
 
 
     public Myynti() {
     }
 
-    public Myynti(LocalDate myyntiaika, String email, Tyontekija tyontekijat) {
+    public Myynti(LocalDateTime myyntiaika, String email, Tyontekija tyontekijat) {
         this.myyntiaika = myyntiaika;
         this.email = email;
         this.tyontekijat = tyontekijat;
@@ -43,11 +46,11 @@ public class Myynti {
         this.myyntiId = myyntiId;
     }
 
-    public LocalDate getMyyntiaika() {
+    public LocalDateTime getMyyntiaika() {
         return myyntiaika;
     }
 
-    public void setMyyntiaika(LocalDate myyntiaika) {
+    public void setMyyntiaika(LocalDateTime myyntiaika) {
         this.myyntiaika = myyntiaika;
     }
 

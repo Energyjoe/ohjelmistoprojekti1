@@ -73,7 +73,9 @@ CREATE TABLE liput (
     lippu_id SERIAL PRIMARY KEY,
     myynti_id INTEGER NOT NULL,
     FOREIGN KEY (myynti_id) REFERENCES myynnit(myynti_id),
-    tarkastuskoodi CHAR(8) NOT NULL
+    tapahtumalippu_id INTEGER NOT NULL,
+    FOREIGN KEY (tapahtumalippu_id) REFERENCES tapahtumaliput(tapahtumalippu_id),
+    tarkistuskoodi CHAR(8) NOT NULL
 );
 
 -- Insert sample data into postinumerot
@@ -126,8 +128,8 @@ INSERT INTO myynnit (tyontekija_id, myyntiaika, email) VALUES
 (1, '2024-03-01 10:00:00', 'asiakas3@example.com');
 
 -- Insert sample data into liput
-INSERT INTO liput (myynti_id, tarkastuskoodi) VALUES
-(1, 'ABCDEF01'),
-(1, 'BCDEF012'),
-(2, 'CDEF0123'),
-(3, 'DEF01234');
+INSERT INTO liput (myynti_id, tapahtumalippu_id, tarkistuskoodi) VALUES
+(1, 1, 'ABCDEF01'),
+(1, 2, 'BCDEF012'),
+(2, 3, 'CDEF0123'),
+(3, 4, 'DEF01234');

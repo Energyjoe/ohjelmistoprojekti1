@@ -1,5 +1,6 @@
 package kevat25.ohjelmistoprojekti1.domain;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -17,12 +18,15 @@ public class Tapahtuma {
     // Sarake tapahtumaId -.-.-.-.-.-.-.-.-.-
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name = "tapahtuma_id")
     private Long tapahtumaId;
 
     // Sarake tapahtuma -.-.-.-.-.-.-.-.-.-
+    @Column(name = "tapahtuma")
     private String tapahtumaNimi;
 
     // Sarake kuvaus -.-.-.-.-.-.-.-.-.-
+    @Column(name = "kuvaus")
     private String tapahtumaKuvaus;
 
     //Sarakkeet aloitusaika ja lopetusaika -.-.-.-.-.-.-.-.-.-
@@ -31,7 +35,7 @@ public class Tapahtuma {
 
     // Sarake tapahtumapaikkaId -.-.-.-.-.-.-.-.-.-
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "tapahtumapaikkaId")
+    @JoinColumn(name = "tapahtumapaikka_id")
     private Tapahtumapaikka tapahtumapaikka;
 
      //Parametriton konstruktori -.-.-.-.-.-.-.-.-.-

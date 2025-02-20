@@ -7,6 +7,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
+import jakarta.persistence.Column;
 
 
 @Entity
@@ -16,13 +17,14 @@ public class Tapahtumapaikka {
     //tapahtumapaikkaId
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name = "tapahtumapaikka_id")
     private Long tapahtumapaikkaId;
 
     //tapahtumapaikka, katuosoite, puhnro, email
     private String tapahtumapaikka, katuosoite, puhnro, email; 
 
     //kapasiteetti
-    private int kapasiteetti;
+    private Integer kapasiteetti;
 
     //postinumero
     @ManyToOne
@@ -34,7 +36,7 @@ public class Tapahtumapaikka {
     }
 
     //parametrillinen konstruktori
-    public Tapahtumapaikka (Long tapahtumapaikkaId, String tapahtumapaikka, String katuosoite, String puhnro, String email, int kapasiteetti, Postinumero postinumero) {
+    public Tapahtumapaikka (Long tapahtumapaikkaId, String tapahtumapaikka, String katuosoite, String puhnro, String email, Integer kapasiteetti, Postinumero postinumero) {
         this.tapahtumapaikkaId = tapahtumapaikkaId;
         this.tapahtumapaikka = tapahtumapaikka;
         this.katuosoite = katuosoite;
@@ -86,11 +88,11 @@ public class Tapahtumapaikka {
         this.email = email;
     }
 
-    public int getKapasiteetti() {
+    public Integer getKapasiteetti() {
         return kapasiteetti;
     }
 
-    public void setKapasiteetti(int kapasiteetti) {
+    public void setKapasiteetti(Integer kapasiteetti) {
         this.kapasiteetti = kapasiteetti;
     }
 

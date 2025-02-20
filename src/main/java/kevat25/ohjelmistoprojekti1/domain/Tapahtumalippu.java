@@ -9,6 +9,8 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
+import jakarta.persistence.Column;
+
 
 @Entity
 @Table(name = "tapahtumaliput")
@@ -17,6 +19,7 @@ public class Tapahtumalippu {
     // Sarake tapahtumalippuID ja hinta -.-.-
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name = "tapahtumalippu_id")
     private Long tapahtumalippuId;
     private BigDecimal hinta; // Rahasummien tallentamiseen BigDecimal on suositeltavaa, koska se on tarkka ja
                               // estää pyöristysvirheitä, joita voi esiintyä double-tyypin kanssa.
@@ -24,13 +27,13 @@ public class Tapahtumalippu {
     // Sarake asiakastyyppiId -.-.-.-.-.-.-.-
 
     @ManyToOne
-    @JoinColumn(name = "asiakastyyppiId")
+    @JoinColumn(name = "asiakastyyppi_id")
     private Asiakastyyppi asiakastyyppi;
 
     // Sarake tapahtumaId -.-.-.-.-.-.-.-.-.-
 
     @ManyToOne
-    @JoinColumn(name = "tapahtumaId")
+    @JoinColumn(name = "tapahtuma_id")
     private Tapahtuma tapahtuma;
 
     // Getterit -.-.-.-.-.-.-.-.-.-.-.-.-.-.-

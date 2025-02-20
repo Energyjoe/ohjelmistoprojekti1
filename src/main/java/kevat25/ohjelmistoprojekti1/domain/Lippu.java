@@ -1,5 +1,6 @@
 package kevat25.ohjelmistoprojekti1.domain;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -16,6 +17,7 @@ import jakarta.persistence.Table;
 public class Lippu {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO) // Generoitu ID-numero lipulle
+    @Column(name = "lippu_id")
     private Long lippuId;
 
     @ManyToOne
@@ -31,7 +33,8 @@ public class Lippu {
     // Kommentoin alla olevan rivin siksi pois. -Samuli 2025-02-20
     // @GeneratedValue(strategy = GenerationType.SEQUENCE) //Generoitu numerosarja
     // tarkistuskoodiksi
-    private long tarkistuskoodi;
+    
+    private String tarkistuskoodi;
 
     // Getterit ja setterit
 
@@ -59,11 +62,11 @@ public class Lippu {
         this.myynti = myynti;
     }
 
-    public long getTarkistuskoodi() {
+    public String getTarkistuskoodi() {
         return tarkistuskoodi;
     }
 
-    public void setTarkistuskoodi(long tarkistuskoodi) {
+    public void setTarkistuskoodi(String tarkistuskoodi) {
         this.tarkistuskoodi = tarkistuskoodi;
     }
 

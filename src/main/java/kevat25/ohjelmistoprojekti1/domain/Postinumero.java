@@ -14,10 +14,7 @@ public class Postinumero {
     @Id
     private String postinumero;
 
-    @Column(name="paikkakunta")
     private String paikkakunta;
-
-    // mapping OneToMany tai ManyToOne puuttuu
 
     public Postinumero() {
     }

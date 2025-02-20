@@ -3,6 +3,7 @@ package kevat25.ohjelmistoprojekti1.domain;
 import java.util.List;
 
 import jakarta.persistence.CascadeType;
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -18,11 +19,12 @@ public class Tyontekija {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name = "tyontekija_id")
     private Long tyontekijaId;
 
     @ManyToOne
     @JoinColumn(name = "postinumero")
-    private Postinumero postinumerot;
+    private Postinumero postinumero;
 
     private String katuosoite;
     private String etunimi;
@@ -37,10 +39,10 @@ public class Tyontekija {
     public Tyontekija() {
     }
 
-    public Tyontekija(Long tyontekijaId, Postinumero postinumerot, String katuosoite,
+    public Tyontekija(Long tyontekijaId, Postinumero postinumero, String katuosoite,
             String etunimi, String sukunimi, String email, String puhnro, String bcrypthash) {
         this.tyontekijaId = tyontekijaId;
-        this.postinumerot = postinumerot;
+        this.postinumero = postinumero;
         this.katuosoite = katuosoite;
         this.etunimi = etunimi;
         this.sukunimi = sukunimi;
@@ -58,11 +60,11 @@ public class Tyontekija {
     }
 
     public Postinumero getPostinumerot() {
-        return postinumerot;
+        return postinumero;
     }
 
-    public void setPostinumerot(Postinumero postinumerot) {
-        this.postinumerot = postinumerot;
+    public void setPostinumerot(Postinumero postinumero) {
+        this.postinumero = postinumero;
     }
 
     public String getKatuosoite() {
@@ -123,7 +125,7 @@ public class Tyontekija {
 
     @Override
     public String toString() {
-        if (this.postinumerot != null) {
+        if (this.postinumero != null) {
             return "Tyontekijat [tyontekijaId=" + tyontekijaId + ", postinumerot=" + this.getPostinumerot() + ", katuosoite="
                     + katuosoite + ", etunimi=" + etunimi + ", sukunimi=" + sukunimi
                     + ", email=" + email + ", puhnro=" + puhnro + ", bcrypthash=" + bcrypthash + "]";
