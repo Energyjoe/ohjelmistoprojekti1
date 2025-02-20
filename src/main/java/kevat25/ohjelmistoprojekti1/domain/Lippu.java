@@ -6,11 +6,13 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.Table;
 
 // vaihdoin long tapahtumalippu -tyyppiset viittaukset viittauksiksi muiden luokkien entiteetteihin
 // -Samuli 2025-02-20
 
 @Entity
+@Table(name = "liput")
 public class Lippu {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO) // Generoitu ID-numero lipulle
