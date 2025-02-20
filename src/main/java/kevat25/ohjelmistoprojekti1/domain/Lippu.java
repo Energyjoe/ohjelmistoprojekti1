@@ -7,52 +7,64 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 
-
+// vaihdoin long tapahtumalippu -tyyppiset viittaukset viittauksiksi muiden luokkien entiteetteihin
+// -Samuli 2025-02-20
 
 @Entity
-
 public class Lippu {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO) //Generoitu ID-numero lipulle
-    private long lippuId;
+    @GeneratedValue(strategy = GenerationType.AUTO) // Generoitu ID-numero lipulle
+    private Long lippuId;
 
-@ManyToOne
-@JoinColumn(name="tapahtumalippuId")
-private long tapahtumalippu;
+    @ManyToOne
+    @JoinColumn(name = "tapahtumalippu_id")
+    private Tapahtumalippu tapahtumalippu;
 
-@ManyToOne
-@JoinColumn(name="myyntiId")
-private long myynti;
+    @ManyToOne
+    @JoinColumn(name = "myynti_id")
+    private Myynti myynti;
 
-@GeneratedValue(strategy = GenerationType.SEQUENCE) //Generoitu numerosarja tarkistuskoodiksi 
-private long tarkistuskoodi;
+    // @GeneratedValue on tarkoitettu käytettäväksi vain yhdessä @Id -annotaation
+    // kanssa pääavaimen generoimiseksi.
+    // Kommentoin alla olevan rivin siksi pois. -Samuli 2025-02-20
+    // @GeneratedValue(strategy = GenerationType.SEQUENCE) //Generoitu numerosarja
+    // tarkistuskoodiksi
+    private long tarkistuskoodi;
 
-//Getterit ja setterit
+    // Getterit ja setterit
 
-public long getTapahtumalippu() {
-    return tapahtumalippu;
+    public Long getLippuId() {
+        return lippuId;
+    }
+
+    public void setLippuId(Long lippuId) {
+        this.lippuId = lippuId;
+    }
+
+    public Tapahtumalippu getTapahtumalippu() {
+        return tapahtumalippu;
+    }
+
+    public void setTapahtumalippu(Tapahtumalippu tapahtumalippu) {
+        this.tapahtumalippu = tapahtumalippu;
+    }
+
+    public Myynti getMyynti() {
+        return myynti;
+    }
+
+    public void setMyynti(Myynti myynti) {
+        this.myynti = myynti;
+    }
+
+    public long getTarkistuskoodi() {
+        return tarkistuskoodi;
+    }
+
+    public void setTarkistuskoodi(long tarkistuskoodi) {
+        this.tarkistuskoodi = tarkistuskoodi;
+    }
+
+
+
 }
-
-public void setTapahtumalippu(long tapahtumalippu) {
-    this.tapahtumalippu = tapahtumalippu;
-}
-
-public long getMyynti() {
-    return myynti;
-}
-
-public void setMyynti(long myynti) {
-    this.myynti = myynti;
-}
-
-public long getTarkistuskoodi() {
-    return tarkistuskoodi;
-}
-
-public void setTarkistuskoodi(long tarkistuskoodi) {
-    this.tarkistuskoodi = tarkistuskoodi;
-}
-
-}
-
-

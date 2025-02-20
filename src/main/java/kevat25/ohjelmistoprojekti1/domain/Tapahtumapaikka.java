@@ -6,7 +6,6 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
-import jakarta.persistence.MapsId;
 
 @Entity
 public class Tapahtumapaikka {
@@ -24,7 +23,6 @@ public class Tapahtumapaikka {
 
     //postinumero
     @ManyToOne
-    @MapsId
     @JoinColumn(name = "postinumero")
     private Postinumero postinumero;
 
