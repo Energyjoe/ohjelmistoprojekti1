@@ -12,7 +12,7 @@ import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 
 @Entity
-public class Tyontekijat {
+public class Tyontekija {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -32,10 +32,10 @@ public class Tyontekijat {
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "tyontekijat")
     private List<Myynti> myynnit;
 
-    public Tyontekijat() {
+    public Tyontekija() {
     }
 
-    public Tyontekijat(Long tyontekijaId, Postinumero postinumerot, String katuosoite,
+    public Tyontekija(Long tyontekijaId, Postinumero postinumerot, String katuosoite,
             String etunimi, String sukunimi, String email, String puhnro, String bcrypthash) {
         this.tyontekijaId = tyontekijaId;
         this.postinumerot = postinumerot;

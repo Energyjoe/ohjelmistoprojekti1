@@ -18,7 +18,7 @@ public class Myynti {
 
     @ManyToOne
     @JoinColumn(name = "tyontekijaId")
-    private Tyontekijat tyontekijat;
+    private Tyontekija tyontekijat;
 
     private LocalDate myyntiaika;
     private String email;
@@ -27,7 +27,7 @@ public class Myynti {
     public Myynti() {
     }
 
-    public Myynti(LocalDate myyntiaika, String email, Tyontekijat tyontekijat) {
+    public Myynti(LocalDate myyntiaika, String email, Tyontekija tyontekijat) {
         this.myyntiaika = myyntiaika;
         this.email = email;
         this.tyontekijat = tyontekijat;
@@ -57,11 +57,11 @@ public class Myynti {
         this.email = email;
     }
 
-    public Tyontekijat getTyontekijat() {
+    public Tyontekija getTyontekijat() {
         return tyontekijat;
     }
 
-    public void setTyontekijat(Tyontekijat tyontekijat) {
+    public void setTyontekijat(Tyontekija tyontekijat) {
         this.tyontekijat = tyontekijat;
     }
 
