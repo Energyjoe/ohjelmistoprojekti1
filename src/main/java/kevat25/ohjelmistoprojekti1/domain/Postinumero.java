@@ -2,16 +2,15 @@ package kevat25.ohjelmistoprojekti1.domain;
 
 import jakarta.persistence.Entity;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
+// import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Id;
-import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 
 @Entity
 @Table(name = "postinumerot")
-public class Postinumerot {
+public class Postinumero {
     @Id
     private String postinumero;
 
@@ -20,10 +19,10 @@ public class Postinumerot {
 
     // mapping OneToMany tai ManyToOne puuttuu
 
-    public Postinumerot() {
+    public Postinumero() {
     }
     
-    public Postinumerot(String postinumero, String paikkakunta) {
+    public Postinumero(String postinumero, String paikkakunta) {
         this.postinumero = postinumero;
         this.paikkakunta = paikkakunta;
     }

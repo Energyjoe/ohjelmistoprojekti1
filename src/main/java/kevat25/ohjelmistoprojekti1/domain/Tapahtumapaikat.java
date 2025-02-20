@@ -26,14 +26,14 @@ public class Tapahtumapaikat {
     //postinumero
     @ManyToOne
     @JoinColumn(postinumero = "postinumero")
-    private Postinumerot postinumero;
+    private Postinumero postinumero;
 
     //parametriton konstruktori
     public Tapahtumapaikat() {
     }
 
     //parametrillinen konstruktori
-    public Tapahtumapaikat (Long tapahtumapaikkaId, String tapahtumapaikka, String katuosoite, String puhnro, String email, int kapasiteetti, Postinumerot postinumero) {
+    public Tapahtumapaikat (Long tapahtumapaikkaId, String tapahtumapaikka, String katuosoite, String puhnro, String email, int kapasiteetti, Postinumero postinumero) {
         this.tapahtumapaikkaId = tapahtumapaikkaId;
         this.tapahtumapaikka = tapahtumapaikka;
         this.katuosoite = katuosoite;
@@ -93,11 +93,11 @@ public class Tapahtumapaikat {
         this.kapasiteetti = kapasiteetti;
     }
 
-    public Postinumerot getPostinumero() {
+    public Postinumero getPostinumero() {
         return postinumero;
     }
 
-    public void setPostinumero(Postinumerot postinumero) {
+    public void setPostinumero(Postinumero postinumero) {
         this.postinumero = postinumero;
     }
 

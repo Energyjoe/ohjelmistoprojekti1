@@ -20,7 +20,7 @@ public class Tyontekijat {
 
     @ManyToOne
     @JoinColumn(name = "postinumero")
-    private Postinumerot postinumerot;
+    private Postinumero postinumerot;
 
     private String katuosoite;
     private String etunimi;
@@ -35,7 +35,7 @@ public class Tyontekijat {
     public Tyontekijat() {
     }
 
-    public Tyontekijat(Long tyontekijaId, Postinumerot postinumerot, String katuosoite,
+    public Tyontekijat(Long tyontekijaId, Postinumero postinumerot, String katuosoite,
             String etunimi, String sukunimi, String email, String puhnro, String bcrypthash) {
         this.tyontekijaId = tyontekijaId;
         this.postinumerot = postinumerot;
@@ -55,11 +55,11 @@ public class Tyontekijat {
         this.tyontekijaId = tyontekijaId;
     }
 
-    public Postinumerot getPostinumerot() {
+    public Postinumero getPostinumerot() {
         return postinumerot;
     }
 
-    public void setPostinumerot(Postinumerot postinumerot) {
+    public void setPostinumerot(Postinumero postinumerot) {
         this.postinumerot = postinumerot;
     }
 

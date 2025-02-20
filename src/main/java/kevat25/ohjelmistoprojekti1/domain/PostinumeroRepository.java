@@ -4,7 +4,7 @@ import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface PostinumerotRepository extends CrudRepository<Postinumerot, String> {
-    Postinumerot findByPostinumero(String postinumero);
+public interface PostinumeroRepository extends CrudRepository<Postinumero, String> {
+    Postinumero findByPostinumero(String postinumero);
 
 }
