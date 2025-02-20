@@ -33,8 +33,12 @@ public class Lippu {
     // Kommentoin alla olevan rivin siksi pois. -Samuli 2025-02-20
     // @GeneratedValue(strategy = GenerationType.SEQUENCE) //Generoitu numerosarja
     // tarkistuskoodiksi
-    
+
     private String tarkistuskoodi;
+
+    // Parametriton konstruktori
+    public Lippu() {
+    }
 
     // Getterit ja setterit
 
@@ -69,7 +73,5 @@ public class Lippu {
     public void setTarkistuskoodi(String tarkistuskoodi) {
         this.tarkistuskoodi = tarkistuskoodi;
     }
-
-
 
 }

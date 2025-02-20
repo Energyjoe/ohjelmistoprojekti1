@@ -18,6 +18,10 @@ public class Asiakastyyppi {
 
     private String asiakastyyppi; // esim opiskelija, aikuinen, eläkeläinen, lapsi
 
+    // Parametriton konstruktori
+    public Asiakastyyppi() {
+    }
+
     // Getterit ja setterit
 
     public Asiakastyyppi(Long asiakastyyppiId, String asiakastyyppi) {

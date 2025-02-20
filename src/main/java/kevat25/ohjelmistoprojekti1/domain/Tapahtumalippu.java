@@ -54,6 +54,10 @@ public class Tapahtumalippu {
         return tapahtuma;
     }
 
+    // Parametriton konstruktori
+    public Tapahtumalippu() {
+    }
+
     // Setterit -.-.-.-.-.-.-.-.-.-.-.-.-.-.-
 
     public void setTapahtumalippuId(Long tapahtumalippuId) {
