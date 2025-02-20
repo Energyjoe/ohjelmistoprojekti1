@@ -15,7 +15,8 @@ CREATE TABLE asiakastyypit (
 
 CREATE TABLE postinumerot (
     postinumero CHAR(5) PRIMARY KEY,
-    postitoimipaikka VARCHAR(50) NOT NULL
+    paikkakunta VARCHAR(50) NOT NULL,
+    CHECK (char_length(postinumero) = 5)
 );
 
 CREATE TABLE tapahtumapaikat (
@@ -76,7 +77,7 @@ CREATE TABLE liput (
 );
 
 -- Insert sample data into postinumerot
-INSERT INTO postinumerot (postinumero, postitoimipaikka) VALUES
+INSERT INTO postinumerot (postinumero, paikkakunta) VALUES
 ('00100', 'Helsinki'),
 ('00180', 'Helsinki'),
 ('00200', 'Helsinki'),
