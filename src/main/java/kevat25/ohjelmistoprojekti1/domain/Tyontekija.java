@@ -33,7 +33,7 @@ public class Tyontekija {
     private String puhnro;
     private String bcrypthash;
 
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "tyontekijat")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "tyontekija")
     private List<Myynti> myynnit;
 
     public Tyontekija() {

@@ -1,6 +1,5 @@
 package kevat25.ohjelmistoprojekti1.domain;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 import jakarta.persistence.Column;
