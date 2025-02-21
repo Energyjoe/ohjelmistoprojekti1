@@ -14,16 +14,16 @@ import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 
 @Entity
-@Table(name = "tyontekijat")
+@Table(name = "tyontekijat") // Taulu, johon Tyontekija-luokan instanssit tallennetaan
 public class Tyontekija {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name = "tyontekija_id")
+    @GeneratedValue(strategy = GenerationType.AUTO) // Tyontekija-id generoidaan automaattisesti tietokannan avulla
+    @Column(name = "tyontekija_id") // Taulun sarake, jossa säilytetään työntekijän id:tä
     private Long tyontekijaId;
 
-    @ManyToOne
-    @JoinColumn(name = "postinumero")
+    @ManyToOne // Määrittää, että työntekijällä on linkki postinumeroon
+    @JoinColumn(name = "postinumero") // Liittää postinumeron työntekijään
     private Postinumero postinumero;
 
     private String katuosoite;
@@ -33,7 +33,8 @@ public class Tyontekija {
     private String puhnro;
     private String bcrypthash;
 
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "tyontekijat")
+    // Liittää työntekijät myynteihin; poistaa myynnit, jos työntekijä poistetaan
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "tyontekija")
     private List<Myynti> myynnit;
 
     public Tyontekija() {
@@ -51,6 +52,7 @@ public class Tyontekija {
         this.bcrypthash = bcrypthash;
     }
 
+    // Getterit ja setterit työntekijän tiedoille
     public Long getTyontekijaId() {
         return tyontekijaId;
     }
@@ -59,11 +61,11 @@ public class Tyontekija {
         this.tyontekijaId = tyontekijaId;
     }
 
-    public Postinumero getPostinumerot() {
+    public Postinumero getPostinumero() {
         return postinumero;
     }
 
-    public void setPostinumerot(Postinumero postinumero) {
+    public void setPostinumero(Postinumero postinumero) {
         this.postinumero = postinumero;
     }
 
@@ -123,10 +125,13 @@ public class Tyontekija {
         this.myynnit = myynnit;
     }
 
+    /* Ehdollinen toString tulostaa kaikki tiedot jos postinumero on määritelty,
+     * muissa tapauksissa tulostetaan vain työntekijän perustiedot.
+     */
     @Override
     public String toString() {
         if (this.postinumero != null) {
-            return "Tyontekijat [tyontekijaId=" + tyontekijaId + ", postinumerot=" + this.getPostinumerot() + ", katuosoite="
+            return "Tyontekijat [tyontekijaId=" + tyontekijaId + ", postinumerot=" + this.getPostinumero() + ", katuosoite="
                     + katuosoite + ", etunimi=" + etunimi + ", sukunimi=" + sukunimi
                     + ", email=" + email + ", puhnro=" + puhnro + ", bcrypthash=" + bcrypthash + "]";
         } else {
