@@ -9,8 +9,6 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 
-// vaihdoin long tapahtumalippu -tyyppiset viittaukset viittauksiksi muiden luokkien entiteetteihin
-// -Samuli 2025-02-20
 
 @Entity
 @Table(name = "liput")
@@ -28,11 +26,6 @@ public class Lippu {
     @JoinColumn(name = "myynti_id")
     private Myynti myynti;
 
-    // @GeneratedValue on tarkoitettu käytettäväksi vain yhdessä @Id -annotaation
-    // kanssa pääavaimen generoimiseksi.
-    // Kommentoin alla olevan rivin siksi pois. -Samuli 2025-02-20
-    // @GeneratedValue(strategy = GenerationType.SEQUENCE) //Generoitu numerosarja
-    // tarkistuskoodiksi
 
     private String tarkistuskoodi;
 
