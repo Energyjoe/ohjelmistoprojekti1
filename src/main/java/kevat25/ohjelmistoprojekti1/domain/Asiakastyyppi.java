@@ -1,10 +1,14 @@
 package kevat25.ohjelmistoprojekti1.domain;
 
+import java.util.List;
+
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 
 @Entity
@@ -17,6 +21,10 @@ public class Asiakastyyppi {
     private Long asiakastyyppiId;
 
     private String asiakastyyppi; // esim opiskelija, aikuinen, eläkeläinen, lapsi
+
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "asiakastyypit") // cascade = mahdollistaa automaattisen
+                                                                      // päivityksen ja poiston
+    private List<Tapahtumalippu> tapahtumaliput;
 
     // Parametriton konstruktori
     public Asiakastyyppi() {
