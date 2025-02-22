@@ -57,21 +57,13 @@ Lipunmyyntijärjestelmän käyttäjärooleja ovat myyjä, asiakas, lipuntarkasta
 
 ## Käyttöliittymä
 
-Esitetään käyttöliittymän tärkeimmät (vain ne!) näkymät sekä niiden väliset siirtymät käyttöliittymäkaaviona.
-
-Jos näkymän tarkoitus ei ole itsestään selvä, se pitää kuvata lyhyesti.
 
 ![Käyttöliittymä](kayttoliittyma.png)
 
 ## Tietokanta
+### UML-tietokantakaavio
 
-Järjestelmään säilöttävä ja siinä käsiteltävät tiedot ja niiden väliset suhteet
-kuvataan käsitekaaviolla. Käsitemalliin sisältyy myös taulujen välisten viiteyhteyksien ja avainten
-määritykset. Tietokanta kuvataan käyttäen jotain kuvausmenetelmää, joko ER-kaaviota ja UML-luokkakaaviota.
-
-Lisäksi kukin järjestelmän tietoelementti ja sen attribuutit kuvataan
-tietohakemistossa. Tietohakemisto tarkoittaa yksinkertaisesti vain jokaisen elementin (taulun) ja niiden
-attribuuttien (kentät/sarakkeet) listausta ja lyhyttä kuvausta esim. tähän tyyliin:
+![Tietokantakaavio](tietokantakaavio.png)
 
 > ### Asiakastyypit
 >
@@ -79,7 +71,7 @@ attribuuttien (kentät/sarakkeet) listausta ja lyhyttä kuvausta esim. tähän t
 >
 > | Kenttä          | Tyyppi      | Kuvaus             |
 > | --------------- | ----------- | ------------------ |
-> | asiakastyyppiId | int PK      | Asiakastyypin id   |
+> | asiakastyyppi_id | int PK      | Asiakastyypin id   |
 > | asiakastyyppi   | varchar(20) | Asiakastyypin nimi |
 
 > ### Myynnit
@@ -88,8 +80,8 @@ attribuuttien (kentät/sarakkeet) listausta ja lyhyttä kuvausta esim. tähän t
 >
 > | Kenttä       | Tyyppi      | Kuvaus                                        |
 > | ------------ | ----------- | --------------------------------------------- |
-> | myyntiId     | int PK      | Myyntitapahtuman id                           |
-> | tyontekijaId | int FK      | Työntekijän Id, viittaus työntekijät -tauluun |
+> | myynti_id     | int PK      | Myyntitapahtuman id                           |
+> | tyontekija_id | int FK      | Työntekijän Id, viittaus työntekijät -tauluun |
 > | myyntiaika   | datetime    | Myyntipäivä ja aika                           |
 > | email        | varchar(50) | Asiakkaan sähköpostiosoite                    |
 
@@ -108,10 +100,10 @@ attribuuttien (kentät/sarakkeet) listausta ja lyhyttä kuvausta esim. tähän t
 >
 > | Kenttä           | Tyyppi | Kuvaus                                            |
 > | ---------------- | ------ | ------------------------------------------------- |
-> | tapahtumalippuId | int PK | Tapahtumalipun id                                 |
+> | tapahtumalippu_id | int PK | Tapahtumalipun id                                 |
 > | hinta            | int    | Lipunhinta                                        |
-> | tapahtumaId      | int FK | Tapahtuman id, viittaus tapahtumat -tauluun       |
-> | asiakastyyppiId  | int FK | Asiakastyypin id, viittaus asiakastyypit -tauluun |
+> | tapahtuma_id      | int FK | Tapahtuman id, viittaus tapahtumat -tauluun       |
+> | asiakastyyppi_id  | int FK | Asiakastyypin id, viittaus asiakastyypit -tauluun |
 
 > ### Tapahtumapaikat
 >
@@ -119,7 +111,7 @@ attribuuttien (kentät/sarakkeet) listausta ja lyhyttä kuvausta esim. tähän t
 >
 > | Kenttä            | Tyyppi      | Kuvaus                                                     |
 > | ----------------- | ----------- | ---------------------------------------------------------- |
-> | tapahtumapaikkaId | int PK      | Tapahtumapaikan id                                         |
+> | tapahtumapaikka_id | int PK      | Tapahtumapaikan id                                         |
 > | postinumero       | int FK      | Tapahtumapaikan postinumero, viittaus postinumero -tauluun |
 > | tapahtumapaikka   | varchar(50) | Tapahtumapaikan nimi                                       |
 > | katuosoite        | varchar(50) | Paikan katuosoite                                          |
@@ -131,8 +123,8 @@ attribuuttien (kentät/sarakkeet) listausta ja lyhyttä kuvausta esim. tähän t
 >
 > | Kenttä            | Tyyppi      | Kuvaus                                                |
 > | ----------------- | ----------- | ----------------------------------------------------- |
-> | tapahtumaId       | int PK      | Tapahtuman id                                         |
-> | tapahtumapaikkaId | int FK      | Tapahtumapaikan id, viittaus tapahtumapaikka -tauluun |
+> | tapahtuma_id       | int PK      | Tapahtuman id                                         |
+> | tapahtumapaikka_id | int FK      | Tapahtumapaikan id, viittaus tapahtumapaikka -tauluun |
 > | tapahtuma         | varchar(50) | Tapahtuman nimi                                       |
 > | aloitusaika       | datetime    | Tapahtuman aloitusaika                                |
 > | lopeutusaika      | datetime    | Tapahtuman lopetusaika                                |
@@ -144,7 +136,7 @@ attribuuttien (kentät/sarakkeet) listausta ja lyhyttä kuvausta esim. tähän t
 >
 > | Kenttä       | Tyyppi      | Kuvaus                                                 |
 > | ------------ | ----------- | ------------------------------------------------------ |
-> | tyontekijaId | int PK      | Työntekijän id                                         |
+> | tyontekija_id | int PK      | Työntekijän id                                         |
 > | postinumero  | int FK      | Työntekijän postinumero, viittaus postinumero -tauluun |
 > | katuosoite   | varchar(50) | Työntekijän katuosoite                                 |
 > | etunimi      | varchar(50) | Etunimi                                                |
@@ -159,9 +151,9 @@ attribuuttien (kentät/sarakkeet) listausta ja lyhyttä kuvausta esim. tähän t
 >
 > | Kenttä           | Tyyppi     | Kuvaus                                              |
 > | ---------------- | ---------- | --------------------------------------------------- |
-> | lippuId          | int PK     | Lipun id                                            |
-> | myyntiId         | int FK     | Myyntitapahtuman id, viittaus myynnit -tauluun      |
-> | tapahtumalippuId | int FK     | Tapahtumalipun id, viittaus tapahtumaliput -tauluun |
+> | lippu_id          | int PK     | Lipun id                                            |
+> | myynti_id         | int FK     | Myyntitapahtuman id, viittaus myynnit -tauluun      |
+> | tapahtumalippu_id | int FK     | Tapahtumalipun id, viittaus tapahtumaliput -tauluun |
 > | tarkastuskoodi   | varchar(8) | Lipun tarkastuskoodi                                |
 
 ## Tekninen kuvaus
