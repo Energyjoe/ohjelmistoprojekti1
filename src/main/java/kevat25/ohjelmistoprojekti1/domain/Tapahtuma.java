@@ -7,9 +7,12 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import jakarta.persistence.FetchType;
 import java.time.LocalDateTime;
+import jakarta.persistence.CascadeType;
+import java.util.List;
 
 @Entity
 @Table(name = "tapahtumat")
@@ -37,6 +40,10 @@ public class Tapahtuma {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "tapahtumapaikka_id")
     private Tapahtumapaikka tapahtumapaikka;
+
+    //OneToMany-yhteys Tapahtumat-tauluun -.-.-.-.-.-.-.-.-.-
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "tapahtuma_id")
+    private List<Tapahtumalippu> tapahtumaliput;
 
      //Parametriton konstruktori -.-.-.-.-.-.-.-.-.-
      public Tapahtuma() {
