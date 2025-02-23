@@ -6,8 +6,11 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import jakarta.persistence.Column;
+import java.util.List;
+import jakarta.persistence.CascadeType;
 
 
 @Entity
@@ -30,6 +33,10 @@ public class Tapahtumapaikka {
     @ManyToOne
     @JoinColumn(name = "postinumero")
     private Postinumero postinumero;
+
+    //OneToMany-viittaus Tapahtumat-tauluun
+    @OneToMany (cascade = CascadeType.ALL, mappedBy = "tapahtumapaikka_id")
+    private List<Tapahtuma> tapahtumat;
 
     //parametriton konstruktori
     public Tapahtumapaikka() {
