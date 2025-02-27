@@ -2,6 +2,8 @@ package kevat25.ohjelmistoprojekti1.web;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -31,6 +33,21 @@ public tapahtumaController(TapahtumaRepository tapahtumaRepository) {
 
         //Palauttaa HTTP-vastauksen
         return ResponseEntity.status(HttpStatus.CREATED).body(tallennettuTapahtuma);
+    }
+
+    @DeleteMapping("/{tapahtuma_id}")
+    public ResponseEntity<Void> poistaTapahtuma(@PathVariable Long tapahtuma_id) {
+
+        // Tarkistetaan, löytyykö annetulla id:llä tapahtuma
+        if (!tapahtumaRepository.existsById(tapahtuma_id)) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+        }
+
+        // Poistetaan tapahtuma id:n perusteella
+        tapahtumaRepository.deleteById(tapahtuma_id);
+
+        // Palautetaan 204 No Content
+        return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
     }
   }
 
