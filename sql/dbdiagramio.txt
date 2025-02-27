@@ -1,0 +1,70 @@
+Table asiakastyypit {
+  asiakastyyppi_id SERIAL [pk]
+  asiakastyyppi VARCHAR(20)
+}
+
+Table postinumerot {
+  postinumero CHAR(5) [pk]
+  paikkakunta VARCHAR(50)
+}
+
+Table tapahtumapaikat {
+  tapahtumapaikka_id SERIAL [pk]
+  postinumero CHAR(5)
+  tapahtumapaikka VARCHAR(50)
+  kapasiteetti INTEGER
+  katuosoite VARCHAR(50)
+  puhnro VARCHAR(15)
+  email VARCHAR(254)
+}
+
+Table tapahtumat {
+  tapahtuma_id SERIAL [pk]
+  tapahtumapaikka_id INTEGER
+  tapahtuma VARCHAR(100)
+  aloitusaika TIMESTAMP
+  lopetusaika TIMESTAMP
+  kuvaus TEXT
+  kapasiteetti INTEGER
+}
+
+Table tapahtumaliput {
+  tapahtumalippu_id SERIAL [pk]
+  asiakastyyppi_id INTEGER
+  tapahtuma_id INTEGER
+  hinta DECIMAL(6,2)
+}
+
+Table tyontekijat {
+  tyontekija_id SERIAL [pk]
+  postinumero CHAR(5)
+  katuosoite VARCHAR(50)
+  etunimi VARCHAR(50)
+  sukunimi VARCHAR(50)
+  email VARCHAR(254)
+  puhnro VARCHAR(15)
+  bcrypthash VARCHAR(60)
+}
+
+Table myynnit {
+  myynti_id SERIAL [pk]
+  tyontekija_id INTEGER
+  myyntiaika TIMESTAMP
+  email VARCHAR(254)
+}
+
+Table liput {
+  lippu_id SERIAL [pk]
+  myynti_id INTEGER
+  tapahtumalippu_id INTEGER
+  tarkistuskoodi CHAR(8)
+}
+
+Ref: tapahtumapaikat.postinumero > postinumerot.postinumero
+Ref: tapahtumat.tapahtumapaikka_id > tapahtumapaikat.tapahtumapaikka_id
+Ref: tapahtumaliput.asiakastyyppi_id > asiakastyypit.asiakastyyppi_id
+Ref: tapahtumaliput.tapahtuma_id > tapahtumat.tapahtuma_id
+Ref: tyontekijat.postinumero > postinumerot.postinumero
+Ref: myynnit.tyontekija_id > tyontekijat.tyontekija_id
+Ref: liput.myynti_id > myynnit.myynti_id
+Ref: liput.tapahtumalippu_id > tapahtumaliput.tapahtumalippu_id
