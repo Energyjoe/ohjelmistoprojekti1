@@ -46,7 +46,6 @@ public class Tapahtumapaikka {
         this.katuosoite = katuosoite;
         this.puhnro = puhnro;
         this.email = email;
-        this.kapasiteetti = kapasiteetti;
         this.postinumero = postinumero;
     }
 
