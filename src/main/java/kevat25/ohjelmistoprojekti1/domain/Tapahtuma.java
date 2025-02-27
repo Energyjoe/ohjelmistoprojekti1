@@ -42,7 +42,7 @@ public class Tapahtuma {
     private Tapahtumapaikka tapahtumapaikka;
 
     //OneToMany-yhteys Tapahtumat-tauluun -.-.-.-.-.-.-.-.-.-
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "tapahtuma_id")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "tapahtumalippuId")
     private List<Tapahtumalippu> tapahtumaliput;
 
      //Parametriton konstruktori -.-.-.-.-.-.-.-.-.-

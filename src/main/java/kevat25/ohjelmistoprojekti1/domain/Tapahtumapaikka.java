@@ -35,7 +35,7 @@ public class Tapahtumapaikka {
     private Postinumero postinumero;
 
     //OneToMany-viittaus Tapahtumat-tauluun
-    @OneToMany (cascade = CascadeType.ALL, mappedBy = "tapahtumapaikka_id")
+    @OneToMany (cascade = CascadeType.ALL, mappedBy = "tapahtumaId")
     private List<Tapahtuma> tapahtumat;
 
     //parametriton konstruktori

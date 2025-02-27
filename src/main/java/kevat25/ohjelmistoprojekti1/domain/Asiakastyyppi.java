@@ -22,7 +22,7 @@ public class Asiakastyyppi {
 
     private String asiakastyyppi; // esim opiskelija, aikuinen, eläkeläinen, lapsi
 
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "asiakastyypit") // cascade = mahdollistaa automaattisen
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "asiakastyyppi") // cascade = mahdollistaa automaattisen
                                                                       // päivityksen ja poiston
     private List<Tapahtumalippu> tapahtumaliput;
 
