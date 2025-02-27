@@ -26,9 +26,6 @@ public class Tapahtumapaikka {
     //tapahtumapaikka, katuosoite, puhnro, email
     private String tapahtumapaikka, katuosoite, puhnro, email; 
 
-    //kapasiteetti
-    private Integer kapasiteetti;
-
     //postinumero
     @ManyToOne
     @JoinColumn(name = "postinumero")
@@ -95,13 +92,6 @@ public class Tapahtumapaikka {
         this.email = email;
     }
 
-    public Integer getKapasiteetti() {
-        return kapasiteetti;
-    }
-
-    public void setKapasiteetti(Integer kapasiteetti) {
-        this.kapasiteetti = kapasiteetti;
-    }
 
     public Postinumero getPostinumero() {
         return postinumero;
@@ -119,7 +109,6 @@ public class Tapahtumapaikka {
                 ", katuosoite='" + katuosoite + '\'' +
                 ", puhnro='" + puhnro + '\'' +
                 ", email='" + email + '\'' +
-                ", kapasiteetti=" + kapasiteetti +
                 ", postinumero=" + postinumero +
                 '}';
     }

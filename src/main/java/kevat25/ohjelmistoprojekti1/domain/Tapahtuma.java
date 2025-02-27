@@ -28,6 +28,9 @@ public class Tapahtuma {
     @Column(name = "tapahtuma")
     private String tapahtumaNimi;
 
+    // Kapasiteetti 
+    private Integer kapasiteetti;
+
     // Sarake kuvaus -.-.-.-.-.-.-.-.-.-
     @Column(name = "kuvaus")
     private String tapahtumaKuvaus;
@@ -83,6 +86,10 @@ public class Tapahtuma {
         return tapahtumapaikka;
     }
 
+    public Integer getKapasiteetti() {
+        return kapasiteetti;
+    }
+
     // Setterit -.-.-.-.-.-.-.-.-.-
 
     public void setTapahtumaId(Long tapahtumaId) {
@@ -109,6 +116,10 @@ public class Tapahtuma {
         this.tapahtumapaikka = tapahtumapaikka;
     }
 
+    public void setKapasiteetti (Integer kapasiteetti) {
+        this.kapasiteetti = kapasiteetti;
+    }
+
     @Override
     public String toString() {
         return "Tapahtumat{" +
@@ -117,11 +128,11 @@ public class Tapahtuma {
                 ", tapahtumaKuvaus='" + tapahtumaKuvaus + '\'' +
                 ", aloitusaika=" + aloitusaika +
                 ", lopetusaika=" + lopetusaika +
+                ", kapasiteetti=" + kapasiteetti +
                 ", tapahtumapaikka=" + (tapahtumapaikka != null ? tapahtumapaikka.getTapahtumapaikka() : "ei määritetty") +
                 '}';
     }
     
-
 
 
 
