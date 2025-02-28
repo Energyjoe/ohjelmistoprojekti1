@@ -5,13 +5,13 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import kevat25.ohjelmistoprojekti1.domain.Tapahtuma;
 import kevat25.ohjelmistoprojekti1.domain.TapahtumaRepository;
-import org.springframework.web.bind.annotation.PutMapping;
 
 @RestController
 @RequestMapping("/tapahtumat")
@@ -48,7 +48,7 @@ public class tapahtumaController {
         return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
     }
 
-    @PutMapping("/muokkaaTapahtumaa/{tapahtuma_id}")
+    @PutMapping("/{tapahtuma_id}")
     public ResponseEntity<Object> muokkaaTapahtumaa(@PathVariable Long tapahtuma_id,
             @RequestBody Tapahtuma uusiTapahtuma) {
 
