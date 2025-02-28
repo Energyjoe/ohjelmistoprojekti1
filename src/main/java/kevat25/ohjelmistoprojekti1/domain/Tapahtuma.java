@@ -53,11 +53,12 @@ public class Tapahtuma {
     }
 
     //Parametrillinen konstruktori -.-.-.-.-.-.-.-.-.-
-    public Tapahtuma(String tapahtumaNimi, String tapahtumaKuvaus, LocalDateTime aloitusaika, LocalDateTime lopetusaika, Tapahtumapaikka tapahtumapaikka) {
+    public Tapahtuma(String tapahtumaNimi, String tapahtumaKuvaus, LocalDateTime aloitusaika, LocalDateTime lopetusaika, Integer kapasiteetti, Tapahtumapaikka tapahtumapaikka) {
         this.tapahtumaNimi = tapahtumaNimi;
         this.tapahtumaKuvaus = tapahtumaKuvaus;
         this.aloitusaika = aloitusaika;
         this.lopetusaika = lopetusaika;
+        this.kapasiteetti = kapasiteetti;
         this.tapahtumapaikka = tapahtumapaikka;
     }
 
