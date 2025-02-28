@@ -60,7 +60,7 @@ public class tapahtumaController {
         }
     }
 
-    @DeleteMapping("/")
+    @DeleteMapping("/{tapahtumaId}")
     public ResponseEntity<Void> poistaTapahtuma(@PathVariable Long tapahtumaId) {
         Optional<Tapahtuma> tapahtuma = tapahtumaRepository.findById(tapahtumaId);
 
