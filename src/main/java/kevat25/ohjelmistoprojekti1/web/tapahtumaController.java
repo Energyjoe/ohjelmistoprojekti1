@@ -44,7 +44,7 @@ public class tapahtumaController {
         if (tapahtumat.isEmpty()) {
             return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
         } else {
-        return ResponseEntity.ok(tapahtumat);
+            return ResponseEntity.ok(tapahtumat);
         }
     }
 
@@ -72,16 +72,16 @@ public class tapahtumaController {
         }
     }
 
-    @PutMapping("/{tapahtuma_id}")
-    public ResponseEntity<Object> muokkaaTapahtumaa(@PathVariable Long tapahtuma_id,
+    @PutMapping("/{tapahtumaId}")
+    public ResponseEntity<Object> muokkaaTapahtumaa(@PathVariable Long tapahtumaId,
             @RequestBody Tapahtuma uusiTapahtuma) {
 
         // etsitään muokattava tapahtuma id:n perusteella:
-        Tapahtuma muokattavaTapahtuma = tapahtumaRepository.findById(tapahtuma_id).orElse(null);
+        Tapahtuma muokattavaTapahtuma = tapahtumaRepository.findById(tapahtumaId).orElse(null);
 
         // jos tapahtumaa ei löydy:
         if (muokattavaTapahtuma == null) {
-            String virheViesti = "Tapahtumaa ei löytynyt ID:llä" + tapahtuma_id;
+            String virheViesti = "Tapahtumaa ei löytynyt ID:llä" + tapahtumaId;
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(virheViesti);
         }
 
