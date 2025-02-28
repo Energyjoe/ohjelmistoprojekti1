@@ -27,7 +27,7 @@ public class tapahtumaController {
         this.tapahtumaRepository = tapahtumaRepository;
     }
 
-    @PostMapping("/lisaaTapahtuma")
+    @PostMapping("/")
     public ResponseEntity<Tapahtuma> uusiTapahtuma(@RequestBody Tapahtuma uusiTapahtuma) {
 
         // Tallennetaan tapahtuma repositoryyn
@@ -49,7 +49,7 @@ public class tapahtumaController {
     }
 
     //Palauttaa tapahtuman tiedot, tai virheilmoitusken, jos kyseistä tapahtumaId:tä ei löydy.
-    @GetMapping("/{tapahtumaId}")
+    @GetMapping("/{tapahtumaId")
     public ResponseEntity<Tapahtuma> haeTapahtuma(@PathVariable Long tapahtumaId) {
         Optional<Tapahtuma> tapahtuma = tapahtumaRepository.findById(tapahtumaId);
 
@@ -60,19 +60,16 @@ public class tapahtumaController {
         }
     }
 
-    @DeleteMapping("/{tapahtuma_id}")
-    public ResponseEntity<Void> poistaTapahtuma(@PathVariable Long tapahtuma_id) {
+    @DeleteMapping("/")
+    public ResponseEntity<Void> poistaTapahtuma(@PathVariable Long tapahtumaId) {
+        Optional<Tapahtuma> tapahtuma = tapahtumaRepository.findById(tapahtumaId);
 
-        // Tarkistetaan, löytyykö annetulla id:llä tapahtuma
-        if (!tapahtumaRepository.existsById(tapahtuma_id)) {
+        if (tapahtuma.isPresent()) {
+            tapahtumaRepository.deleteById(tapahtumaId);
+            return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
+        } else {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
         }
-
-        // Poistetaan tapahtuma id:n perusteella
-        tapahtumaRepository.deleteById(tapahtuma_id);
-
-        // Palautetaan 204 No Content
-        return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
     }
 
     @PutMapping("/{tapahtuma_id}")
