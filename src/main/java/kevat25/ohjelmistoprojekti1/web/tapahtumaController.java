@@ -36,16 +36,27 @@ public class tapahtumaController {
         return ResponseEntity.status(HttpStatus.CREATED).body(tallennettuTapahtuma);
     }
 
-    //Hae kaikki tapahtumat
+    // Palauttaa Listan tapahtumista, tai virhekoodin, jos lista on tyhjä.
     @GetMapping("/")
-    public List<Tapahtuma> haeKaikki() {
-        return (List<Tapahtuma>) tapahtumaRepository.findAll();
+    public ResponseEntity<List<Tapahtuma>> haeKaikki() {
+        List<Tapahtuma> tapahtumat = (List<Tapahtuma>) tapahtumaRepository.findAll();
+        if (tapahtumat.isEmpty()) {
+            return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
+        } else {
+        return ResponseEntity.ok(tapahtumat);
+        }
     }
 
-    //Hae tapahtumaa id:n perusteella
+    //Palauttaa tapahtuman tiedot, tai virheilmoitusken, jos kyseistä tapahtumaId:tä ei löydy.
     @GetMapping("/{tapahtumaId}")
-    public Optional<Tapahtuma> haeTapahtuma(@PathVariable Long tapahtumaId) {
-        return tapahtumaRepository.findById(tapahtumaId);
+    public ResponseEntity<Tapahtuma> haeTapahtuma(@PathVariable Long tapahtumaId) {
+        Optional<Tapahtuma> tapahtuma = tapahtumaRepository.findById(tapahtumaId);
+
+        if (tapahtuma.isPresent()) {
+            return ResponseEntity.ok(tapahtuma.get());
+        } else {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+        }
     }
 
     @DeleteMapping("/{tapahtuma_id}")
