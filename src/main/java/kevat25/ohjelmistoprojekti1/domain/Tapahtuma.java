@@ -14,6 +14,8 @@ import java.time.LocalDateTime;
 import jakarta.persistence.CascadeType;
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 @Entity
 @Table(name = "tapahtumat")
 public class Tapahtuma {
@@ -41,6 +43,7 @@ public class Tapahtuma {
 
     // Sarake tapahtumapaikkaId -.-.-.-.-.-.-.-.-.-
     @ManyToOne(fetch = FetchType.LAZY)
+    @JsonIgnore
     @JoinColumn(name = "tapahtumapaikka_id")
     private Tapahtumapaikka tapahtumapaikka;
 
