@@ -37,7 +37,8 @@ CREATE TABLE tapahtumat (
     tapahtuma VARCHAR(100) NOT NULL,
     aloitusaika TIMESTAMP NOT NULL,
     lopetusaika TIMESTAMP NOT NULL,
-    kuvaus TEXT
+    kuvaus TEXT,
+    kapasiteetti INTEGER
 );
 
 CREATE TABLE tapahtumaliput (
