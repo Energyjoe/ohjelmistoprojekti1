@@ -7,7 +7,7 @@ public class MyyntiDTO {
 
 //Myynti-entitystä
 private LocalDateTime myyntiaika;
-private Tyontekija tyontekija;
+private Long tyontekijaId;
 private String email;
 private Long myyntiId;
 
@@ -21,8 +21,8 @@ public LocalDateTime getMyyntiaika() {
     return myyntiaika;
 }
 
-public Tyontekija getTyontekija() {
-    return tyontekija;
+public Long getTyontekijaId() {
+    return tyontekijaId;
 }
 
 public String getEmail() {
@@ -41,8 +41,8 @@ public void setMyyntiaika (LocalDateTime myyntiaika) {
     this.myyntiaika = myyntiaika;
 }
 
-public void setTyontekija (Tyontekija tyontekija) {
-    this.tyontekija = tyontekija;
+public void setTyontekijaId (Long tyontekijaId) {
+    this.tyontekijaId = tyontekijaId;
 }
 
 public void setEmail (String email) {
@@ -59,10 +59,10 @@ public  MyyntiDTO() {
 }
 
 //Konstruktori: 
-public MyyntiDTO(LocalDateTime myyntiaika, Tyontekija tyontekija, 
+public MyyntiDTO(LocalDateTime myyntiaika, Long tyontekijaId, 
 String email, Long myyntiId, List<LippuDTO> liput) {
 this.myyntiaika = myyntiaika;
-this.tyontekija = tyontekija;
+this.tyontekijaId = tyontekijaId;
 this.email = email;
 this.myyntiId = myyntiId;
 this.liput = liput;

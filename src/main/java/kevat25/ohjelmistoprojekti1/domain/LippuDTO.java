@@ -16,7 +16,9 @@ public class LippuDTO {
 
     //Tapahtumalippu-entitystä
     private BigDecimal hinta;
-    private Asiakastyyppi asiakastyyppi;
+
+    //Asiakastyyppi-entitystä
+    private String asiakastyyppi;
 
 
    
@@ -28,7 +30,7 @@ public class LippuDTO {
     // Parametrillinen konstruktori
     public LippuDTO(Long lippuId, String tarkistuskoodi, Long myyntiId, Long tapahtumalippuId, 
                      String tapahtumanNimi, LocalDateTime alkuaika, BigDecimal hinta, 
-                    Asiakastyyppi asiakastyyppi) {
+                    String asiakastyyppi) {
         this.lippuId = lippuId;
         this.tarkistuskoodi = tarkistuskoodi;
         this.myyntiId = myyntiId;
@@ -97,11 +99,11 @@ public class LippuDTO {
             this.hinta = hinta;
         }
     
-        public Asiakastyyppi getAsiakastyyppi() {
+        public String asiakastyyppi() {
             return asiakastyyppi;
         }
     
-        public void setAsiakastyyppi(Asiakastyyppi asiakastyyppi) {
+        public void setAsiakastyyppi(String asiakastyyppi) {
             this.asiakastyyppi = asiakastyyppi;
         }
     }
