@@ -12,6 +12,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
+import jakarta.persistence.PrePersist;
 import jakarta.persistence.Table;
 
 @Entity
@@ -43,7 +44,7 @@ public class Myynti {
         this.tyontekija = tyontekija;
     }
 
-    //Getterit ja setterit myyntitapahtuman tiedoille
+    // Getterit ja setterit myyntitapahtuman tiedoille
     public Long getMyyntiId() {
         return myyntiId;
     }
@@ -84,21 +85,27 @@ public class Myynti {
         this.liput = liput;
     }
 
-    /* Ehdollinen toString tulostaa kaikki tiedot jos työntekijä on määritelty,
+    /*
+     * Ehdollinen toString tulostaa kaikki tiedot jos työntekijä on määritelty,
      * muissa tapauksissa pelkästään myyntitapahtuman perustiedot
      */
     @Override
     public String toString() {
         if (this.tyontekija != null) {
-        return "Myynnit [myyntiId=" + myyntiId + ", myyntiaika=" + myyntiaika + ", email=" + email + ", tyontekija="
-                + this.getTyontekija() + "]";
+            return "Myynnit [myyntiId=" + myyntiId + ", myyntiaika=" + myyntiaika + ", email=" + email + ", tyontekija="
+                    + this.getTyontekija() + "]";
         } else {
             return "Myynnit [myyntiId=" + myyntiId + ", myyntiaika=" + myyntiaika + ", email=" + email + "]";
         }
     }
 
-    
-
-    
+    // PrePersist-menetelmä, joka asettaa myyntiajan ennen tietokantaan
+    // tallentamista
+    @PrePersist
+    public void ennenTallennusta() {
+        if (myyntiaika == null) {
+            myyntiaika = LocalDateTime.now(); // Asetetaan nykyinen aika, jos myyntiaikaa ei ole annettu
+        }
+    }
 
 }
