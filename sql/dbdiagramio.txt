@@ -55,8 +55,8 @@ Table myynnit {
 
 Table liput {
   lippu_id SERIAL [pk]
-  myynti_id INTEGER
   tapahtumalippu_id INTEGER
+   myynti_id INTEGER
   tarkistuskoodi CHAR(8)
 }
 

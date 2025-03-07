@@ -177,6 +177,117 @@ Tämän lisäksi
 - ohjelmiston pitää olla organisoitu komponentteihin niin, että turhalta toistolta
   vältytään
 
+### REST API -dokumentaatio
+
+#### Tapahtumat
+
+##### *Perus-URL (base URL)*
+/tapahtumat
+
+##### *Päätepisteet (endpoints)*
+
+###### Hae kaikki tapahtumat
+Palauttaa kaikki tapahtumat.
+
+*Pyyntö:*
+- HTTP-metodi: GET
+- Päätepiste: /
+- Parametrit: ei parametreja
+
+*Esimerkki:*
+GET /tapahtumat/
+
+*Vastaus:*
+{
+    "tapahtumaId": 1,
+    "tapahtumaNimi": "Konsertti",
+    "kapasiteetti": 5000,
+    "tapahtumaKuvaus": "Mahtava konsertti Helsingissä",
+    "aloitusaika": "2025-04-01T19:00:00",
+    "lopetusaika": "2025-04-01T23:00:00",
+    "tapahtumapaikka": null
+}
+
+##### Hae tapahtuma ID:n perusteella
+Palauttaa yksittäisen tapahtuman tiedot.
+
+*Pyyntö:*
+- HTTP-metodi: GET
+- Endpoint: /{tapahtumaId}
+- Polkuparametrit: {tapahtumaId} (kokonaisluku, pakollinen): Tapahtuman yksilöllinen tunniste
+
+*Esimerkki:*
+GET /tapahtumat/123
+
+*Vastaus:*
+kts. yllä
+
+##### Luo uusi tapahtuma
+Luo uuden tapahtuman.
+
+*Pyyntö:*
+- HTTP-metodi: POST
+- Endpoint: /
+- Otsikot: Content-Type: application/json
+- Body: JSON-objekti, joka sisältää tapahtuman tiedot
+
+*Esimerkki:*
+OST /tapahtumat/
+Content-Type: application/json
+
+{
+  "tapahtumaNimi": "Konsertti",
+  "tapahtumaKuvaus": "Mahtava konsertti Helsingissä",
+  "aloitusaika": "2025-04-01T19:00:00",
+  "lopetusaika": "2025-04-01T23:00:00",
+  "kapasiteetti": 5000
+}
+
+*Vastaus:*
+- Onnistunut vastaus: Luodun tapahtuman tiedot JSON-muodossa, HTTP-statuskoodi 201 (Created).
+
+##### Muokkaa tapahtumaa
+Päivittää olemassa olevan tapahtuman tietoja.
+
+*Pyyntö:*
+- HTTP-metodi: PUT
+- Endpoint: /{tapahtumaId}
+- Polkuparametrit: {tapahtumaId} (kokonaisluku, pakollinen): Tapahtuman yksilöllinen tunniste
+- Otsikot: Content-Type: application/json
+- Body: JSON-objekti, joka sisältää päivitettävät tapahtuman tiedot
+
+*Esimerkki:*
+PUT /tapahtumat/123
+Content-Type: application/json
+
+{
+  "tapahtumaNimi": "Uudempi Konsertti",
+  "tapahtumaKuvaus": "Uudempi mahtavampi konsertti Helsingissä",
+  "aloitusaika": "2026-04-01T19:00:00",
+  "lopetusaika": "2026-04-01T23:00:00",
+  "kapasiteetti": 10000
+}
+
+*Vastaus_*
+- Onnistunut vastaus: Päivitetyn tapahtuman tiedot JSON-muodossa, HTTP-statuskoodi 200 (OK)
+- Jos tapahtumaa ei löydy: Virheviesti ja HTTP-statuskoodi 404 (Not Found)
+
+##### Poista tapahtuma
+Poistaa tapahtuman.
+
+*Pyyntö:*
+- HTTP-metodi: DELETE
+- Endpoint: /{tapahtumaId}
+- Polkuparametrit: {tapahtumaId} (kokonaisluku, pakollinen): Tapahtuman yksilöllinen tunniste
+
+*Esimerkki:*
+
+DELETE /tapahtumat/123
+
+*Vastaus:*
+- Onnistunut poisto: Tyhjä vastaus, HTTP-statuskoodi 204 (No Content)
+- Jos tapahtumaa ei löydy: Tyhjä vastaus, HTTP-statuskoodi 404 (Not Found)
+
 ## Testaus
 
 Tässä kohdin selvitetään, miten ohjelmiston oikea toiminta varmistetaan
