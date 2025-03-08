@@ -43,8 +43,7 @@ public class Tapahtumapaikka {
     }
 
     //parametrillinen konstruktori
-    public Tapahtumapaikka (Long tapahtumapaikkaId, String tapahtumapaikka, String katuosoite, String puhnro, String email, Integer kapasiteetti, Postinumero postinumero) {
-        this.tapahtumapaikkaId = tapahtumapaikkaId;
+    public Tapahtumapaikka (String tapahtumapaikka, String katuosoite, String puhnro, String email, Integer kapasiteetti, Postinumero postinumero) {
         this.tapahtumapaikka = tapahtumapaikka;
         this.katuosoite = katuosoite;
         this.puhnro = puhnro;

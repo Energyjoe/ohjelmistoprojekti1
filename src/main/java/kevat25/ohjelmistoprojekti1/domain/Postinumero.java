@@ -1,15 +1,12 @@
 package kevat25.ohjelmistoprojekti1.domain;
 
+import java.util.List;
+
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
-
-// import com.fasterxml.jackson.annotation.JsonIgnore;
-
-import jakarta.persistence.Column;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
-import java.util.List;
-import jakarta.persistence.CascadeType;
 
 @Entity
 @Table(name = "postinumerot")
@@ -47,6 +44,27 @@ public class Postinumero {
 
     public void setPaikkakunta(String paikkakunta) {
         this.paikkakunta = paikkakunta;
+    }
+
+    public List<Tapahtumapaikka> getTapahtumapaikat() {
+        return tapahtumapaikat;
+    }
+
+    public void setTapahtumapaikat(List<Tapahtumapaikka> tapahtumapaikat) {
+        this.tapahtumapaikat = tapahtumapaikat;
+    }
+
+    public List<Tyontekija> getTyontekijat() {
+        return tyontekijat;
+    }
+
+    public void setTyontekijat(List<Tyontekija> tyontekijat) {
+        this.tyontekijat = tyontekijat;
+    }
+
+    @Override
+    public String toString() {
+        return "Postinumero [postinumero=" + postinumero + ", paikkakunta=" + paikkakunta + "]";
     }
 
     

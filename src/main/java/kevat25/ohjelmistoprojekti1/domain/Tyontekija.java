@@ -40,9 +40,8 @@ public class Tyontekija {
     public Tyontekija() {
     }
 
-    public Tyontekija(Long tyontekijaId, Postinumero postinumero, String katuosoite,
+    public Tyontekija(Postinumero postinumero, String katuosoite,
             String etunimi, String sukunimi, String email, String puhnro, String bcrypthash) {
-        this.tyontekijaId = tyontekijaId;
         this.postinumero = postinumero;
         this.katuosoite = katuosoite;
         this.etunimi = etunimi;
@@ -125,13 +124,15 @@ public class Tyontekija {
         this.myynnit = myynnit;
     }
 
-    /* Ehdollinen toString tulostaa kaikki tiedot jos postinumero on määritelty,
+    /*
+     * Ehdollinen toString tulostaa kaikki tiedot jos postinumero on määritelty,
      * muissa tapauksissa tulostetaan vain työntekijän perustiedot.
      */
     @Override
     public String toString() {
         if (this.postinumero != null) {
-            return "Tyontekijat [tyontekijaId=" + tyontekijaId + ", postinumerot=" + this.getPostinumero() + ", katuosoite="
+            return "Tyontekijat [tyontekijaId=" + tyontekijaId + ", postinumerot=" + this.getPostinumero()
+                    + ", katuosoite="
                     + katuosoite + ", etunimi=" + etunimi + ", sukunimi=" + sukunimi
                     + ", email=" + email + ", puhnro=" + puhnro + ", bcrypthash=" + bcrypthash + "]";
         } else {

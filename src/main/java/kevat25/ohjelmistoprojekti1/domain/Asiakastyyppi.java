@@ -32,8 +32,7 @@ public class Asiakastyyppi {
 
     // Getterit ja setterit
 
-    public Asiakastyyppi(Long asiakastyyppiId, String asiakastyyppi) {
-        this.asiakastyyppiId = asiakastyyppiId;
+    public Asiakastyyppi(String asiakastyyppi) {
         this.asiakastyyppi = asiakastyyppi;
     }
 

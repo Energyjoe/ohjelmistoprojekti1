@@ -41,8 +41,19 @@ public class Tapahtumalippu {
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "tapahtumalippu")
     private List<Lippu> liput;
 
+    // Konstruktorit
+    public Tapahtumalippu() {
+    }
+
+    public Tapahtumalippu(BigDecimal hinta, Asiakastyyppi asiakastyyppi, Tapahtuma tapahtuma) {
+        this.hinta = hinta;
+        this.asiakastyyppi = asiakastyyppi;
+        this.tapahtuma = tapahtuma;
+    }
+
     // Getterit -.-.-.-.-.-.-.-.-.-.-.-.-.-.-
 
+    
     public Long getTapahtumalippuId() {
         return tapahtumalippuId;
     }
@@ -59,10 +70,7 @@ public class Tapahtumalippu {
         return tapahtuma;
     }
 
-    // Parametriton konstruktori
-    public Tapahtumalippu() {
-    }
-
+    
     // Setterit -.-.-.-.-.-.-.-.-.-.-.-.-.-.-
 
     public void setTapahtumalippuId(Long tapahtumalippuId) {
