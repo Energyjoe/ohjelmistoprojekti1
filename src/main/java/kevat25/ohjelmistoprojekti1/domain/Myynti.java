@@ -3,6 +3,8 @@ package kevat25.ohjelmistoprojekti1.domain;
 import java.time.LocalDateTime;
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -32,6 +34,7 @@ public class Myynti {
     private String email;
 
     // Liittää liput myyntiin; kaikki liput poistetaan, kun myynti poistetaan
+    @JsonIgnore
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "myynti")
     private List<Lippu> liput;
 
