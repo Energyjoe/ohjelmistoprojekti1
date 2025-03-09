@@ -63,7 +63,7 @@ Lipunmyyntijärjestelmän käyttäjärooleja ovat myyjä, asiakas, lipuntarkasta
 ## Tietokanta
 ### UML-tietokantakaavio
 
-![Tietokantakaavio](tietokantakaavio.png)
+![Tietokantakaavio](src/main/resources/sql/dbdiagramio.png)
 
 > ### Asiakastyypit
 >
@@ -191,7 +191,7 @@ Palauttaa kaikki tapahtumat.
 
 *Pyyntö:*
 - HTTP-metodi: GET
-- Päätepiste: /
+- Päätepiste: /tapahtumat/
 - Parametrit: ei parametreja
 
 *Esimerkki:*
@@ -213,7 +213,7 @@ Palauttaa yksittäisen tapahtuman tiedot.
 
 *Pyyntö:*
 - HTTP-metodi: GET
-- Endpoint: /{tapahtumaId}
+- Endpoint: /tapahtumat/{tapahtumaId}
 - Polkuparametrit: {tapahtumaId} (kokonaisluku, pakollinen): Tapahtuman yksilöllinen tunniste
 
 *Esimerkki:*
@@ -227,12 +227,12 @@ Luo uuden tapahtuman.
 
 *Pyyntö:*
 - HTTP-metodi: POST
-- Endpoint: /
+- Endpoint: /tapahtumat/
 - Otsikot: Content-Type: application/json
 - Body: JSON-objekti, joka sisältää tapahtuman tiedot
 
 *Esimerkki:*
-OST /tapahtumat/
+POST /tapahtumat/
 Content-Type: application/json
 
 {
@@ -251,7 +251,7 @@ Päivittää olemassa olevan tapahtuman tietoja.
 
 *Pyyntö:*
 - HTTP-metodi: PUT
-- Endpoint: /{tapahtumaId}
+- Endpoint: /tapahtumat/{tapahtumaId}
 - Polkuparametrit: {tapahtumaId} (kokonaisluku, pakollinen): Tapahtuman yksilöllinen tunniste
 - Otsikot: Content-Type: application/json
 - Body: JSON-objekti, joka sisältää päivitettävät tapahtuman tiedot
@@ -277,7 +277,7 @@ Poistaa tapahtuman.
 
 *Pyyntö:*
 - HTTP-metodi: DELETE
-- Endpoint: /{tapahtumaId}
+- Endpoint: /tapahtumat/{tapahtumaId}
 - Polkuparametrit: {tapahtumaId} (kokonaisluku, pakollinen): Tapahtuman yksilöllinen tunniste
 
 *Esimerkki:*
