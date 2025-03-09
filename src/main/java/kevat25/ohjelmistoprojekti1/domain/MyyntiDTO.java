@@ -27,13 +27,11 @@ public class MyyntiDTO {
         return email;
     }
 
-public Long getMyyntiId() {
+    public Long getMyyntiId() {
     return myyntiId;
-}
+    }
 
-public List<LippuDTO> getLiput() {
-    return liput; 
-}
+
 
     public List<LippuDTO> getLiput() {
         return liput;
@@ -56,9 +54,6 @@ public void setMyyntiId(Long myyntiId) {
     this.myyntiId = myyntiId;
 }
 
-public void setLiput(List<LippuDTO> liput) {
-    this.liput = liput;
-}
 
     public void setLiput(List<LippuDTO> liput) {
         this.liput = liput;

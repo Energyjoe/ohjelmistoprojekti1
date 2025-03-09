@@ -27,6 +27,7 @@ import kevat25.ohjelmistoprojekti1.domain.MyyntiRepository;
 import kevat25.ohjelmistoprojekti1.domain.Tapahtuma;
 import kevat25.ohjelmistoprojekti1.domain.Tyontekija;
 import kevat25.ohjelmistoprojekti1.domain.TyontekijaRepository;
+import kevat25.ohjelmistoprojekti1.service.MyyntiService;
 
 @RestController
 @RequestMapping("/myynnit") //Vaihoin tän monikkoon -lotta
