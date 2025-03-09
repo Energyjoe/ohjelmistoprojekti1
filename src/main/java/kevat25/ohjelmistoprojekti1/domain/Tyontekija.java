@@ -3,6 +3,7 @@ package kevat25.ohjelmistoprojekti1.domain;
 import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
@@ -37,6 +38,7 @@ public class Tyontekija {
     private String bcrypthash;
 
     // Liittää työntekijät myynteihin; poistaa myynnit, jos työntekijä poistetaan
+    @JsonManagedReference
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "tyontekija")
     private List<Myynti> myynnit;
 

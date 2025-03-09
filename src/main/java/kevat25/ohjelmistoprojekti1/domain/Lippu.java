@@ -1,5 +1,7 @@
 package kevat25.ohjelmistoprojekti1.domain;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -22,8 +24,9 @@ public class Lippu {
     @JoinColumn(name = "tapahtumalippu_id")
     private Tapahtumalippu tapahtumalippu;
 
-    @ManyToOne(cascade = CascadeType.PERSIST)  // Käytetään vain PERSIST, jotta se ei jää looppiin
+    @ManyToOne(cascade = CascadeType.PERSIST) // Käytetään vain PERSIST, jotta se ei jää looppiin
     @JoinColumn(name = "myynti_id")
+    @JsonBackReference
     private Myynti myynti;
 
     private String tarkistuskoodi;

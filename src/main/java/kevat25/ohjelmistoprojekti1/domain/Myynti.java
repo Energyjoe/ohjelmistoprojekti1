@@ -3,7 +3,9 @@ package kevat25.ohjelmistoprojekti1.domain;
 import java.time.LocalDateTime;
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
@@ -28,14 +30,15 @@ public class Myynti {
 
     @ManyToOne // Määrittää, että tämä on monen myynnin ja yhden työntekijän välinen suhde
     @JoinColumn(name = "tyontekija_id") // Liittää työntekijän myyntiin työntekijä-id:n kautta
+    @JsonBackReference
     private Tyontekija tyontekija;
 
     private LocalDateTime myyntiaika;
     private String email;
 
     // Liittää liput myyntiin; kaikki liput poistetaan, kun myynti poistetaan
-    @JsonIgnore
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "myynti")
+    @JsonManagedReference
     private List<Lippu> liput;
 
     public Myynti() {
