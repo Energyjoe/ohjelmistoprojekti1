@@ -21,17 +21,11 @@ import kevat25.ohjelmistoprojekti1.domain.TapahtumalippuRepository;
 @Service
 public class LippuService {
 
-    @Autowired
-    private TapahtumaRepository tapahtumarepo; //Täältä haetaan tapahtuman nimi sekä alkamisaika
+
 
     @Autowired
     private LippuRepository lippurepo; //Täältä haetaan myynti_id, johon lippu kuuluu, tarkistuskoodi ja tapahtumalippu_id jonka kautta saadaan kyseisen tapahtuman tiedot
 
-    @Autowired 
-    private TapahtumalippuRepository tapahtumalippurepo; //Täältä haetaan tapahtuma_id, hinta sekä asiakastyyppi_id
-
-    @Autowired
-    private AsiakastyyppiRepository asiakastyyppirepo; //Täältä haetaan asiakastyyppi id:n perusteella
 
 
     public LippuDTO getLipputiedot(Long lippuId) {
