@@ -1,9 +1,12 @@
 package kevat25.ohjelmistoprojekti1.web;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -11,7 +14,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import jakarta.transaction.Transactional;
 import kevat25.ohjelmistoprojekti1.domain.Lippu;
+import kevat25.ohjelmistoprojekti1.domain.LippuDTO;
 import kevat25.ohjelmistoprojekti1.domain.LippuRepository;
 import kevat25.ohjelmistoprojekti1.domain.Myynti;
 import kevat25.ohjelmistoprojekti1.domain.MyyntiDTO;
@@ -32,36 +37,41 @@ public class myyntiController {
     @Autowired
     private TyontekijaRepository tyontekijaRepository;
 
-    // Luo uusi myyntitapahtuma (ilman lippuja)
-    @PostMapping
+    @Transactional
+    @PostMapping("/")
     public ResponseEntity<Myynti> uusiMyynti(@RequestBody MyyntiDTO myyntiDTO) {
-        Optional<Tyontekija> tyontekijaOpt = tyontekijaRepository.findById(myyntiDTO.getTyontekijaId());
 
-        if (tyontekijaOpt.isEmpty()) {
-            return ResponseEntity.badRequest().build();
+        // Luodaan uusi Myynti-olio, joka saadaan MyyntiDTO:sta
+        Myynti uusiMyynti = new Myynti();
+
+        // Asetetaan MyyntiDTO:n tiedot Myynti-olioon
+        uusiMyynti.setMyyntiaika(myyntiDTO.getMyyntiaika());
+
+        // Hae työntekijä id:llä
+        Tyontekija tyontekija = tyontekijaRepository.findById(myyntiDTO.getTyontekijaId())
+                .orElseThrow(() -> new RuntimeException("Työntekijää ei löytynyt"));
+        uusiMyynti.setTyontekija(tyontekija);
+
+        // Asetetaan email, mikäli se on tarpeen
+        uusiMyynti.setEmail(myyntiDTO.getEmail());
+
+        // Liput, jotka saadaan MyyntiDTO:n listalta
+        List<Lippu> liput = new ArrayList<>();
+        for (LippuDTO lippuDTO : myyntiDTO.getLiput()) {
+            // Oletetaan, että lippu on jo tallennettu tietokantaan ja siihen on viite
+            Lippu lippu = lippuRepository.findById(lippuDTO.getLippuId())
+                    .orElseThrow(() -> new RuntimeException("Lippu ei löytynyt"));
+
+            // Liitä lippu oikeaan entiteettiin
+            liput.add(lippu);
         }
+        uusiMyynti.setLiput(liput);
 
-        Myynti myynti = new Myynti(LocalDateTime.now(), myyntiDTO.getEmail(), tyontekijaOpt.get());
-        Myynti savedMyynti = myyntiRepository.save(myynti);
-        return ResponseEntity.ok(savedMyynti);
-    }
+        // Tallennetaan Myynti-olio tietokantaan
+        Myynti tallennettuMyynti = myyntiRepository.save(uusiMyynti);
 
-    // Lisää lippu myyntiin
-    @PostMapping("/{myyntiId}/lisaaLippu")
-    public ResponseEntity<Myynti> lisaaLippuToMyynti(@PathVariable Long myyntiId, @RequestBody Long lippuId) {
-        Optional<Myynti> myyntiOpt = myyntiRepository.findById(myyntiId);
-        Optional<Lippu> lippuOpt = lippuRepository.findById(lippuId);
-
-        if (myyntiOpt.isEmpty() || lippuOpt.isEmpty()) {
-            return ResponseEntity.notFound().build();
-        }
-
-        Myynti myynti = myyntiOpt.get();
-        Lippu lippu = lippuOpt.get();
-        lippu.setMyynti(myynti);
-        lippuRepository.save(lippu);
-
-        return ResponseEntity.ok(myynti);
+        // Palautetaan HTTP 201-vastaus
+        return ResponseEntity.status(HttpStatus.CREATED).body(tallennettuMyynti);
     }
 
 }

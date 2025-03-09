@@ -2,6 +2,8 @@ package kevat25.ohjelmistoprojekti1.domain;
 
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -22,6 +24,7 @@ public class Tyontekija {
     @Column(name = "tyontekija_id") // Taulun sarake, jossa säilytetään työntekijän id:tä
     private Long tyontekijaId;
 
+    @JsonIgnore
     @ManyToOne // Määrittää, että työntekijällä on linkki postinumeroon
     @JoinColumn(name = "postinumero") // Liittää postinumeron työntekijään
     private Postinumero postinumero;
