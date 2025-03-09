@@ -63,7 +63,7 @@ Lipunmyyntijärjestelmän käyttäjärooleja ovat myyjä, asiakas, lipuntarkasta
 ## Tietokanta
 ### UML-tietokantakaavio
 
-![Tietokantakaavio](tietokantakaavio.png)
+![Tietokantakaavio](src/main/resources/sql/dbdiagramio.png)
 
 > ### Asiakastyypit
 >
@@ -191,7 +191,7 @@ Palauttaa kaikki tapahtumat.
 
 *Pyyntö:*
 - HTTP-metodi: GET
-- Päätepiste: /
+- Päätepiste: /tapahtumat/
 - Parametrit: ei parametreja
 
 *Esimerkki:*
@@ -213,7 +213,7 @@ Palauttaa yksittäisen tapahtuman tiedot.
 
 *Pyyntö:*
 - HTTP-metodi: GET
-- Endpoint: /{tapahtumaId}
+- Endpoint: /tapahtumat/{tapahtumaId}
 - Polkuparametrit: {tapahtumaId} (kokonaisluku, pakollinen): Tapahtuman yksilöllinen tunniste
 
 *Esimerkki:*
@@ -227,12 +227,12 @@ Luo uuden tapahtuman.
 
 *Pyyntö:*
 - HTTP-metodi: POST
-- Endpoint: /
+- Endpoint: /tapahtumat/
 - Otsikot: Content-Type: application/json
 - Body: JSON-objekti, joka sisältää tapahtuman tiedot
 
 *Esimerkki:*
-OST /tapahtumat/
+POST /tapahtumat/
 Content-Type: application/json
 
 {
@@ -240,7 +240,10 @@ Content-Type: application/json
   "tapahtumaKuvaus": "Mahtava konsertti Helsingissä",
   "aloitusaika": "2025-04-01T19:00:00",
   "lopetusaika": "2025-04-01T23:00:00",
-  "kapasiteetti": 5000
+  "kapasiteetti": 5000,
+  "tapahtumapaikka": {
+    "tapahtumapaikkaId": 1
+}
 }
 
 *Vastaus:*
@@ -251,7 +254,7 @@ Päivittää olemassa olevan tapahtuman tietoja.
 
 *Pyyntö:*
 - HTTP-metodi: PUT
-- Endpoint: /{tapahtumaId}
+- Endpoint: /tapahtumat/{tapahtumaId}
 - Polkuparametrit: {tapahtumaId} (kokonaisluku, pakollinen): Tapahtuman yksilöllinen tunniste
 - Otsikot: Content-Type: application/json
 - Body: JSON-objekti, joka sisältää päivitettävät tapahtuman tiedot
@@ -265,7 +268,10 @@ Content-Type: application/json
   "tapahtumaKuvaus": "Uudempi mahtavampi konsertti Helsingissä",
   "aloitusaika": "2026-04-01T19:00:00",
   "lopetusaika": "2026-04-01T23:00:00",
-  "kapasiteetti": 10000
+  "kapasiteetti": 10000,
+  "tapahtumapaikka": {
+    "tapahtumapaikkaId": 
+}
 }
 
 *Vastaus_*
@@ -277,7 +283,7 @@ Poistaa tapahtuman.
 
 *Pyyntö:*
 - HTTP-metodi: DELETE
-- Endpoint: /{tapahtumaId}
+- Endpoint: /tapahtumat/{tapahtumaId}
 - Polkuparametrit: {tapahtumaId} (kokonaisluku, pakollinen): Tapahtuman yksilöllinen tunniste
 
 *Esimerkki:*

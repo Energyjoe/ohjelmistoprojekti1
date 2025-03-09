@@ -1,15 +1,18 @@
 package kevat25.ohjelmistoprojekti1.domain;
 
 import java.math.BigDecimal;
+import java.util.List;
 
+import jakarta.persistence.CascadeType;
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
-import jakarta.persistence.Column;
 
 @Entity
 @Table(name = "tapahtumaliput")
@@ -35,8 +38,22 @@ public class Tapahtumalippu {
     @JoinColumn(name = "tapahtuma_id")
     private Tapahtuma tapahtuma;
 
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "tapahtumalippu")
+    private List<Lippu> liput;
+
+    // Konstruktorit
+    public Tapahtumalippu() {
+    }
+
+    public Tapahtumalippu(BigDecimal hinta, Asiakastyyppi asiakastyyppi, Tapahtuma tapahtuma) {
+        this.hinta = hinta;
+        this.asiakastyyppi = asiakastyyppi;
+        this.tapahtuma = tapahtuma;
+    }
+
     // Getterit -.-.-.-.-.-.-.-.-.-.-.-.-.-.-
 
+    
     public Long getTapahtumalippuId() {
         return tapahtumalippuId;
     }
@@ -53,10 +70,7 @@ public class Tapahtumalippu {
         return tapahtuma;
     }
 
-    // Parametriton konstruktori
-    public Tapahtumalippu() {
-    }
-
+    
     // Setterit -.-.-.-.-.-.-.-.-.-.-.-.-.-.-
 
     public void setTapahtumalippuId(Long tapahtumalippuId) {

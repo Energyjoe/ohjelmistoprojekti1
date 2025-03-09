@@ -9,7 +9,6 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 
-
 @Entity
 @Table(name = "liput")
 public class Lippu {
@@ -26,7 +25,6 @@ public class Lippu {
     @JoinColumn(name = "myynti_id")
     private Myynti myynti;
 
-
     private String tarkistuskoodi;
 
     // Parametriton konstruktori
@@ -34,6 +32,12 @@ public class Lippu {
     }
 
     // Getterit ja setterit
+
+    public Lippu(Tapahtumalippu tapahtumalippu, Myynti myynti, String tarkistuskoodi) {
+        this.tapahtumalippu = tapahtumalippu;
+        this.myynti = myynti;
+        this.tarkistuskoodi = tarkistuskoodi;
+    }
 
     public Long getLippuId() {
         return lippuId;
@@ -65,6 +69,12 @@ public class Lippu {
 
     public void setTarkistuskoodi(String tarkistuskoodi) {
         this.tarkistuskoodi = tarkistuskoodi;
+    }
+
+    @Override
+    public String toString() {
+        return "Lippu [lippuId=" + lippuId + ", tapahtumalippu=" + tapahtumalippu + ", myynti=" + myynti
+                + ", tarkistuskoodi=" + tarkistuskoodi + "]";
     }
 
 }

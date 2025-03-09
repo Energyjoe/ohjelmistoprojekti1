@@ -1,5 +1,11 @@
 package kevat25.ohjelmistoprojekti1.domain;
 
+import java.util.List;
+
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
+import jakarta.persistence.CascadeType;
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -8,9 +14,6 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
-import jakarta.persistence.Column;
-import java.util.List;
-import jakarta.persistence.CascadeType;
 
 
 @Entity
@@ -26,13 +29,17 @@ public class Tapahtumapaikka {
     //tapahtumapaikka, katuosoite, puhnro, email
     private String tapahtumapaikka, katuosoite, puhnro, email; 
 
+    private Integer kapasiteetti;
+
     //postinumero
     @ManyToOne
     @JoinColumn(name = "postinumero")
     private Postinumero postinumero;
 
     //OneToMany-viittaus Tapahtumat-tauluun
-    @OneToMany (cascade = CascadeType.ALL, mappedBy = "tapahtumaId")
+    @OneToMany (cascade = CascadeType.ALL, mappedBy = "tapahtumapaikka")
+    @JsonManagedReference
+    // https://www.baeldung.com/jackson-bidirectional-relationships-and-infinite-recursion
     private List<Tapahtuma> tapahtumat;
 
     //parametriton konstruktori
@@ -40,12 +47,12 @@ public class Tapahtumapaikka {
     }
 
     //parametrillinen konstruktori
-    public Tapahtumapaikka (Long tapahtumapaikkaId, String tapahtumapaikka, String katuosoite, String puhnro, String email, Integer kapasiteetti, Postinumero postinumero) {
-        this.tapahtumapaikkaId = tapahtumapaikkaId;
+    public Tapahtumapaikka (String tapahtumapaikka, String katuosoite, String puhnro, String email, Integer kapasiteetti, Postinumero postinumero) {
         this.tapahtumapaikka = tapahtumapaikka;
         this.katuosoite = katuosoite;
         this.puhnro = puhnro;
         this.email = email;
+        this.kapasiteetti = kapasiteetti;
         this.postinumero = postinumero;
     }
 
@@ -91,6 +98,13 @@ public class Tapahtumapaikka {
         this.email = email;
     }
 
+    public Integer getKapasiteetti() {
+        return kapasiteetti;
+    }
+
+    public void setKapasiteetti(Integer kapasiteetti) {
+        this.kapasiteetti = kapasiteetti;
+    }
 
     public Postinumero getPostinumero() {
         return postinumero;
@@ -108,6 +122,7 @@ public class Tapahtumapaikka {
                 ", katuosoite='" + katuosoite + '\'' +
                 ", puhnro='" + puhnro + '\'' +
                 ", email='" + email + '\'' +
+                ", kapasiteetti=" + kapasiteetti +
                 ", postinumero=" + postinumero +
                 '}';
     }

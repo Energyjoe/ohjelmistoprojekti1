@@ -50,7 +50,8 @@ public class tapahtumaController {
 
     // Palauttaa tapahtuman tiedot, tai virheilmoitusken, jos kyseistä
     // tapahtumaId:tä ei löydy.
-    @GetMapping("/{tapahtumaId}")
+
+  @GetMapping("/{tapahtumaId}")
     public ResponseEntity<Tapahtuma> haeTapahtuma(@PathVariable Long tapahtumaId) {
         Optional<Tapahtuma> tapahtuma = tapahtumaRepository.findById(tapahtumaId);
 
