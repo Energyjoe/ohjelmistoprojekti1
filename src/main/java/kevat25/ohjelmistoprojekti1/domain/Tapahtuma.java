@@ -3,6 +3,7 @@ package kevat25.ohjelmistoprojekti1.domain;
 import java.time.LocalDateTime;
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import jakarta.persistence.CascadeType;
@@ -44,8 +45,9 @@ public class Tapahtuma {
 
     // Sarake tapahtumapaikkaId -.-.-.-.-.-.-.-.-.-
     @ManyToOne(fetch = FetchType.LAZY)
-    @JsonIgnore
     @JoinColumn(name = "tapahtumapaikka_id")
+    @JsonBackReference
+    // https://www.baeldung.com/jackson-bidirectional-relationships-and-infinite-recursion
     private Tapahtumapaikka tapahtumapaikka;
 
     //OneToMany-yhteys Tapahtumat-tauluun -.-.-.-.-.-.-.-.-.-
