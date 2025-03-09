@@ -57,10 +57,13 @@ public class MyyntiDTO {
     }
 
     // Parametriton konstruktori:
-    public MyyntiDTO() {}
+    public MyyntiDTO() {
+
+    }
 
     // Konstruktori:
-    public MyyntiDTO(LocalDateTime myyntiaika, Long tyontekijaId, String email, Long myyntiId, List<LippuDTO> liput) {
+    public MyyntiDTO(LocalDateTime myyntiaika, Long tyontekijaId,
+            String email, Long myyntiId, List<LippuDTO> liput) {
         this.myyntiaika = myyntiaika;
         this.tyontekijaId = tyontekijaId;
         this.email = email;

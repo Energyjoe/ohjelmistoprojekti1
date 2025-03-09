@@ -240,7 +240,10 @@ Content-Type: application/json
   "tapahtumaKuvaus": "Mahtava konsertti Helsingissä",
   "aloitusaika": "2025-04-01T19:00:00",
   "lopetusaika": "2025-04-01T23:00:00",
-  "kapasiteetti": 5000
+  "kapasiteetti": 5000,
+  "tapahtumapaikka": {
+    "tapahtumapaikkaId": 1
+}
 }
 
 *Vastaus:*
@@ -265,7 +268,10 @@ Content-Type: application/json
   "tapahtumaKuvaus": "Uudempi mahtavampi konsertti Helsingissä",
   "aloitusaika": "2026-04-01T19:00:00",
   "lopetusaika": "2026-04-01T23:00:00",
-  "kapasiteetti": 10000
+  "kapasiteetti": 10000,
+  "tapahtumapaikka": {
+    "tapahtumapaikkaId": 
+}
 }
 
 *Vastaus_*
