@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -36,11 +37,18 @@ public class myyntiController {
     @Autowired
     private MyyntiRepository myyntiRepository;
 
+     @Autowired
+    private MyyntiService myyntiService;
+
     @Autowired
     private LippuRepository lippuRepository;
 
     @Autowired
     private TyontekijaRepository tyontekijaRepository;
+
+    private boolean isValidEmail(String email) {
+        return email != null && email.matches("^[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+$");
+    }
 
     // Lippu-entiteetistä LippuDTO:ksi
     private LippuDTO lippuToDTO(Lippu lippu) {
@@ -135,6 +143,19 @@ public class myyntiController {
      * ]
      * }
      */
+
+     //Hakee kaikki myyntitapahtumat
+     @GetMapping("/") 
+     public List<MyyntiDTO> getAllMyynnit() {
+        return myyntiService.getAllMyynnit();
+     }
+
+     //Hakee yksittäisen myyntitapahtuman tiedot
+    @GetMapping("/{myyntiId}") 
+    public MyyntiDTO getMyyntiById(@PathVariable Long myyntiId){
+        return myyntiService.getMyyntiById(myyntiId);
+     }
+
 
     // Muokkaa myyntitapahtumaa
     @PatchMapping("/{myyntiId}")
