@@ -4,7 +4,9 @@ import java.time.LocalDateTime;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -16,6 +18,7 @@ import kevat25.ohjelmistoprojekti1.domain.LippuRepository;
 import kevat25.ohjelmistoprojekti1.domain.Myynti;
 import kevat25.ohjelmistoprojekti1.domain.MyyntiDTO;
 import kevat25.ohjelmistoprojekti1.domain.MyyntiRepository;
+import kevat25.ohjelmistoprojekti1.domain.Tapahtuma;
 import kevat25.ohjelmistoprojekti1.domain.Tyontekija;
 import kevat25.ohjelmistoprojekti1.domain.TyontekijaRepository;
 
@@ -62,6 +65,19 @@ public class myyntiController {
         lippuRepository.save(lippu);
 
         return ResponseEntity.ok(myynti);
+    }
+
+    //Poista myyntitapahtuma
+    @DeleteMapping("/{myyntiId}")
+    public ResponseEntity<Void> poistaMyynti(@PathVariable Long myyntiId) {
+        Optional<Myynti> myynti = myyntiRepository.findById(myyntiId);
+
+        if (myynti.isPresent()) {
+            myyntiRepository.deleteById(myyntiId);
+            return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
+        } else {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+        }
     }
 
 }
