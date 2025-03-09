@@ -27,6 +27,7 @@ import kevat25.ohjelmistoprojekti1.domain.MyyntiRepository;
 import kevat25.ohjelmistoprojekti1.domain.Tapahtuma;
 import kevat25.ohjelmistoprojekti1.domain.Tyontekija;
 import kevat25.ohjelmistoprojekti1.domain.TyontekijaRepository;
+import kevat25.ohjelmistoprojekti1.service.MyyntiService;
 
 @RestController
 @RequestMapping("/myynnit") //Vaihoin tän monikkoon -lotta
@@ -43,7 +44,6 @@ public class myyntiController {
 
     @Transactional
     @PostMapping("/")
-
     public ResponseEntity<Myynti> uusiMyynti(@RequestBody MyyntiDTO myyntiDTO) {
 
         // Luodaan uusi Myynti-olio, joka saadaan MyyntiDTO:sta
@@ -78,6 +78,7 @@ public class myyntiController {
         // Palautetaan HTTP 201-vastaus
         return ResponseEntity.status(HttpStatus.CREATED).body(tallennettuMyynti);
     }
+
 
     // Muokkaa myyntitapahtumaa
     @PatchMapping("/{myyntiId}")
