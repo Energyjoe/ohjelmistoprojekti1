@@ -2,6 +2,9 @@ package kevat25.ohjelmistoprojekti1.domain;
 
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -22,6 +25,7 @@ public class Tyontekija {
     @Column(name = "tyontekija_id") // Taulun sarake, jossa säilytetään työntekijän id:tä
     private Long tyontekijaId;
 
+    @JsonIgnore
     @ManyToOne // Määrittää, että työntekijällä on linkki postinumeroon
     @JoinColumn(name = "postinumero") // Liittää postinumeron työntekijään
     private Postinumero postinumero;
@@ -34,6 +38,7 @@ public class Tyontekija {
     private String bcrypthash;
 
     // Liittää työntekijät myynteihin; poistaa myynnit, jos työntekijä poistetaan
+    @JsonManagedReference
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "tyontekija")
     private List<Myynti> myynnit;
 

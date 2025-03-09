@@ -5,78 +5,72 @@ import java.util.List;
 
 public class MyyntiDTO {
 
-//Myynti-entitystä
-private LocalDateTime myyntiaika;
-private Long tyontekijaId;
-private String email;
-private Long myyntiId;
+    // Myynti-entitystä
+    private LocalDateTime myyntiaika;
+    private Long tyontekijaId;
+    private String email;
+    private Long myyntiId;
 
-//LippuDTO:t lisätään tänne listana, jolloin saadaan jokaisen lipun yksittäiset tiedot haettua tätä kautta
-private List<LippuDTO> liput;
+    // LippuDTO:t lisätään tänne listana
+    private List<LippuDTO> liput;
 
+    // Getterit
+    public LocalDateTime getMyyntiaika() {
+        return myyntiaika;
+    }
 
-//Getterit
+    public Long getTyontekijaId() {
+        return tyontekijaId;
+    }
 
-public LocalDateTime getMyyntiaika() {
-    return myyntiaika;
-}
+    public String getEmail() {
+        return email;
+    }
 
-public Long getTyontekijaId() {
-    return tyontekijaId;
-}
-
-public String getEmail() {
-    return email;
-}
-
-public Long getMyyntiId() {
+    public Long getMyyntiId() {
     return myyntiId;
-}
-
-public List<LippuDTO> getLiput() {
-    return liput;
-}
-
-//Setterit
+    }
 
 
 
-public void setMyyntiaika (LocalDateTime myyntiaika) {
-    this.myyntiaika = myyntiaika;
-}
+    public List<LippuDTO> getLiput() {
+        return liput;
+    }
 
-public void setTyontekijaId (Long tyontekijaId) {
-    this.tyontekijaId = tyontekijaId;
-}
+    // Setterit
+    public void setMyyntiaika(LocalDateTime myyntiaika) {
+        this.myyntiaika = myyntiaika;
+    }
 
-public void setEmail (String email) {
-    this.email = email;
-}
+    public void setTyontekijaId(Long tyontekijaId) {
+        this.tyontekijaId = tyontekijaId;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
 
 public void setMyyntiId(Long myyntiId) {
     this.myyntiId = myyntiId;
 }
 
-public void setLiput(List<LippuDTO> liput) {
-    this.liput = liput;
+
+    public void setLiput(List<LippuDTO> liput) {
+        this.liput = liput;
+    }
+
+    // Parametriton konstruktori:
+    public MyyntiDTO() {
+
+    }
+
+    // Konstruktori:
+    public MyyntiDTO(LocalDateTime myyntiaika, Long tyontekijaId,
+            String email, Long myyntiId, List<LippuDTO> liput) {
+        this.myyntiaika = myyntiaika;
+        this.tyontekijaId = tyontekijaId;
+        this.email = email;
+        this.myyntiId = myyntiId;
+        this.liput = liput;
+    }
 }
-
-//Parametriton konstruktori:
-public  MyyntiDTO() {
-
-}
-
-//Konstruktori: 
-public MyyntiDTO(LocalDateTime myyntiaika, Long tyontekijaId, 
-String email, Long myyntiId, List<LippuDTO> liput) {
-this.myyntiaika = myyntiaika;
-this.tyontekijaId = tyontekijaId;
-this.email = email;
-this.myyntiId = myyntiId;
-this.liput = liput;
-}
-
-
-}
-
-
