@@ -6,7 +6,6 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -34,6 +33,10 @@ public class myyntiController {
 
     @Autowired
     private TyontekijaRepository tyontekijaRepository;
+
+    private boolean isValidEmail(String email) {
+        return email != null && email.matches("^[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+$");
+    }
 
     // Luo uusi myyntitapahtuma (ilman lippuja)
     @PostMapping
@@ -65,19 +68,6 @@ public class myyntiController {
         lippuRepository.save(lippu);
 
         return ResponseEntity.ok(myynti);
-    }
-
-    //Poista myyntitapahtuma
-    @DeleteMapping("/{myyntiId}")
-    public ResponseEntity<Void> poistaMyynti(@PathVariable Long myyntiId) {
-        Optional<Myynti> myynti = myyntiRepository.findById(myyntiId);
-
-        if (myynti.isPresent()) {
-            myyntiRepository.deleteById(myyntiId);
-            return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
-        } else {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
-        }
     }
 
 }

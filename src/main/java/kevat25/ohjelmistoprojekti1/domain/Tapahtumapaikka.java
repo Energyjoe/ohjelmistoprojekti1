@@ -2,6 +2,8 @@ package kevat25.ohjelmistoprojekti1.domain;
 
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -36,6 +38,8 @@ public class Tapahtumapaikka {
 
     //OneToMany-viittaus Tapahtumat-tauluun
     @OneToMany (cascade = CascadeType.ALL, mappedBy = "tapahtumapaikka")
+    @JsonManagedReference
+    // https://www.baeldung.com/jackson-bidirectional-relationships-and-infinite-recursion
     private List<Tapahtuma> tapahtumat;
 
     //parametriton konstruktori

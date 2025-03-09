@@ -33,6 +33,10 @@ public Long getMyyntiId() {
     return myyntiId;
 }
 
+public List<LippuDTO> getLiput() {
+    return liput;
+}
+
 //Setterit
 
 
@@ -51,6 +55,10 @@ public void setEmail (String email) {
 
 public void setMyyntiId(Long myyntiId) {
     this.myyntiId = myyntiId;
+}
+
+public void setLiput(List<LippuDTO> liput) {
+    this.liput = liput;
 }
 
 //Parametriton konstruktori:
