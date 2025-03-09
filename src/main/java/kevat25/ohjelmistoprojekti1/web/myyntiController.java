@@ -38,10 +38,32 @@ public class myyntiController {
     @Autowired
     private TyontekijaRepository tyontekijaRepository;
 
+    // Lippu-entiteetistä LippuDTO:ksi
+    private LippuDTO lippuToDTO(Lippu lippu) {
+        LippuDTO lippuDTO = new LippuDTO();
+        lippuDTO.setLippuId(lippu.getLippuId());
+        lippuDTO.setTarkistuskoodi(lippu.getTarkistuskoodi());
+
+        // Asetetaan Myynti-id
+        lippuDTO.setMyyntiId(lippu.getMyynti().getMyyntiId()); // Oletetaan, että Lippu on linkitetty Myyntiin
+
+        // Asetetaan tapahtumalippuId
+        lippuDTO.setTapahtumalippuId(lippu.getTapahtumalippu().getTapahtumalippuId());
+
+        // Asetetaan tapahtuman nimi ja alkuajankohta
+        lippuDTO.setTapahtumanNimi(lippu.getTapahtumalippu().getTapahtuma().getTapahtumaNimi());
+        lippuDTO.setAlkuaika(lippu.getTapahtumalippu().getTapahtuma().getAloitusaika());
+
+        // Asetetaan hinta ja asiakastyyppi
+        lippuDTO.setHinta(lippu.getTapahtumalippu().getHinta());
+        lippuDTO.setAsiakastyyppi(lippu.getTapahtumalippu().getAsiakastyyppi().getAsiakastyyppi());
+
+        return lippuDTO;
+    }
+
     @Transactional
     @PostMapping("/")
-
-    public ResponseEntity<Myynti> uusiMyynti(@RequestBody MyyntiDTO myyntiDTO) {
+    public ResponseEntity<MyyntiDTO> uusiMyynti(@RequestBody MyyntiDTO myyntiDTO) {
 
         // Luodaan uusi Myynti-olio, joka saadaan MyyntiDTO:sta
         Myynti uusiMyynti = new Myynti();
@@ -67,14 +89,48 @@ public class myyntiController {
             // Liitä lippu oikeaan entiteettiin
             liput.add(lippu);
         }
+
+        // Asetetaan liput Myynti-olioon
         uusiMyynti.setLiput(liput);
 
         // Tallennetaan Myynti-olio tietokantaan
         Myynti tallennettuMyynti = myyntiRepository.save(uusiMyynti);
 
-        // Palautetaan HTTP 201-vastaus
-        return ResponseEntity.status(HttpStatus.CREATED).body(tallennettuMyynti);
+        // Muunna Myynti-olio takaisin DTO:ksi ennen palautusta
+        MyyntiDTO tallennettuMyyntiDTO = new MyyntiDTO();
+        tallennettuMyyntiDTO.setMyyntiId(tallennettuMyynti.getMyyntiId());
+        tallennettuMyyntiDTO.setMyyntiaika(tallennettuMyynti.getMyyntiaika());
+        tallennettuMyyntiDTO.setEmail(tallennettuMyynti.getEmail());
+
+        // Muunna liput entiteetistä DTO:ksi
+        List<LippuDTO> lippuDTOList = new ArrayList<>();
+        for (Lippu lippu : tallennettuMyynti.getLiput()) {
+            lippuDTOList.add(lippuToDTO(lippu));
+        }
+        tallennettuMyyntiDTO.setLiput(lippuDTOList);
+
+        // Palautetaan HTTP 201-vastaus, jossa on MyyntiDTO
+        return ResponseEntity.status(HttpStatus.CREATED).body(tallennettuMyyntiDTO);
     }
+
+    /*
+     * POST JSON data Postmania varten:
+     * {
+     * "myyntiaika": "2025-03-09T14:00:00",
+     * "tyontekijaId": 1,
+     * "email": "esimerkki@domain.com",
+     * "liput": [
+     * {
+     * "lippuId": 1,
+     * "tarkistuskoodi": "ABCDEF01"
+     * },
+     * {
+     * "lippuId": 2,
+     * "tarkistuskoodi": "BCDEF012"
+     * }
+     * ]
+     * }
+     */
 
     // Muokkaa myyntitapahtumaa
     @PatchMapping("/{myyntiId}")
