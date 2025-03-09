@@ -35,10 +35,6 @@ public List<LippuDTO> getLiput() {
     return liput; 
 }
 
-    public List<LippuDTO> getLiput() {
-        return liput;
-    }
-
     // Setterit
     public void setMyyntiaika(LocalDateTime myyntiaika) {
         this.myyntiaika = myyntiaika;
@@ -59,10 +55,6 @@ public void setMyyntiId(Long myyntiId) {
 public void setLiput(List<LippuDTO> liput) {
     this.liput = liput;
 }
-
-    public void setLiput(List<LippuDTO> liput) {
-        this.liput = liput;
-    }
 
     // Parametriton konstruktori:
     public MyyntiDTO() {

@@ -5,9 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PatchMapping;
@@ -29,7 +27,7 @@ import kevat25.ohjelmistoprojekti1.domain.Tyontekija;
 import kevat25.ohjelmistoprojekti1.domain.TyontekijaRepository;
 
 @RestController
-@RequestMapping("/myynnit") //Vaihoin tän monikkoon -lotta
+@RequestMapping("/myynnit") // Vaihoin tän monikkoon -lotta
 public class myyntiController {
 
     @Autowired
