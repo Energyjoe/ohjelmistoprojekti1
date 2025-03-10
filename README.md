@@ -384,6 +384,27 @@ Content-Type: application/json
 *Vastaus:*
 - Onnistunut vastaus: Luodun myynnin tiedot JSON-muodossa, HTTP-statuskoodi 201 (Created).
 
+Muokkaa tapahtumaa
+Päivittää olemassa olevan tapahtuman tietoja.
+
+Pyyntö:
+
+HTTP-metodi: PATCH
+Endpoint: /myynnit/{myyntiId}
+Polkuparametrit: {myyntiId} (kokonaisluku, pakollinen): Tapahtuman yksilöllinen tunniste
+Otsikot: Content-Type: application/json
+Body: JSON-objekti, joka sisältää päivitettävät tapahtuman osan tiedot
+Esimerkki: PATCH /myynnit/123 Content-Type: application/json
+
+{
+  "email":"esi@merkki.com"
+}
+
+Vastaus:
+
+Onnistunut vastaus: Päivitetyn tapahtuman tiedot JSON-muodossa, HTTP-statuskoodi 200 (OK)
+Jos tapahtumaa ei löydy: Virheviesti ja HTTP-statuskoodi 404 (Not Found)
+
 
 ##### Poista myynti
 Poistaa myynnin.
