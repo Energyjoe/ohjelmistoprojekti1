@@ -31,6 +31,10 @@ public class MyyntiDTO {
     return myyntiId;
     }
 
+    public List<LippuDTO> getLiput() {
+        return liput;
+    }
+
 
 
     // Setterit
@@ -48,6 +52,10 @@ public class MyyntiDTO {
 
 public void setMyyntiId(Long myyntiId) {
     this.myyntiId = myyntiId;
+}
+
+public void setLiput(List<LippuDTO> liput) {
+    this.liput = liput;
 }
 
 
