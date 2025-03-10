@@ -33,22 +33,20 @@ import kevat25.ohjelmistoprojekti1.service.MyyntiService;
 
 @RestController
 @RequestMapping("/myynnit") // Vaihoin tän monikkoon -lotta
+
 public class myyntiController {
 
     @Autowired
     private MyyntiRepository myyntiRepository;
 
     @Autowired
-    private MyyntiService myyntiService;
+    private TyontekijaRepository tyontekijaRepository;
 
     @Autowired
     private LippuRepository lippuRepository;
 
     @Autowired
-    private TyontekijaRepository tyontekijaRepository;
-
-    @Autowired
-    private LippuService lippuService; // Injektio LippuService-luokasta
+    private MyyntiService myyntiService; // Injektio MyyntiService-luokasta
 
     private boolean isValidEmail(String email) {
         return email != null && email.matches("^[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+$");
@@ -73,7 +71,6 @@ public class myyntiController {
         // Liput, jotka saadaan MyyntiDTO:n listalta
         List<Lippu> liput = new ArrayList<>();
         for (LippuDTO lippuDTO : myyntiDTO.getLiput()) {
-            // Oletetaan, että lippu on jo tallennettu tietokantaan ja siihen on viite
             Lippu lippu = lippuRepository.findById(lippuDTO.getLippuId())
                     .orElseThrow(() -> new RuntimeException("Lippu ei löytynyt"));
 
@@ -81,8 +78,6 @@ public class myyntiController {
             // Liitä lippu oikeaan entiteettiin
             liput.add(lippu);
         }
-
-        // Asetetaan liput Myynti-olioon
         uusiMyynti.setLiput(liput);
 
         // Tallennetaan Myynti-olio tietokantaan
@@ -156,4 +151,17 @@ public class myyntiController {
 
     // Muokkaa myyntitapahtuman lippuja (työn alla)
 
+    // Poista myyntitapahtuma
+    @DeleteMapping("/{myyntiId}")
+    public ResponseEntity<Void> poistaMyynti(@PathVariable Long myyntiId) {
+        Optional<Myynti> myynti = myyntiRepository.findById(myyntiId);
+
+        if (myynti.isPresent()) {
+            myyntiRepository.deleteById(myyntiId);
+            return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
+        } else {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+        }
+
+    }
 }
