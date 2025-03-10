@@ -26,6 +26,9 @@ import kevat25.ohjelmistoprojekti1.domain.Myynti;
 import kevat25.ohjelmistoprojekti1.domain.MyyntiDTO;
 import kevat25.ohjelmistoprojekti1.domain.MyyntiRepository;
 import kevat25.ohjelmistoprojekti1.domain.Tapahtuma;
+import kevat25.ohjelmistoprojekti1.domain.TapahtumaRepository;
+import kevat25.ohjelmistoprojekti1.domain.Tapahtumalippu;
+import kevat25.ohjelmistoprojekti1.domain.TapahtumalippuRepository;
 import kevat25.ohjelmistoprojekti1.domain.Tyontekija;
 import kevat25.ohjelmistoprojekti1.domain.TyontekijaRepository;
 import kevat25.ohjelmistoprojekti1.service.LippuService;
@@ -48,6 +51,17 @@ public class myyntiController {
     @Autowired
     private MyyntiService myyntiService; // Injektio MyyntiService-luokasta
 
+    @Autowired
+    private LippuService lippuService;
+
+    @Autowired
+    private TapahtumalippuRepository tapahtumalippuRepository;
+
+    // Lippu-entiteetistä LippuDTO:ksi
+    private LippuDTO lippuToDTO(Lippu lippu) {
+        return lippuService.getLipputiedot(lippu.getLippuId());
+    }
+
     private boolean isValidEmail(String email) {
         return email != null && email.matches("^[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+$");
     }
@@ -68,23 +82,47 @@ public class myyntiController {
         // Asetetaan email, mikäli se on tarpeen
         uusiMyynti.setEmail(myyntiDTO.getEmail());
 
-        // Liput, jotka saadaan MyyntiDTO:n listalta
+        // Liput, jotka luodaan MyyntiDTO:n perusteella
         List<Lippu> liput = new ArrayList<>();
-        for (LippuDTO lippuDTO : myyntiDTO.getLiput()) {
-            Lippu lippu = lippuRepository.findById(lippuDTO.getLippuId())
-                    .orElseThrow(() -> new RuntimeException("Lippu ei löytynyt"));
 
+        for (LippuDTO lippuDTO : myyntiDTO.getLiput()) {
+            // Luodaan uusi lippu ilman lippuId:tä (ID generoituu automaattisesti)
+            Lippu lippu = new Lippu();
+
+            // Asetetaan tarkistuskoodi
+            lippu.setTarkistuskoodi(lippuDTO.getTarkistuskoodi());
+
+            // Jos lippu liittyy tapahtumalippuun, liitetään tapahtumalippu
+            if (lippuDTO.getTapahtumalippuId() != null) {
+                Tapahtumalippu tapahtumalippu = tapahtumalippuRepository.findById(lippuDTO.getTapahtumalippuId())
+                        .orElseThrow(() -> new RuntimeException("Tapahtumalippu ei löytynyt"));
+                lippu.setTapahtumalippu(tapahtumalippu); // Liitetään tapahtumalippu lippuun
+            }
+
+            // Liitetään lippu myyntiin
             lippu.setMyynti(uusiMyynti);
-            // Liitä lippu oikeaan entiteettiin
+
+            // Lisää lippu listalle
             liput.add(lippu);
         }
+        // Liitetään liput myyntiin
         uusiMyynti.setLiput(liput);
 
         // Tallennetaan Myynti-olio tietokantaan
         Myynti tallennettuMyynti = myyntiRepository.save(uusiMyynti);
 
+        // Tallennetaan myös luodut liput, jolloin niiden ID:t generoituu
+        // automaattisesti
+        lippuRepository.saveAll(liput);
+
         // Muunnetaan tallennettu Myynti DTO:ksi käyttäen MyyntiServiceä
         MyyntiDTO tallennettuMyyntiDTO = myyntiService.getMyyntiById(tallennettuMyynti.getMyyntiId());
+
+        List<LippuDTO> lippuDTOList = new ArrayList<>();
+        for (Lippu lippu : tallennettuMyynti.getLiput()) {
+            lippuDTOList.add(lippuToDTO(lippu));
+        }
+        tallennettuMyyntiDTO.setLiput(lippuDTOList);
 
         // Palautetaan HTTP 201-vastaus, jossa on MyyntiDTO
         return ResponseEntity.status(HttpStatus.CREATED).body(tallennettuMyyntiDTO);
@@ -93,20 +131,21 @@ public class myyntiController {
     /*
      * POST JSON data Postmania varten:
      * {
-     * "myyntiaika": "2025-03-09T14:00:00",
+     * "myyntiaika": "2024-02-29T12:00:00",
      * "tyontekijaId": 1,
-     * "email": "esimerkki@domain.com",
+     * "email": "asiakas1@example.com",
      * "liput": [
      * {
-     * "lippuId": 1,
+     * "tapahtumalippuId": 1,
      * "tarkistuskoodi": "ABCDEF01"
      * },
      * {
-     * "lippuId": 2,
+     * "tapahtumalippuId": 2,
      * "tarkistuskoodi": "BCDEF012"
      * }
      * ]
      * }
+     * 
      */
 
     // Hakee kaikki myyntitapahtumat
