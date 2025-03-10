@@ -34,7 +34,7 @@ public class MyyntiService {
                 .orElseThrow(() -> new EntityNotFoundException("Myyntiä ei löytynyt tällä id:llä: " + myyntiId));
 
         //Etsii kaikki kyseiseen myyntitapahtumaan liittyvät liput
-        List<Lippu> liput = lippuRepository.findByMyyntiId(myyntiId);  //Etsii liput myyntiId:n perusteella
+        List<Lippu> liput = lippuRepository.findByMyyntiMyyntiId(myyntiId);  //Etsii liput myyntiId:n perusteella
 
         List<LippuDTO> lippudtot = new ArrayList();  //Luo tyhjän lippuDTO listan
 

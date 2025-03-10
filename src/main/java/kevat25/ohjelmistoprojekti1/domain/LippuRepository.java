@@ -8,7 +8,5 @@ import org.springframework.stereotype.Repository;
 
 @RepositoryRestResource(collectionResourceRel = "liput", path = "liput")
 public interface LippuRepository extends CrudRepository<Lippu, Long> {
-    List<Lippu> findByMyyntiId(Long myyntiId);
-    }
-
-
+    List<Lippu> findByMyyntiMyyntiId(Long myyntiId);
+}
