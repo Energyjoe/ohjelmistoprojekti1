@@ -198,6 +198,7 @@ Palauttaa kaikki tapahtumat.
 GET /tapahtumat/
 
 *Vastaus:*
+```
 {
     "tapahtumaId": 1,
     "tapahtumaNimi": "Konsertti",
@@ -207,6 +208,7 @@ GET /tapahtumat/
     "lopetusaika": "2025-04-01T23:00:00",
     "tapahtumapaikka": null
 }
+```
 
 ##### Hae tapahtuma ID:n perusteella
 Palauttaa yksittäisen tapahtuman tiedot.
@@ -234,7 +236,7 @@ Luo uuden tapahtuman.
 *Esimerkki:*
 POST /tapahtumat/
 Content-Type: application/json
-
+```
 {
   "tapahtumaNimi": "Konsertti",
   "tapahtumaKuvaus": "Mahtava konsertti Helsingissä",
@@ -245,7 +247,7 @@ Content-Type: application/json
     "tapahtumapaikkaId": 1
 }
 }
-
+```
 *Vastaus:*
 - Onnistunut vastaus: Luodun tapahtuman tiedot JSON-muodossa, HTTP-statuskoodi 201 (Created).
 
@@ -262,7 +264,7 @@ Päivittää olemassa olevan tapahtuman tietoja.
 *Esimerkki:*
 PUT /tapahtumat/123
 Content-Type: application/json
-
+```
 {
   "tapahtumaNimi": "Uudempi Konsertti",
   "tapahtumaKuvaus": "Uudempi mahtavampi konsertti Helsingissä",
@@ -273,7 +275,7 @@ Content-Type: application/json
     "tapahtumapaikkaId": 
 }
 }
-
+```
 *Vastaus_*
 - Onnistunut vastaus: Päivitetyn tapahtuman tiedot JSON-muodossa, HTTP-statuskoodi 200 (OK)
 - Jos tapahtumaa ei löydy: Virheviesti ja HTTP-statuskoodi 404 (Not Found)
@@ -293,6 +295,112 @@ DELETE /tapahtumat/123
 *Vastaus:*
 - Onnistunut poisto: Tyhjä vastaus, HTTP-statuskoodi 204 (No Content)
 - Jos tapahtumaa ei löydy: Tyhjä vastaus, HTTP-statuskoodi 404 (Not Found)
+
+#### Myynnit
+
+##### *Perus-URL (base URL)*
+/myynnit
+
+##### *Päätepisteet (endpoints)*
+
+###### Hae kaikki myynnit
+Palauttaa kaikki myynnit.
+
+*Pyyntö:*
+- HTTP-metodi: GET
+- Päätepiste: /myynnit/
+- Parametrit: ei parametreja
+
+*Esimerkki:*
+GET /myynnit/
+
+*Vastaus:*
+```
+[
+    {
+        "myyntiaika": "2024-02-29T12:00:00",
+        "tyontekijaId": 1,
+        "email": "asiakas1@example.com",
+        "myyntiId": 1,
+        "liput": [
+            {
+                "lippuId": 1,
+                "tarkistuskoodi": "ABCDEF01",
+                "myyntiId": 1,
+                "tapahtumalippuId": 1,
+                "tapahtumanNimi": "HIFK - Kärpät",
+                "alkuaika": "2024-03-02T17:00:00",
+                "hinta": 25.00,
+                "asiakastyyppi": "Opiskelija"
+            },
+            {
+                "lippuId": 2,
+                "tarkistuskoodi": "BCDEF012",
+                "myyntiId": 1,
+                "tapahtumalippuId": 2,
+                "tapahtumanNimi": "HIFK - Kärpät",
+                "alkuaika": "2024-03-02T17:00:00",
+                "hinta": 45.00,
+                "asiakastyyppi": "Aikuinen"
+            }
+        ]
+    }
+]
+```
+##### Hae Myynti ID:n perusteella
+Palauttaa yksittäisen tapahtuman tiedot.
+
+*Pyyntö:*
+- HTTP-metodi: GET
+- Endpoint: /myynnit/{myyntiId}
+- Polkuparametrit: {myyntiId} (kokonaisluku, pakollinen): Myynnin yksilöllinen tunniste
+
+*Esimerkki:*
+GET /myynnit/123
+
+*Vastaus:*
+kts. yllä
+
+##### Luo uusi Myynti
+Luo uuden myynnin.
+
+*Pyyntö:*
+- HTTP-metodi: POST
+- Endpoint: /myynnit/
+- Otsikot: Content-Type: application/json
+- Body: JSON-objekti, joka sisältää tapahtuman tiedot
+
+*Esimerkki:*
+POST /myynnit/
+Content-Type: application/json
+```
+     {
+      "myyntiaika": "2024-02-29T12:00:00",
+      "tyontekijaId": 1,
+      "email": "asiakas1@example.com",
+     "liput": []
+   }
+```
+*Vastaus:*
+- Onnistunut vastaus: Luodun myynnin tiedot JSON-muodossa, HTTP-statuskoodi 201 (Created).
+
+
+##### Poista myynti
+Poistaa myynnin.
+
+*Pyyntö:*
+- HTTP-metodi: DELETE
+- Endpoint: /myynnit/{myyntiId}
+- Polkuparametrit: {myyntiId} (kokonaisluku, pakollinen): Tapahtuman yksilöllinen tunniste
+
+*Esimerkki:*
+
+DELETE /myynnit/123
+
+*Vastaus:*
+- Onnistunut poisto: Tyhjä vastaus, HTTP-statuskoodi 204 (No Content)
+- Jos tapahtumaa ei löydy: Tyhjä vastaus, HTTP-statuskoodi 404 (Not Found)
+
 
 ## Testaus
 
