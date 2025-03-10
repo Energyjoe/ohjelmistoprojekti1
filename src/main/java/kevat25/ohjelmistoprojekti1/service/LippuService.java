@@ -21,59 +21,52 @@ import kevat25.ohjelmistoprojekti1.domain.TapahtumalippuRepository;
 @Service
 public class LippuService {
 
-
-
     @Autowired
-    private LippuRepository lippurepo; //Täältä haetaan myynti_id, johon lippu kuuluu, tarkistuskoodi ja tapahtumalippu_id jonka kautta saadaan kyseisen tapahtuman tiedot
-
-
+    private LippuRepository lippurepo; // Täältä haetaan myynti_id, johon lippu kuuluu, tarkistuskoodi ja
+                                       // tapahtumalippu_id jonka kautta saadaan kyseisen tapahtuman tiedot
 
     public LippuDTO getLipputiedot(Long lippuId) {
 
-        //Luodaan tyhjä LippuDTO objekti
+        // Luodaan tyhjä LippuDTO objekti
         LippuDTO lippuDTO = new LippuDTO();
 
-        //Haetaan lippu id:n perusteella
-        Lippu lippu = lippurepo.findById(lippuId) 
-        .orElseThrow(() -> new EntityNotFoundException("Ticket not found with ID: " + lippuId));
-        lippuDTO.setTarkistuskoodi(lippu.getTarkistuskoodi()); //Haetaan lipusta tarkistuskoodi ja viedään se DTO:lle 
-        lippuDTO.setLippuId(lippuId); //Viedään lippuId lippuDTO:hon
+        // Haetaan lippu id:n perusteella
+        Lippu lippu = lippurepo.findById(lippuId)
+                .orElseThrow(() -> new EntityNotFoundException("Ticket not found with ID: " + lippuId));
+        lippuDTO.setTarkistuskoodi(lippu.getTarkistuskoodi()); // Haetaan lipusta tarkistuskoodi ja viedään se DTO:lle
+        lippuDTO.setLippuId(lippuId); // Viedään lippuId lippuDTO:hon
 
-
-        //Haetaan lippuun linkitetty myyntiobjekti
+        // Haetaan lippuun linkitetty myyntiobjekti
         Myynti myynti = lippu.getMyynti();
         if (myynti != null) {
-            lippuDTO.setMyyntiId(myynti.getMyyntiId());  //Mikäli myynti löytyy, täytetään lippuDTO:n myynti_id myynnin ID:llä
+            lippuDTO.setMyyntiId(myynti.getMyyntiId()); // Mikäli myynti löytyy, täytetään lippuDTO:n myynti_id myynnin
+                                                        // ID:llä
         }
 
-        //Haetaan lippuun liitetty tapahtumalippu
+        // Haetaan lippuun liitetty tapahtumalippu
         Tapahtumalippu tapahtumalippu = lippu.getTapahtumalippu();
         if (tapahtumalippu != null) {
-            lippuDTO.setTapahtumalippuId(tapahtumalippu.getTapahtumalippuId()); //Mikäli tapahtumalippu löytyy, täytetään lippuDTO:n tietoja
-            lippuDTO.setHinta(tapahtumalippu.getHinta()); //Haetaan hinta tapahtumalipusta
+            lippuDTO.setTapahtumalippuId(tapahtumalippu.getTapahtumalippuId()); // Mikäli tapahtumalippu löytyy,
+                                                                                // täytetään lippuDTO:n tietoja
+            lippuDTO.setHinta(tapahtumalippu.getHinta()); // Haetaan hinta tapahtumalipusta
         }
 
-        //Haetaan lippuun liitetty asiakastyyppi
-        Asiakastyyppi asiakastyyppi = tapahtumalippu.getAsiakastyyppi(); //Haetaan tapahtumalippuun liitetty asiakastyyppi
+        // Haetaan lippuun liitetty asiakastyyppi
+        Asiakastyyppi asiakastyyppi = tapahtumalippu.getAsiakastyyppi(); // Haetaan tapahtumalippuun liitetty
+                                                                         // asiakastyyppi
         if (asiakastyyppi != null) {
             lippuDTO.setAsiakastyyppi(asiakastyyppi.getAsiakastyyppi());
 
         }
 
-        //Haetaan lippuun liitetty tapahtuma
+        // Haetaan lippuun liitetty tapahtuma
         Tapahtuma tapahtuma = tapahtumalippu.getTapahtuma();
         if (tapahtuma != null) {
-            lippuDTO.setTapahtumanNimi(tapahtuma.getTapahtumaNimi()); //Haetaan tapahtuman nimi ja viedään DTO:hon
-            lippuDTO.setAlkuaika(tapahtuma.getAloitusaika()); //Haetaan tapahtuman aloitusaika ja viedään DTO:hon
+            lippuDTO.setTapahtumanNimi(tapahtuma.getTapahtumaNimi()); // Haetaan tapahtuman nimi ja viedään DTO:hon
+            lippuDTO.setAlkuaika(tapahtuma.getAloitusaika()); // Haetaan tapahtuman aloitusaika ja viedään DTO:hon
         }
-        
-
-
 
         return lippuDTO;
     }
 
-    
-
-    
 }

@@ -5,7 +5,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.HttpStatus;
@@ -31,13 +30,13 @@ import kevat25.ohjelmistoprojekti1.domain.TyontekijaRepository;
 import kevat25.ohjelmistoprojekti1.service.MyyntiService;
 
 @RestController
-@RequestMapping("/myynnit") //Vaihoin tän monikkoon -lotta
+@RequestMapping("/myynnit") // Vaihoin tän monikkoon -lotta
 public class myyntiController {
 
     @Autowired
     private MyyntiRepository myyntiRepository;
 
-     @Autowired
+    @Autowired
     private MyyntiService myyntiService;
 
     @Autowired
@@ -144,18 +143,17 @@ public class myyntiController {
      * }
      */
 
-     //Hakee kaikki myyntitapahtumat
-     @GetMapping("/") 
-     public List<MyyntiDTO> getAllMyynnit() {
+    // Hakee kaikki myyntitapahtumat
+    @GetMapping("/")
+    public List<MyyntiDTO> getAllMyynnit() {
         return myyntiService.getAllMyynnit();
-     }
+    }
 
-     //Hakee yksittäisen myyntitapahtuman tiedot
-    @GetMapping("/{myyntiId}") 
-    public MyyntiDTO getMyyntiById(@PathVariable Long myyntiId){
+    // Hakee yksittäisen myyntitapahtuman tiedot
+    @GetMapping("/{myyntiId}")
+    public MyyntiDTO getMyyntiById(@PathVariable Long myyntiId) {
         return myyntiService.getMyyntiById(myyntiId);
-     }
-
+    }
 
     // Muokkaa myyntitapahtumaa
     @PatchMapping("/{myyntiId}")
