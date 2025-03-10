@@ -11,6 +11,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -25,6 +27,7 @@ import kevat25.ohjelmistoprojekti1.domain.MyyntiRepository;
 import kevat25.ohjelmistoprojekti1.domain.Tapahtuma;
 import kevat25.ohjelmistoprojekti1.domain.Tyontekija;
 import kevat25.ohjelmistoprojekti1.domain.TyontekijaRepository;
+import kevat25.ohjelmistoprojekti1.service.MyyntiService;
 
 @RestController
 @RequestMapping("/myynnit") // Vaihoin tän monikkoon -lotta
@@ -33,11 +36,18 @@ public class myyntiController {
     @Autowired
     private MyyntiRepository myyntiRepository;
 
+     @Autowired
+    private MyyntiService myyntiService;
+
     @Autowired
     private LippuRepository lippuRepository;
 
     @Autowired
     private TyontekijaRepository tyontekijaRepository;
+
+    private boolean isValidEmail(String email) {
+        return email != null && email.matches("^[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+$");
+    }
 
     // Lippu-entiteetistä LippuDTO:ksi
     private LippuDTO lippuToDTO(Lippu lippu) {
@@ -133,6 +143,19 @@ public class myyntiController {
      * }
      */
 
+     //Hakee kaikki myyntitapahtumat
+     @GetMapping("/") 
+     public List<MyyntiDTO> getAllMyynnit() {
+        return myyntiService.getAllMyynnit();
+     }
+
+     //Hakee yksittäisen myyntitapahtuman tiedot
+    @GetMapping("/{myyntiId}") 
+    public MyyntiDTO getMyyntiById(@PathVariable Long myyntiId){
+        return myyntiService.getMyyntiById(myyntiId);
+     }
+
+
     // Muokkaa myyntitapahtumaa
     @PatchMapping("/{myyntiId}")
     public ResponseEntity<?> muokkaaMyyntia(@PathVariable Long myyntiId, @RequestBody MyyntiDTO myyntiDTO) {
@@ -161,6 +184,6 @@ public class myyntiController {
         return ResponseEntity.ok(myynti);
     }
 
-    // Muokkaa myyntitapahtuman lippuja (työn alla)
+    //Muokkaa myyntitapahtuman lippuja (työn alla)
 
 }

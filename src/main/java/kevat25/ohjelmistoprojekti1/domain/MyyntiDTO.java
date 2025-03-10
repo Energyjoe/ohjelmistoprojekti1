@@ -27,13 +27,11 @@ public class MyyntiDTO {
         return email;
     }
 
-public Long getMyyntiId() {
+    public Long getMyyntiId() {
     return myyntiId;
-}
+    }
 
-public List<LippuDTO> getLiput() {
-    return liput; 
-}
+
 
     // Setterit
     public void setMyyntiaika(LocalDateTime myyntiaika) {
@@ -52,9 +50,6 @@ public void setMyyntiId(Long myyntiId) {
     this.myyntiId = myyntiId;
 }
 
-public void setLiput(List<LippuDTO> liput) {
-    this.liput = liput;
-}
 
     // Parametriton konstruktori:
     public MyyntiDTO() {
