@@ -38,7 +38,7 @@ public class Myynti {
 
     // Liittää liput myyntiin; kaikki liput poistetaan, kun myynti poistetaan
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "myynti")
-    @JsonManagedReference
+    @JsonIgnore
     private List<Lippu> liput;
 
     public Myynti() {
