@@ -17,6 +17,10 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
+import jakarta.validation.constraints.Future;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
 
 @Entity
 @Table(name = "tapahtumat")
@@ -30,9 +34,12 @@ public class Tapahtuma {
 
     // Sarake tapahtuma -.-.-.-.-.-.-.-.-.-
     @Column(name = "tapahtuma")
+    @NotBlank (message = "Tapahtumalla tulee olla nimi")
+    @Size(max=100, message = "Tapahtuman nimi voi olla enintään 100 merkkiä") 
     private String tapahtumaNimi;
 
     // Kapasiteetti 
+    @NotNull (message = "Tapahtumalla tulee olla kapasiteetti")
     private Integer kapasiteetti;
 
     // Sarake kuvaus -.-.-.-.-.-.-.-.-.-
@@ -40,7 +47,11 @@ public class Tapahtuma {
     private String tapahtumaKuvaus;
 
     //Sarakkeet aloitusaika ja lopetusaika -.-.-.-.-.-.-.-.-.-
+    @NotNull (message = "Tapahtumalla tulee olla aloitusaika")
+    @Future (message = "Tapahtuman tulee olla tulevaisuudessa")
     private LocalDateTime aloitusaika;
+
+
     private LocalDateTime lopetusaika;
 
     // Sarake tapahtumapaikkaId -.-.-.-.-.-.-.-.-.-
@@ -48,6 +59,7 @@ public class Tapahtuma {
     @JoinColumn(name = "tapahtumapaikka_id")
     @JsonBackReference
     // https://www.baeldung.com/jackson-bidirectional-relationships-and-infinite-recursion
+    @NotNull(message = "Tapahtumalla tulee olla tapahtumapaikka")
     private Tapahtumapaikka tapahtumapaikka;
 
     //OneToMany-yhteys Tapahtumat-tauluun -.-.-.-.-.-.-.-.-.-

@@ -11,6 +11,8 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
 
 @Entity
 @Table(name = "liput")
@@ -22,13 +24,17 @@ public class Lippu {
 
     @ManyToOne
     @JoinColumn(name = "tapahtumalippu_id")
+    @NotNull (message = "Tapahtumalippu on pakollinen tieto")
     private Tapahtumalippu tapahtumalippu;
 
     @ManyToOne(cascade = CascadeType.PERSIST) // Käytetään vain PERSIST, jotta se ei jää looppiin
     @JoinColumn(name = "myynti_id")
     @JsonBackReference
+    @NotNull (message = "Myynti on pakollinen tieto")
     private Myynti myynti;
 
+    @NotNull(message = "Tarkistuskoodi on välttämätön tieto")
+    @Size(min=8, max=8, message = "Koodin pitää olla kahdeksan merkkiä pitkä")
     private String tarkistuskoodi;
 
     // Parametriton konstruktori

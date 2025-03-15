@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import jakarta.validation.Valid;
 import kevat25.ohjelmistoprojekti1.domain.Tapahtuma;
 import kevat25.ohjelmistoprojekti1.domain.TapahtumaRepository;
 
@@ -28,7 +29,7 @@ public class tapahtumaController {
     }
 
     @PostMapping("/")
-    public ResponseEntity<Tapahtuma> uusiTapahtuma(@RequestBody Tapahtuma uusiTapahtuma) {
+    public ResponseEntity<Tapahtuma> uusiTapahtuma(@Valid @RequestBody Tapahtuma uusiTapahtuma) {
 
         // Tallennetaan tapahtuma repositoryyn
         Tapahtuma tallennettuTapahtuma = tapahtumaRepository.save(uusiTapahtuma);
@@ -52,7 +53,7 @@ public class tapahtumaController {
     // tapahtumaId:tä ei löydy.
 
   @GetMapping("/{tapahtumaId}")
-    public ResponseEntity<Tapahtuma> haeTapahtuma(@PathVariable Long tapahtumaId) {
+    public ResponseEntity<Tapahtuma> haeTapahtuma(@Valid @PathVariable Long tapahtumaId) {
         Optional<Tapahtuma> tapahtuma = tapahtumaRepository.findById(tapahtumaId);
 
         if (tapahtuma.isPresent()) {
@@ -75,7 +76,7 @@ public class tapahtumaController {
     }
 
     @PutMapping("/{tapahtumaId}")
-    public ResponseEntity<Object> muokkaaTapahtumaa(@PathVariable Long tapahtumaId,
+    public ResponseEntity<Object> muokkaaTapahtumaa(@Valid @PathVariable Long tapahtumaId,
             @RequestBody Tapahtuma uusiTapahtuma) {
 
         // etsitään muokattava tapahtuma id:n perusteella:

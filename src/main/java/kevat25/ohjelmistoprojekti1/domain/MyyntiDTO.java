@@ -3,12 +3,21 @@ package kevat25.ohjelmistoprojekti1.domain;
 import java.time.LocalDateTime;
 import java.util.List;
 
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotNull;
+
 public class MyyntiDTO {
 
     // Myynti-entitystä
+    @NotNull (message= "Myynnin aika tulee merkitä")
     private LocalDateTime myyntiaika;
+
+    @NotNull (message = "Työntekijän tunnus tulee olla mukana")
     private Long tyontekijaId;
+
+    @Email (message = "Sähköpostin tulee olla oikeassa muodossa")
     private String email;
+
     private Long myyntiId;
 
     // LippuDTO:t lisätään tänne listana

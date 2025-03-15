@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import jakarta.transaction.Transactional;
+import jakarta.validation.Valid;
 import kevat25.ohjelmistoprojekti1.domain.Lippu;
 import kevat25.ohjelmistoprojekti1.domain.LippuDTO;
 import kevat25.ohjelmistoprojekti1.domain.LippuRepository;
@@ -60,7 +61,7 @@ public class myyntiController {
 
     @Transactional
     @PostMapping("/")
-    public ResponseEntity<MyyntiDTO> uusiMyynti(@RequestBody MyyntiDTO myyntiDTO) {
+    public ResponseEntity<MyyntiDTO> uusiMyynti(@Valid @RequestBody MyyntiDTO myyntiDTO) {
 
         // Luodaan uusi Myynti-olio, joka saadaan MyyntiDTO:sta
         Myynti uusiMyynti = new Myynti();
@@ -154,7 +155,7 @@ public class myyntiController {
 
     // Muokkaa myyntitapahtumaa
     @PatchMapping("/{myyntiId}")
-    public ResponseEntity<?> muokkaaMyyntia(@PathVariable Long myyntiId, @RequestBody MyyntiDTO myyntiDTO) {
+    public ResponseEntity<?> muokkaaMyyntia(@Valid @PathVariable Long myyntiId, @RequestBody MyyntiDTO myyntiDTO) {
         Myynti paivitettyMyynti = myyntiService.muokkaaMyyntia(myyntiId, myyntiDTO);
         return ResponseEntity.ok(paivitettyMyynti);
     }
