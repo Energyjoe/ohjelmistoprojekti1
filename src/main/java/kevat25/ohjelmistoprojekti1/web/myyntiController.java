@@ -68,82 +68,39 @@ public class myyntiController {
 
     @Transactional
     @PostMapping("/")
-    public ResponseEntity<MyyntiDTO> uusiMyynti(@RequestBody MyyntiDTO myyntiDTO) {
+    public ResponseEntity<?> uusiMyynti(@RequestBody MyyntiDTO myyntiDTO) {
+        // Tarkistetaan, että myyntiaika on annettu
+        if (myyntiDTO.getMyyntiaika() == null) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Virhe: Myyntiaika on pakollinen.");
+        }
 
-        // Luodaan uusi Myynti-olio, joka saadaan MyyntiDTO:sta
+        // Haetaan työntekijä, palautetaan 404 jos ei löydy
+        Tyontekija tyontekija = tyontekijaRepository.findById(myyntiDTO.getTyontekijaId())
+                .orElse(null);
+        if (tyontekija == null) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND)
+                    .body("Virhe: Työntekijää ei löytynyt ID:llä " + myyntiDTO.getTyontekijaId());
+        }
+
+        // Luodaan uusi myynti
         Myynti uusiMyynti = new Myynti();
         uusiMyynti.setMyyntiaika(myyntiDTO.getMyyntiaika());
-
-        // Hae työntekijä id:llä
-        Tyontekija tyontekija = tyontekijaRepository.findById(myyntiDTO.getTyontekijaId())
-                .orElseThrow(() -> new RuntimeException("Työntekijää ei löytynyt"));
         uusiMyynti.setTyontekija(tyontekija);
-
-        // Asetetaan email, mikäli se on tarpeen
         uusiMyynti.setEmail(myyntiDTO.getEmail());
 
-        // Liput, jotka luodaan MyyntiDTO:n perusteella
-        List<Lippu> liput = new ArrayList<>();
-
-        for (LippuDTO lippuDTO : myyntiDTO.getLiput()) {
-            // Luodaan uusi lippu ilman lippuId:tä (ID generoituu automaattisesti)
-            Lippu lippu = new Lippu();
-
-            // Asetetaan tarkistuskoodi
-            lippu.setTarkistuskoodi(lippuDTO.getTarkistuskoodi());
-
-            // Jos lippu liittyy tapahtumalippuun, liitetään tapahtumalippu
-            if (lippuDTO.getTapahtumalippuId() != null) {
-                Tapahtumalippu tapahtumalippu = tapahtumalippuRepository.findById(lippuDTO.getTapahtumalippuId())
-                        .orElseThrow(() -> new RuntimeException("Tapahtumalippu ei löytynyt"));
-                lippu.setTapahtumalippu(tapahtumalippu); // Liitetään tapahtumalippu lippuun
-            }
-
-            // Liitetään lippu myyntiin
-            lippu.setMyynti(uusiMyynti);
-
-            // Lisää lippu listalle
-            liput.add(lippu);
-        }
-        // Liitetään liput myyntiin
-        uusiMyynti.setLiput(liput);
-
-        // Tallennetaan Myynti-olio tietokantaan
+        // Tallennetaan myynti
         Myynti tallennettuMyynti = myyntiRepository.save(uusiMyynti);
 
-        // Tallennetaan myös luodut liput, jolloin niiden ID:t generoituu
-        // automaattisesti
-        lippuRepository.saveAll(liput);
-
-        // Muunnetaan tallennettu Myynti DTO:ksi käyttäen MyyntiServiceä
+        // Muunnetaan DTO:ksi ja palautetaan
         MyyntiDTO tallennettuMyyntiDTO = myyntiService.getMyyntiById(tallennettuMyynti.getMyyntiId());
-
-        List<LippuDTO> lippuDTOList = new ArrayList<>();
-        for (Lippu lippu : tallennettuMyynti.getLiput()) {
-            lippuDTOList.add(lippuToDTO(lippu));
-        }
-        tallennettuMyyntiDTO.setLiput(lippuDTOList);
-
-        // Palautetaan HTTP 201-vastaus, jossa on MyyntiDTO
         return ResponseEntity.status(HttpStatus.CREATED).body(tallennettuMyyntiDTO);
     }
 
     /*
-     * POST JSON data Postmania varten:
      * {
-     * "myyntiaika": "2024-02-29T12:00:00",
+     * "myyntiaika": "2024-03-17T14:30:00",
      * "tyontekijaId": 1,
-     * "email": "asiakas1@example.com",
-     * "liput": [
-     * {
-     * "tapahtumalippuId": 1,
-     * "tarkistuskoodi": "ABCDEF01"
-     * },
-     * {
-     * "tapahtumalippuId": 2,
-     * "tarkistuskoodi": "BCDEF012"
-     * }
-     * ]
+     * "email": "asiakas@example.com"
      * }
      * 
      */
