@@ -1,6 +1,9 @@
 package kevat25.ohjelmistoprojekti1.domain;
 
+import org.springframework.beans.factory.annotation.Autowired;
+
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
@@ -24,17 +27,16 @@ public class Lippu {
 
     @ManyToOne
     @JoinColumn(name = "tapahtumalippu_id")
-    @NotNull (message = "Tapahtumalippu on pakollinen tieto")
+    @NotNull(message = "Tapahtumalippu on pakollinen tieto")
     private Tapahtumalippu tapahtumalippu;
 
     @ManyToOne(cascade = CascadeType.PERSIST) // Käytetään vain PERSIST, jotta se ei jää looppiin
     @JoinColumn(name = "myynti_id")
-    @JsonBackReference
-    @NotNull (message = "Myynti on pakollinen tieto")
+    @NotNull(message = "Myynti on pakollinen tieto")
     private Myynti myynti;
 
     @NotNull(message = "Tarkistuskoodi on välttämätön tieto")
-    @Size(min=8, max=8, message = "Koodin pitää olla kahdeksan merkkiä pitkä")
+    @Size(min = 8, max = 8, message = "Koodin pitää olla kahdeksan merkkiä pitkä")
     private String tarkistuskoodi;
 
     // Parametriton konstruktori
