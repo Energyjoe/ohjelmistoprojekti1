@@ -11,17 +11,19 @@ import kevat25.ohjelmistoprojekti1.domain.LippuRepository;
 import kevat25.ohjelmistoprojekti1.domain.Myynti;
 import kevat25.ohjelmistoprojekti1.domain.LippuPostDTO;
 import kevat25.ohjelmistoprojekti1.domain.TapahtumalippuRepository;
+import kevat25.ohjelmistoprojekti1.service.LippuService;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.server.ResponseStatusException;
+import org.springframework.web.bind.annotation.PathVariable;
 
 import java.util.List;
 import java.util.Optional;
@@ -59,7 +61,7 @@ public class lippuController {
 
         if (tapahtumalippu.isPresent() && myynti.isPresent()) {
             Long tapahtumaId = tapahtumalippu.get().getTapahtuma().getTapahtumaId();
-            String tarkistuskoodi = Lippu.generoiUniikkiTarkistuskoodi(tapahtumaId, lippuRepository);
+            String tarkistuskoodi = LippuService.generoiUniikkiTarkistuskoodi(tapahtumaId, lippuRepository);
 
             Lippu lippu = new Lippu(tapahtumalippu.get(), myynti.get(), tarkistuskoodi);
             lippuRepository.save(lippu);
@@ -67,4 +69,16 @@ public class lippuController {
         }
         throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Tapahtumaa tai myyntiä ei löytynyt");
     }
+
+    @DeleteMapping("/{lippuId}")
+    @ResponseBody
+    public void deleteLippu(@PathVariable Long lippuId) {
+        Optional<Lippu> lippu = lippuRepository.findById(lippuId);
+        if (lippu.isPresent()) {
+            lippuRepository.delete(lippu.get());
+        } else {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Lippua ei löytynyt");
+        }
+    }
+
 }

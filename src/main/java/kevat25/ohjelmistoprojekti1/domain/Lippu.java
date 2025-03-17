@@ -33,27 +33,6 @@ public class Lippu {
 
     private String tarkistuskoodi;
 
-    // satunnaisen kahdeksan merkin pituisen tarkistuskoodin generaattori
-
-    public static String generoiTarkistuskoodi() {
-        String tarkistuskoodi = "";
-        String merkit = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
-        for (int i = 0; i < 8; i++) {
-            int random = (int) (Math.random() * merkit.length());
-            tarkistuskoodi += merkit.charAt(random);
-        }
-        return tarkistuskoodi;
-    }
-
-    public static String generoiUniikkiTarkistuskoodi(Long tapahtumaId, LippuRepository lippuRepository) {
-        String tarkistuskoodi;
-        do {
-            tarkistuskoodi = generoiTarkistuskoodi();
-        } while (lippuRepository.existsByTapahtumaAndTarkistuskoodi(tapahtumaId, tarkistuskoodi));
-
-        return tarkistuskoodi;
-    }
-
     // Parametriton konstruktori
     public Lippu() {
     }
