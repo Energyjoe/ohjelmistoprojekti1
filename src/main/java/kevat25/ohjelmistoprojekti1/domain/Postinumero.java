@@ -7,13 +7,19 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Size;
+
 
 @Entity
 @Table(name = "postinumerot")
 public class Postinumero {
     @Id
+    @Size(min=5, max=5, message = "Postinumeron tulee olla 5 merkkiä")
     private String postinumero;
 
+    @NotBlank (message = "Paikkakunnan nimi ei voi olla tyhjä")
+    @Size(max=50, message = "Paikkakunnan nimi voi olla maksimissaan 50 merkkiä")
     private String paikkakunta;
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "postinumero")

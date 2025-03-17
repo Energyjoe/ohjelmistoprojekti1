@@ -14,6 +14,10 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
 
 
 @Entity
@@ -27,13 +31,28 @@ public class Tapahtumapaikka {
     private Long tapahtumapaikkaId;
 
     //tapahtumapaikka, katuosoite, puhnro, email
-    private String tapahtumapaikka, katuosoite, puhnro, email; 
+    @NotBlank (message = "Tapahtumapaikalla tulee olla nimi")
+    @Size(max=50, message = "Tapahtumapaikan nimi voi olla enintään 50 merkkiä")
+    private String tapahtumapaikka;
+    
+    @NotBlank (message = "Tapahtumapaikalla tulee olla osoite")
+    @Size(max=50, message = "Katuosoite voi olla enintään 50 merkkiä")
+    private String katuosoite;
+    
+    @Size(max=15, message = "Puhelinnumero voi olla enintään 15 merkkiä")
+    private String puhnro;
+    
+    @Email (message = "Sähköpostin tulee olla oikeassa muodossa")
+    @Size (max=254, message = "Sähköposti voi olla enintään 254 merkkiä")
+    private String email; 
 
+    @NotNull (message = "Tapahtumapaikalla tulee olla kapasiteetti")
     private Integer kapasiteetti;
 
     //postinumero
     @ManyToOne
     @JoinColumn(name = "postinumero")
+    @Size(min=5, max=5, message = "Postinumeron tulee olla 5 merkkiä")
     private Postinumero postinumero;
 
     //OneToMany-viittaus Tapahtumat-tauluun

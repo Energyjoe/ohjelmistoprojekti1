@@ -15,6 +15,10 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
 
 @Entity
 @Table(name = "tyontekijat") // Taulu, johon Tyontekija-luokan instanssit tallennetaan
@@ -28,13 +32,32 @@ public class Tyontekija {
     @JsonIgnore
     @ManyToOne // Määrittää, että työntekijällä on linkki postinumeroon
     @JoinColumn(name = "postinumero") // Liittää postinumeron työntekijään
+    @Size(min=5, max=5, message = "Postinumeron tulee olla 5 merkkiä")
     private Postinumero postinumero;
 
+    @NotBlank (message= "Työntekijällä tulee olla postiosoite")
+    @Size(max=50, message = "Katuosoite voi olla enintään 50 merkkiä")
     private String katuosoite;
+
+    @NotBlank (message = "Työntekijällä tulee olla etunimi")
+    @Size(max=50, message = "Etunimi voi olla enintään 50 merkkiä")
     private String etunimi;
+
+    @NotBlank (message = "Työntekijällä tulee olla sukunimi")
+    @Size(max=50, message = "Sukunimi voi olla enintään 50 merkkiä")
     private String sukunimi;
+
+    @NotBlank (message = "Työntekijällä tulee olla sähköposti")
+    @Email (message = "Sähköpostin tulee olla oikeassa muodossa")
+    @Size(max=254, message = "Sähköposti voi olla enintään 254 merkkiä")
     private String email;
+
+    @NotBlank (message = "Työntekijällä tulee olla puhelinnumero")
+    @Size(max=15, message = "Puhelinnumero voi olla enintään 15 merkkiä")
     private String puhnro;
+
+    @NotNull (message = "Työntekijällä tulee olla salasana")
+    @Size(max=60, message = "Salasana voi olla enintään 60 merkkiä")
     private String bcrypthash;
 
     // Liittää työntekijät myynteihin; poistaa myynnit, jos työntekijä poistetaan

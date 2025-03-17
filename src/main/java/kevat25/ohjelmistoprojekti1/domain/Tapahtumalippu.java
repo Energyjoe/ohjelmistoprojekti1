@@ -13,6 +13,7 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
+import jakarta.validation.constraints.NotNull;
 
 @Entity
 @Table(name = "tapahtumaliput")
@@ -23,6 +24,8 @@ public class Tapahtumalippu {
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "tapahtumalippu_id")
     private Long tapahtumalippuId;
+    
+    @NotNull (message = "Tapahtumalipulla tulee olla hinta")
     private BigDecimal hinta; // Rahasummien tallentamiseen BigDecimal on suositeltavaa, koska se on tarkka ja
                               // estää pyöristysvirheitä, joita voi esiintyä double-tyypin kanssa.
 
@@ -30,12 +33,14 @@ public class Tapahtumalippu {
 
     @ManyToOne
     @JoinColumn(name = "asiakastyyppi_id")
+    @NotNull (message = "Asiakastyyppi on pakollinen tieto")
     private Asiakastyyppi asiakastyyppi;
 
     // Sarake tapahtumaId -.-.-.-.-.-.-.-.-.-
 
     @ManyToOne
     @JoinColumn(name = "tapahtuma_id")
+    @NotNull (message = "Tapahtuma on pakollinen tieto")
     private Tapahtuma tapahtuma;
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "tapahtumalippu")

@@ -3,21 +3,42 @@ package kevat25.ohjelmistoprojekti1.domain;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
+import jakarta.validation.constraints.Future;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
+
 public class LippuDTO {
 
+
     private Long lippuId;
+
+    @NotNull (message = "Tarkistuskoodi on pakollinen tieto")
+    @Size(min=8, max=8, message = "Tarkistuskoodin tulee olla 8 merkkiä pitkä")
     private String tarkistuskoodi;
+
+    @NotNull (message = "Myynnin id-numero on pakollinen tieto")
     private Long myyntiId; // Viite myynti-id:hen
+
+    @NotNull (message = "Tapahtumalipun id-numero on pakollinen tieto")
     private Long tapahtumalippuId; // Viite tapahtumalippu-id:hen
 
     // Tapahtuma-entitystä
+    @NotBlank (message = "Tapahtumalla pitää olla nimi")
+    @Size(max=100, message = "Tapahtuman nimi voi olla enintään 100 merkkiä")
     private String tapahtumanNimi;
+
+    @NotNull (message = "Tapahtumalla pitää olla alkuaika")
+    @Future (message = "Tapahtuman alkuajan pitää olla tulevaisuudessa")
     private LocalDateTime alkuaika;
 
     // Tapahtumalippu-entitystä
+    @NotNull (message = "Tapahtumalipulla pitää olla hinta")
     private BigDecimal hinta;
 
     // Asiakastyyppi-entitystä
+    @NotNull (message = "Asiakastyypillä pitää määritellä")
+    @Size(max=20, message = "Asiakastyypin nimi voi olla enintään 20 merkkiä")
     private String asiakastyyppi;
 
     // Parametriton konstruktori

@@ -10,6 +10,8 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
 
 @Entity
 @Table(name = "asiakastyypit")
@@ -20,6 +22,8 @@ public class Asiakastyyppi {
     @Column(name = "asiakastyyppi_id") // Use @Column if the field name differs from the column name
     private Long asiakastyyppiId;
 
+    @NotNull(message = "Asiakastyyppi on välttämätön tieto")
+    @Size(max=20)
     private String asiakastyyppi; // esim opiskelija, aikuinen, eläkeläinen, lapsi
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "asiakastyyppi") // cascade = mahdollistaa automaattisen

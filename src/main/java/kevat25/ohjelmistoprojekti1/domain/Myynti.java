@@ -18,6 +18,9 @@ import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.PrePersist;
 import jakarta.persistence.Table;
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
 
 @Entity
 @Table(name = "myynnit") // Määrittää taulun, johon Myynti-luokan instanssit tallennetaan
@@ -31,9 +34,14 @@ public class Myynti {
     @ManyToOne // Määrittää, että tämä on monen myynnin ja yhden työntekijän välinen suhde
     @JoinColumn(name = "tyontekija_id") // Liittää työntekijän myyntiin työntekijä-id:n kautta
     @JsonBackReference
+    @NotNull (message= "Myynnin tulee olla sidottu työntekijään")
     private Tyontekija tyontekija;
 
+    @NotNull (message = "Myynnin aika tulee merkitä")
     private LocalDateTime myyntiaika;
+
+    @Email (message = "Sähköpostiosoitteen pitää olla oikeassa muodossa")
+    @Size(max=254, message = "Sähköpostiosoite voi olla maksimissaan 254 merkkiä")
     private String email;
 
     // Liittää liput myyntiin; kaikki liput poistetaan, kun myynti poistetaan
