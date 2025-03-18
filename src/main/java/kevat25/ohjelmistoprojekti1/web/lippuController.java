@@ -17,6 +17,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.transaction.CannotCreateTransactionException;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -101,4 +102,9 @@ public class lippuController {
                 .body("Tietokantayhteys epäonnistui. Yritä uudelleen myöhemmin.");
     }
 
+    @ExceptionHandler(CannotCreateTransactionException.class)
+    public ResponseEntity<String> handleCannotCreateTransactionException(CannotCreateTransactionException ex) {
+        return ResponseEntity.status(HttpStatus.SERVICE_UNAVAILABLE)
+                .body("Tietokantayhteys epäonnistui. Yritä uudelleen myöhemmin.");
+    }
 }

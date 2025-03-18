@@ -522,6 +522,7 @@ GET /liput/
 ```
 - Onnistunut vastaus: lippujen tiedot JSON-muodossa, HTTP-statuskoodi 200 (OK).
 - Jos lippuja ei löydy: Virheviesti ja HTTP-statuskoodi 404 (Not Found).
+- Kun JPA ei pysty avaamaan EntityManager-yhteyttä tietokantaan: Virheviesti "Tietokantayhteys epäonnistui. Yritä uudelleen myöhemmin." ja HTTP-statuskoodi 503 (Service Unavailable).
 
 ##### Luo uusi lippu
 Luo uuden lipun.
@@ -544,6 +545,7 @@ Content-Type: application/json
 *Vastaus:*
 - Onnistunut vastaus: Luodun lipun tiedot JSON-muodossa, HTTP-statuskoodi 201 (Created).
 - Jos myyntiä tai tapahtumalippua ei löydy: Virheviesti ja HTTP-statuskoodi 404 (Not Found).
+- Kun JPA ei pysty avaamaan EntityManager-yhteyttä tietokantaan: Virheviesti "Tietokantayhteys epäonnistui. Yritä uudelleen myöhemmin." ja HTTP-statuskoodi 503 (Service Unavailable).
 
 ##### Poista lippu
 Poistaa lipun.
@@ -557,8 +559,9 @@ Poistaa lipun.
 DELETE /liput/123
 
 *Vastaus:*
-- Onnistunut poisto: Tyhjä vastaus, HTTP-statuskoodi 204 (No Content)
+- Onnistunut poisto: Tyhjä vastaus, HTTP-statuskoodi 200 (OK)
 - Jos lippua ei löydy: Virheviesti ja HTTP-statuskoodi 404 (Not Found)
+- Kun JPA ei pysty avaamaan EntityManager-yhteyttä tietokantaan: Virheviesti "Tietokantayhteys epäonnistui. Yritä uudelleen myöhemmin." ja HTTP-statuskoodi 503 (Service Unavailable).
 
 ## Testaus
 
