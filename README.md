@@ -422,6 +422,143 @@ DELETE /myynnit/123
 - Onnistunut poisto: Tyhjä vastaus, HTTP-statuskoodi 204 (No Content)
 - Jos tapahtumaa ei löydy: Tyhjä vastaus, HTTP-statuskoodi 404 (Not Found)
 
+#### Liput
+
+##### *Perus-URL (base URL)*
+/liput
+
+##### *Päätepisteet (endpoints)*
+
+###### Hae kaikki liput
+Palauttaa kaikki liput.
+
+*Pyyntö:*
+- HTTP-metodi: GET
+- Päätepiste: /liput/
+- Parametrit: ei parametreja
+
+*Esimerkki:*
+GET /liput/
+
+*Vastaus:*
+```
+[
+    {
+        "lippuId": 2,
+        "tapahtumalippu": {
+            "tapahtumalippuId": 2,
+            "hinta": 45.00,
+            "asiakastyyppi": {
+                "asiakastyyppiId": 2,
+                "asiakastyyppi": "Aikuinen"
+            },
+            "tapahtuma": {
+                "tapahtumaId": 1,
+                "tapahtumaNimi": "HIFK - Kärpät",
+                "kapasiteetti": null,
+                "tapahtumaKuvaus": "Liiga ottelu",
+                "aloitusaika": "2024-03-02T17:00:00",
+                "lopetusaika": "2024-03-02T19:30:00"
+            }
+        },
+        "myynti": {
+            "myyntiId": 1,
+            "myyntiaika": "2024-02-29T12:00:00",
+            "email": "asiakas1@example.com"
+        },
+        "tarkistuskoodi": "BCDEF012"
+    },
+    {
+        "lippuId": 3,
+        "tapahtumalippu": {
+            "tapahtumalippuId": 3,
+            "hinta": 30.00,
+            "asiakastyyppi": {
+                "asiakastyyppiId": 3,
+                "asiakastyyppi": "Eläkeläinen"
+            },
+            "tapahtuma": {
+                "tapahtumaId": 1,
+                "tapahtumaNimi": "HIFK - Kärpät",
+                "kapasiteetti": null,
+                "tapahtumaKuvaus": "Liiga ottelu",
+                "aloitusaika": "2024-03-02T17:00:00",
+                "lopetusaika": "2024-03-02T19:30:00"
+            }
+        },
+        "myynti": {
+            "myyntiId": 2,
+            "myyntiaika": "2024-02-29T13:30:00",
+            "email": "asiakas2@example.com"
+        },
+        "tarkistuskoodi": "CDEF0123"
+    },
+    {
+        "lippuId": 4,
+        "tapahtumalippu": {
+            "tapahtumalippuId": 4,
+            "hinta": 15.00,
+            "asiakastyyppi": {
+                "asiakastyyppiId": 4,
+                "asiakastyyppi": "Lapsi"
+            },
+            "tapahtuma": {
+                "tapahtumaId": 1,
+                "tapahtumaNimi": "HIFK - Kärpät",
+                "kapasiteetti": null,
+                "tapahtumaKuvaus": "Liiga ottelu",
+                "aloitusaika": "2024-03-02T17:00:00",
+                "lopetusaika": "2024-03-02T19:30:00"
+            }
+        },
+        "myynti": {
+            "myyntiId": 3,
+            "myyntiaika": "2024-03-01T10:00:00",
+            "email": "asiakas3@example.com"
+        },
+        "tarkistuskoodi": "DEF01234"
+    }
+]
+```
+- Onnistunut vastaus: lippujen tiedot JSON-muodossa, HTTP-statuskoodi 200 (OK).
+- Jos lippuja ei löydy: Virheviesti ja HTTP-statuskoodi 404 (Not Found).
+
+##### Luo uusi lippu
+Luo uuden lipun.
+
+*Pyyntö:*
+- HTTP-metodi: POST
+- Endpoint: /liput/
+- Otsikot: Content-Type: application/json
+- Body: JSON-objekti, joka sisältää lipun tiedot
+
+*Esimerkki:*
+POST /liput/
+Content-Type: application/json
+```
+{
+    "myyntiId": 1,
+    "tapahtumalippuId": 1
+}
+```
+*Vastaus:*
+- Onnistunut vastaus: Luodun lipun tiedot JSON-muodossa, HTTP-statuskoodi 201 (Created).
+- Jos myyntiä tai tapahtumalippua ei löydy: Virheviesti ja HTTP-statuskoodi 404 (Not Found).
+
+##### Poista lippu
+Poistaa lipun.
+
+*Pyyntö:*
+- HTTP-metodi: DELETE
+- Endpoint: /liput/{lippuId}
+- Polkuparametrit: {lippuId} (kokonaisluku, pakollinen): Lipun yksilöllinen tunniste
+
+*Esimerkki:*
+DELETE /liput/123
+
+*Vastaus:*
+- Onnistunut poisto: Tyhjä vastaus, HTTP-statuskoodi 200 (OK)
+- Jos lippua ei löydy: Virheviesti ja HTTP-statuskoodi 404 (Not Found)
 
 ## Testaus
 
