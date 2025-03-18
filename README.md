@@ -557,7 +557,7 @@ Poistaa lipun.
 DELETE /liput/123
 
 *Vastaus:*
-- Onnistunut poisto: Tyhjä vastaus, HTTP-statuskoodi 200 (OK)
+- Onnistunut poisto: Tyhjä vastaus, HTTP-statuskoodi 204 (No Content)
 - Jos lippua ei löydy: Virheviesti ja HTTP-statuskoodi 404 (Not Found)
 
 ## Testaus
