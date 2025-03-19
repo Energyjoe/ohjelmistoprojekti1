@@ -104,4 +104,9 @@ public class Tapahtumalippu {
                 '}';
     }
 
+    public void set(BigDecimal hinta2) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'set'");
+    }
+
 }
