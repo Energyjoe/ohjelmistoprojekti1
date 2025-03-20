@@ -1,10 +1,13 @@
 package kevat25.ohjelmistoprojekti1.service;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.rest.webmvc.ResourceNotFoundException;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
@@ -55,7 +58,8 @@ public class TapahtumalippuService {
             boolean exists = tapahtumalippuRepository.existsByTapahtumaAndAsiakastyyppi(tapahtuma, asiakastyyppi);
             if (exists) {
                 conflictMessages.add(
-                        "Tapahtumalippu asiakastyyppille " + asiakastyyppi.getAsiakastyyppi() + " on jo olemassa.");
+                        "Tapahtumalippu asiakastyyppille " + asiakastyyppi.getAsiakastyyppi() + " ID:llä "
+                                + asiakastyyppi.getAsiakastyyppiId() + " on jo olemassa.");
             } else {
                 tapahtumalippu.setTapahtuma(tapahtuma);
                 tapahtumalippu.setAsiakastyyppi(asiakastyyppi);
@@ -77,7 +81,7 @@ public class TapahtumalippuService {
             Tapahtuma tapahtuma = tapahtumaOpt.get();
             return tapahtumalippuRepository.findByTapahtuma(tapahtuma);
         } else {
-            throw new EntityNotFoundException("Tapahtumaa ei löytynyt tällä id:llä " + tapahtumaId);
+            throw new ResourceNotFoundException("Tapahtumaa ei löytynyt tällä id:llä " + tapahtumaId);
         }
     }
 
@@ -85,12 +89,16 @@ public class TapahtumalippuService {
         return tapahtumalippuRepository.findById(tapahtumalippuId);
     }
 
-    public Tapahtumalippu paivitaTapahtumalippu(Long tapahtumalippuId, Tapahtumalippu uusiLippu) {
-        return tapahtumalippuRepository.findById(tapahtumalippuId).map(tapahtumalippu -> {
-            tapahtumalippu.setAsiakastyyppi(uusiLippu.getAsiakastyyppi());
-            tapahtumalippu.setHinta(uusiLippu.getHinta());
-            return tapahtumalippuRepository.save(tapahtumalippu); // tallennetaan muutokset
-        }).orElseThrow(() -> new EntityNotFoundException("Tapahtumalippua ei löytynyt"));
+    public Tapahtumalippu paivitaTapahtumalippu(Long tapahtumalippuId, Map<String, Object> updates) {
+        return tapahtumalippuRepository.findById(tapahtumalippuId)
+                .map(tapahtumalippu -> {
+                    if (updates.containsKey("hinta")) {
+                        BigDecimal hinta = new BigDecimal(updates.get("hinta").toString());
+                        tapahtumalippu.setHinta(hinta);
+                    }
+                    // Voit lisätä muita kenttiä, jos ne ovat tarpeellisia
+                    return tapahtumalippuRepository.save(tapahtumalippu);
+                }).orElseThrow(() -> new EntityNotFoundException("Tapahtumalippua ei löytynyt"));
     }
 
     public void poistaTapahtumalippu(Long tapahtumalippuId) {

@@ -55,17 +55,18 @@ public class asiakastyyppiController {
         return new ResponseEntity<>(uusiAsiakastyyppi, HttpStatus.CREATED);
     }
 
-    //Muokkaa asiakastyyppiä
+    // Muokkaa asiakastyyppiä
     @PatchMapping("/{asiakastyyppiId}")
-    public ResponseEntity<Asiakastyyppi> paivitaAsiakastyyppi(@PathVariable Long asiakastyyppiId, @RequestBody Asiakastyyppi paivitettyAsiakastyyppi) {
+    public ResponseEntity<Asiakastyyppi> paivitaAsiakastyyppi(@PathVariable Long asiakastyyppiId,
+            @RequestBody Asiakastyyppi paivitettyAsiakastyyppi) {
         return asiakastyyppiRepository.findById(asiakastyyppiId)
-            .map(asiakastyyppi -> {
-                asiakastyyppi.setAsiakastyyppi(paivitettyAsiakastyyppi.getAsiakastyyppi());
-                Asiakastyyppi tallennettuAsiakastyyppi = asiakastyyppiRepository.save(asiakastyyppi);
-                return new ResponseEntity<>(tallennettuAsiakastyyppi, HttpStatus.OK);
-            })
-            .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Asiakastyyppiä ei löytynyt"));
-        }
+                .map(asiakastyyppi -> {
+                    asiakastyyppi.setAsiakastyyppi(paivitettyAsiakastyyppi.getAsiakastyyppi());
+                    Asiakastyyppi tallennettuAsiakastyyppi = asiakastyyppiRepository.save(asiakastyyppi);
+                    return new ResponseEntity<>(tallennettuAsiakastyyppi, HttpStatus.OK);
+                })
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Asiakastyyppiä ei löytynyt"));
+    }
 
     // Poista yksittäinen asiakastyyppi
     @DeleteMapping("/{asiakastyyppiId}")
@@ -94,4 +95,3 @@ public class asiakastyyppiController {
                 .body("Tietokantayhteys epäonnistui. Yritä uudelleen myöhemmin.");
     }
 }
-

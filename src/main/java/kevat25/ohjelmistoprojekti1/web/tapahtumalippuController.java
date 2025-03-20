@@ -1,20 +1,23 @@
 package kevat25.ohjelmistoprojekti1.web;
 
-import kevat25.ohjelmistoprojekti1.domain.Asiakastyyppi;
-import kevat25.ohjelmistoprojekti1.domain.AsiakastyyppiRepository;
-import kevat25.ohjelmistoprojekti1.domain.Tapahtuma;
-import kevat25.ohjelmistoprojekti1.domain.TapahtumaRepository;
 import kevat25.ohjelmistoprojekti1.domain.Tapahtumalippu;
 import kevat25.ohjelmistoprojekti1.domain.TapahtumalippuRepository;
 import kevat25.ohjelmistoprojekti1.service.TapahtumalippuService;
 
+import org.hibernate.validator.internal.util.logging.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.actuate.autoconfigure.observation.ObservationProperties.Http;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.server.ResponseStatusException;
+
+import ch.qos.logback.classic.Logger;
+import jakarta.persistence.EntityNotFoundException;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 @RestController
@@ -22,15 +25,10 @@ import java.util.Optional;
 public class tapahtumalippuController {
 
     @Autowired
-    private TapahtumalippuRepository tapahtumalippuRepository;
-
-    @Autowired
-    private TapahtumaRepository tapahtumaRepository;
-
-    @Autowired
-    private AsiakastyyppiRepository asiakastyyppiRepository;
-    @Autowired
     private TapahtumalippuService tapahtumalippuService;
+
+    @Autowired
+    private TapahtumalippuRepository tapahtumalippuRepository;
 
     // POST-pyyntö, joka lisää useamman tapahtumalipun
     // POST-pyyntö, joka lisää useamman tapahtumalipun
@@ -73,6 +71,10 @@ public class tapahtumalippuController {
     @GetMapping("/{tapahtumaId}")
     public ResponseEntity<List<Tapahtumalippu>> haeLiput(@PathVariable Long tapahtumaId) {
         List<Tapahtumalippu> liput = tapahtumalippuService.haeLiput(tapahtumaId);
+        if (liput.isEmpty()) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND,
+                    "Tapahtumalippuja ei löytynyt tapahtumaID:llä " + tapahtumaId);
+        }
         return ResponseEntity.ok(liput);
     }
 
@@ -80,47 +82,38 @@ public class tapahtumalippuController {
     @GetMapping("/tapahtumalippu/{tapahtumalippuId}")
     public ResponseEntity<Tapahtumalippu> haeTapahtumalippu(@PathVariable Long tapahtumalippuId) {
         Optional<Tapahtumalippu> tapahtumalippu = tapahtumalippuService.haeTapahtumalippu(tapahtumalippuId);
+        if (tapahtumalippu.isEmpty()) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND,
+                    "Tapahtumalippua ei löytynyt tapahtumalippuID:llä " + tapahtumalippuId);
+        }
         return tapahtumalippu.map(ResponseEntity::ok)
                 .orElseGet(() -> ResponseEntity.notFound().build());
     }
 
-    // Päivittää lipun tiedot
-    @PutMapping("/{tapahtumalippuId}")
-    public ResponseEntity<Tapahtumalippu> paivitaTapahtumalippu(
-            @PathVariable Long tapahtumalippuId,
-            @RequestBody Tapahtumalippu uusiLippu) {
+    @PatchMapping("/{tapahtumalippuId}")
+    public ResponseEntity<Tapahtumalippu> paivitaTapahtumalippu(@PathVariable Long tapahtumalippuId,
+            @RequestBody Map<String, Object> updates) {
         try {
-            Tapahtumalippu paivitettyLippu = tapahtumalippuService.paivitaTapahtumalippu(tapahtumalippuId, uusiLippu);
+            Tapahtumalippu paivitettyLippu = tapahtumalippuService.paivitaTapahtumalippu(tapahtumalippuId, updates);
             return ResponseEntity.ok(paivitettyLippu);
-        } catch (Exception e) {
-            return ResponseEntity.notFound().build();
+        } catch (EntityNotFoundException e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
         }
     }
 
-    /*
-     * PUT JSON MALLI. Riittääkö patch ja pelkän hinnan muokkaus?
-     * {
-     * "tapahtumalippuId": 1,
-     * "hinta": 35.00,
-     * "asiakastyyppi": {
-     * "asiakastyyppiId": 2,
-     * "asiakastyyppi": "Aikuinen"
-     * },
-     * "tapahtuma": {
-     * "tapahtumaId": 1,
-     * "tapahtumaNimi": "HIFK - Kärpät",
-     * "kapasiteetti": null,
-     * "tapahtumaKuvaus": "Liiga ottelu",
-     * "aloitusaika": "2024-03-02T17:00:00",
-     * "lopetusaika": "2024-03-02T19:30:00"
-     * }
-     * }
-     */
-
     // Poistaa tapahtumalipun
     @DeleteMapping("/{tapahtumalippuId}")
-    public ResponseEntity<Void> poistaTapahtumalippu(@PathVariable Long tapahtumalippuId) {
-        tapahtumalippuService.poistaTapahtumalippu(tapahtumalippuId);
-        return ResponseEntity.noContent().build();
+    @ResponseBody
+    public ResponseEntity<String> poistaTapahtumalippu(@PathVariable Long tapahtumalippuId) {
+        Optional<Tapahtumalippu> tapahtumalippu = tapahtumalippuRepository.findById(tapahtumalippuId);
+        if (tapahtumalippu.isPresent()) {
+            tapahtumalippuRepository.delete(tapahtumalippu.get());
+            return ResponseEntity.status(HttpStatus.NO_CONTENT).body("Tapahtumalippu poistettu");
+        } else {
+            // Jos tapahtumalippua ei löydy, palautetaan 404 Not Found
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND,
+                    "Tapahtumalippua ei löytynyt ID:llä " + tapahtumalippuId);
+        }
     }
+
 }

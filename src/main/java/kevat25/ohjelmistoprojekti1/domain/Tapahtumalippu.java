@@ -24,8 +24,8 @@ public class Tapahtumalippu {
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "tapahtumalippu_id")
     private Long tapahtumalippuId;
-    
-    @NotNull (message = "Tapahtumalipulla tulee olla hinta")
+
+    @NotNull(message = "Tapahtumalipulla tulee olla hinta")
     private BigDecimal hinta; // Rahasummien tallentamiseen BigDecimal on suositeltavaa, koska se on tarkka ja
                               // estää pyöristysvirheitä, joita voi esiintyä double-tyypin kanssa.
 
@@ -33,14 +33,14 @@ public class Tapahtumalippu {
 
     @ManyToOne
     @JoinColumn(name = "asiakastyyppi_id")
-    @NotNull (message = "Asiakastyyppi on pakollinen tieto")
+    @NotNull(message = "Asiakastyyppi on pakollinen tieto")
     private Asiakastyyppi asiakastyyppi;
 
     // Sarake tapahtumaId -.-.-.-.-.-.-.-.-.-
 
     @ManyToOne
     @JoinColumn(name = "tapahtuma_id")
-    @NotNull (message = "Tapahtuma on pakollinen tieto")
+    @NotNull(message = "Tapahtuma on pakollinen tieto")
     private Tapahtuma tapahtuma;
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "tapahtumalippu")
@@ -58,7 +58,6 @@ public class Tapahtumalippu {
 
     // Getterit -.-.-.-.-.-.-.-.-.-.-.-.-.-.-
 
-    
     public Long getTapahtumalippuId() {
         return tapahtumalippuId;
     }
@@ -75,7 +74,6 @@ public class Tapahtumalippu {
         return tapahtuma;
     }
 
-    
     // Setterit -.-.-.-.-.-.-.-.-.-.-.-.-.-.-
 
     public void setTapahtumalippuId(Long tapahtumalippuId) {
