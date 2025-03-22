@@ -315,6 +315,7 @@ Palauttaa kaikki myynnit.
 GET /myynnit/
 
 *Vastaus:*
+- Onnistunut haku:
 ```
 [
     {
@@ -347,6 +348,8 @@ GET /myynnit/
     }
 ]
 ```
+- Epäonnistunut haku: Virheviesti ja HTTP-statuskoodi 404 (Not Found).
+
 ##### Hae Myynti ID:n perusteella
 Palauttaa yksittäisen tapahtuman tiedot.
 
@@ -359,7 +362,8 @@ Palauttaa yksittäisen tapahtuman tiedot.
 GET /myynnit/123
 
 *Vastaus:*
-kts. yllä
+- Onnistunut vastaus: kts. yllä
+- Jos kyseistä myyntiä ei löydy: Virheviesti ("Myyntiä ei löytynyt id:llä (id numero)") ja HTTP-statuskoodi 404(Not Found)
 
 ##### Luo uusi Myynti
 Luo uuden myynnin.
