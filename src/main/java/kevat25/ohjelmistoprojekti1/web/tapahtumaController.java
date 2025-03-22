@@ -29,13 +29,20 @@ public class tapahtumaController {
     }
 
     @PostMapping("/")
-    public ResponseEntity<Tapahtuma> uusiTapahtuma(@Valid @RequestBody Tapahtuma uusiTapahtuma) {
+    public ResponseEntity<?> uusiTapahtuma(@Valid @RequestBody Tapahtuma uusiTapahtuma) {
 
         // Tallennetaan tapahtuma repositoryyn
+        try {
         Tapahtuma tallennettuTapahtuma = tapahtumaRepository.save(uusiTapahtuma);
 
         // Palauttaa HTTP-vastauksen
         return ResponseEntity.status(HttpStatus.CREATED).body(tallennettuTapahtuma);
+        }
+
+        //Mikäli ylläoleva ei onnistu, palauttaa virhekoodin.
+        catch (Exception e){
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Tapahtuman lisäys ei onnistunut. Syy: " + e.getMessage());
+        }
     }
 
     // Palauttaa Listan tapahtumista, tai virhekoodin, jos lista on tyhjä.
