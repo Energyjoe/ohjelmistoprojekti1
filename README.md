@@ -336,14 +336,12 @@ _Pyyntö:_
 _Esimerkki:_
 GET /myynnit/
 
-<<<<<<< HEAD
 _Vastaus:_
 
 =======
 _Vastaus:_
 
 - Onnistunut haku:
-  > > > > > > > 6383cb8e6582f479ca539d07b63274f28234c27d
 
 ```
 [
@@ -378,10 +376,7 @@ _Vastaus:_
 ]
 ```
 
-# <<<<<<< HEAD
-
 - Epäonnistunut haku: Virheviesti ja HTTP-statuskoodi 404 (Not Found).
-  > > > > > > > 6383cb8e6582f479ca539d07b63274f28234c27d
 
 ##### Hae Myynti ID:n perusteella
 
