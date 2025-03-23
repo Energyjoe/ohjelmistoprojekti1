@@ -25,14 +25,13 @@ import jakarta.validation.constraints.Size;
 public class Tyontekija {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO) // Tyontekija-id generoidaan automaattisesti tietokannan avulla
+    @GeneratedValue(strategy = GenerationType.IDENTITY) // Tyontekija-id generoidaan automaattisesti tietokannan avulla
     @Column(name = "tyontekija_id") // Taulun sarake, jossa säilytetään työntekijän id:tä
     private Long tyontekijaId;
 
     @JsonIgnore
     @ManyToOne // Määrittää, että työntekijällä on linkki postinumeroon
     @JoinColumn(name = "postinumero") // Liittää postinumeron työntekijään
-    @Size(min=5, max=5, message = "Postinumeron tulee olla 5 merkkiä")
     private Postinumero postinumero;
 
     @NotBlank (message= "Työntekijällä tulee olla postiosoite")
@@ -57,7 +56,7 @@ public class Tyontekija {
     private String puhnro;
 
     @NotNull (message = "Työntekijällä tulee olla salasana")
-    @Size(max=60, message = "Salasana voi olla enintään 60 merkkiä")
+    @Size(min=8, max=60, message = "Salasana voi olla enintään 60 merkkiä")
     private String bcrypthash;
 
     // Liittää työntekijät myynteihin; poistaa myynnit, jos työntekijä poistetaan

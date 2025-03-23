@@ -94,7 +94,7 @@ public class MyyntiService {
         if (myyntiDTO.getTyontekijaId() != null) {
             Optional<Tyontekija> tyontekijaOpt = tyontekijaRepository.findById(myyntiDTO.getTyontekijaId());
             if (tyontekijaOpt.isEmpty()) {
-                throw new ResponseStatusException(HttpStatus.BAD_REQUEST);
+                throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Työntekijää ei löytynyt");
             }
             myynti.setTyontekija(tyontekijaOpt.get());
         }
