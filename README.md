@@ -338,9 +338,6 @@ GET /myynnit/
 
 _Vastaus:_
 
-=======
-_Vastaus:_
-
 - Onnistunut haku:
 
 ```
