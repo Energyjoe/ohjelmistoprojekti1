@@ -57,10 +57,10 @@ Lipunmyyntijärjestelmän käyttäjärooleja ovat myyjä, asiakas, lipuntarkasta
 
 ## Käyttöliittymä
 
-
 ![Käyttöliittymä](kayttoliittyma.png)
 
 ## Tietokanta
+
 ### UML-tietokantakaavio
 
 ![Tietokantakaavio](src/main/resources/sql/dbdiagramio.png)
@@ -69,21 +69,21 @@ Lipunmyyntijärjestelmän käyttäjärooleja ovat myyjä, asiakas, lipuntarkasta
 >
 > _Asiakastyypit-taulu sisältää tiedot tapahtumalipun asiakastyypeistä: asiakastyyppi (esimerkiksi lapsi, aikuinen, eläkeläinen, opiskelija) sekä asiakastyyppiId. Jokaisella lipulla on yksi asiakastyyppi, yksi asiakastyyppi voi olla usealla tapahtumalipulla._
 >
-> | Kenttä          | Tyyppi      | Kuvaus             |
-> | --------------- | ----------- | ------------------ |
+> | Kenttä           | Tyyppi      | Kuvaus             |
+> | ---------------- | ----------- | ------------------ |
 > | asiakastyyppi_id | int PK      | Asiakastyypin id   |
-> | asiakastyyppi   | varchar(20) | Asiakastyypin nimi |
+> | asiakastyyppi    | varchar(20) | Asiakastyypin nimi |
 
 > ### Myynnit
 >
 > _Myynnit-taulu sisältää lipunmyyntiin liittyvät tiedot: myyntiId, tyontekijaId, myyntiaika ja asiakkaan sähköpostin. Jokainen myynti on yhden työntekijän tekemä, yksi työntekijä voi tehdä usean myynnin._
 >
-> | Kenttä       | Tyyppi      | Kuvaus                                        |
-> | ------------ | ----------- | --------------------------------------------- |
+> | Kenttä        | Tyyppi      | Kuvaus                                        |
+> | ------------- | ----------- | --------------------------------------------- |
 > | myynti_id     | int PK      | Myyntitapahtuman id                           |
 > | tyontekija_id | int FK      | Työntekijän Id, viittaus työntekijät -tauluun |
-> | myyntiaika   | datetime    | Myyntipäivä ja aika                           |
-> | email        | varchar(50) | Asiakkaan sähköpostiosoite                    |
+> | myyntiaika    | datetime    | Myyntipäivä ja aika                           |
+> | email         | varchar(50) | Asiakkaan sähköpostiosoite                    |
 
 > ### Postinumerot
 >
@@ -98,10 +98,10 @@ Lipunmyyntijärjestelmän käyttäjärooleja ovat myyjä, asiakas, lipuntarkasta
 >
 > _Tapahtumaliput-taulu sisältää tapahtumalippuun liittyvät tiedot: tapahtumalippuId, hinta, tapahtumaId ja asiakastyyppi. Tapahtumalipulla voi olla yksi asiakastyyppi, asiakastyyppi voi olla usealla tapahtumalipulla._
 >
-> | Kenttä           | Tyyppi | Kuvaus                                            |
-> | ---------------- | ------ | ------------------------------------------------- |
+> | Kenttä            | Tyyppi | Kuvaus                                            |
+> | ----------------- | ------ | ------------------------------------------------- |
 > | tapahtumalippu_id | int PK | Tapahtumalipun id                                 |
-> | hinta            | int    | Lipunhinta                                        |
+> | hinta             | int    | Lipunhinta                                        |
 > | tapahtuma_id      | int FK | Tapahtuman id, viittaus tapahtumat -tauluun       |
 > | asiakastyyppi_id  | int FK | Asiakastyypin id, viittaus asiakastyypit -tauluun |
 
@@ -109,52 +109,52 @@ Lipunmyyntijärjestelmän käyttäjärooleja ovat myyjä, asiakas, lipuntarkasta
 >
 > _Tapahtumapaikat-taulu sisältää tapahtumapaikkaan liittyvät tiedot: tapahtumapaikan osoitteen, postinumeron, tapahtumapaikan nimen ja kapasiteetin, paljonko tilaan mahtuu ihmisiä. Tapahtumapaikalla voi olla yksi postiosoite, sama postiosoite voi olla usealla tapahtumapaikalla._
 >
-> | Kenttä            | Tyyppi      | Kuvaus                                                     |
-> | ----------------- | ----------- | ---------------------------------------------------------- |
+> | Kenttä             | Tyyppi      | Kuvaus                                                     |
+> | ------------------ | ----------- | ---------------------------------------------------------- |
 > | tapahtumapaikka_id | int PK      | Tapahtumapaikan id                                         |
-> | postinumero       | int FK      | Tapahtumapaikan postinumero, viittaus postinumero -tauluun |
-> | tapahtumapaikka   | varchar(50) | Tapahtumapaikan nimi                                       |
-> | katuosoite        | varchar(50) | Paikan katuosoite                                          |
-> | kapasiteetti      | int         | Paljonko ihmisiä tilaan mahtuu                             |
+> | postinumero        | int FK      | Tapahtumapaikan postinumero, viittaus postinumero -tauluun |
+> | tapahtumapaikka    | varchar(50) | Tapahtumapaikan nimi                                       |
+> | katuosoite         | varchar(50) | Paikan katuosoite                                          |
+> | kapasiteetti       | int         | Paljonko ihmisiä tilaan mahtuu                             |
 
 > ### Tapahtumat
 >
 > _Tapahtumat-taulu sisältää tapahtumaan liittyvät tiedot: tapahtuman nimen, tapahtumapaikan, aloitus- ja lopetusajan ja kuvauksen. Tapahtumalla voi olla yksi tapahtumapaikka, sama tapahtumapaikka voi olla usealla tapahtumalla._
 >
-> | Kenttä            | Tyyppi      | Kuvaus                                                |
-> | ----------------- | ----------- | ----------------------------------------------------- |
+> | Kenttä             | Tyyppi      | Kuvaus                                                |
+> | ------------------ | ----------- | ----------------------------------------------------- |
 > | tapahtuma_id       | int PK      | Tapahtuman id                                         |
 > | tapahtumapaikka_id | int FK      | Tapahtumapaikan id, viittaus tapahtumapaikka -tauluun |
-> | tapahtuma         | varchar(50) | Tapahtuman nimi                                       |
-> | aloitusaika       | datetime    | Tapahtuman aloitusaika                                |
-> | lopeutusaika      | datetime    | Tapahtuman lopetusaika                                |
-> | kuvaus            | text        | Kuvaus tapahtumasta                                   |
+> | tapahtuma          | varchar(50) | Tapahtuman nimi                                       |
+> | aloitusaika        | datetime    | Tapahtuman aloitusaika                                |
+> | lopeutusaika       | datetime    | Tapahtuman lopetusaika                                |
+> | kuvaus             | text        | Kuvaus tapahtumasta                                   |
 
 > ### Työntekijät
 >
 > _Työntekijät-taulu sisältää työntekijään liittyvät tiedot: työntekijäId, postinumero, katuosoite, etunimi, sukunimi, email, puhelinnumero ja bcrypthash eli salattu salasana. Työntekijällä voi olla yksi postinumero, sama postinumero voi olla usealla työntekijällä._
 >
-> | Kenttä       | Tyyppi      | Kuvaus                                                 |
-> | ------------ | ----------- | ------------------------------------------------------ |
+> | Kenttä        | Tyyppi      | Kuvaus                                                 |
+> | ------------- | ----------- | ------------------------------------------------------ |
 > | tyontekija_id | int PK      | Työntekijän id                                         |
-> | postinumero  | int FK      | Työntekijän postinumero, viittaus postinumero -tauluun |
-> | katuosoite   | varchar(50) | Työntekijän katuosoite                                 |
-> | etunimi      | varchar(50) | Etunimi                                                |
-> | sukunimi     | varchar(50) | Sukunimi                                               |
-> | email        | varchar(50) | Sähköpostiosoite                                       |
-> | puhnro       | int         | Puhelinnumero                                          |
-> | bcrypthash   | varchar(60) | bcrypt-salattu salasana                                |
+> | postinumero   | int FK      | Työntekijän postinumero, viittaus postinumero -tauluun |
+> | katuosoite    | varchar(50) | Työntekijän katuosoite                                 |
+> | etunimi       | varchar(50) | Etunimi                                                |
+> | sukunimi      | varchar(50) | Sukunimi                                               |
+> | email         | varchar(50) | Sähköpostiosoite                                       |
+> | puhnro        | int         | Puhelinnumero                                          |
+> | bcrypthash    | varchar(60) | bcrypt-salattu salasana                                |
 
 > ### Liput
 >
 > _Liput-taulu sisältää lippuun liittyvät tiedot: LippuId, myyntiId, tapahtumalippuId ja tarkastuskoodin, jolla lippu voidaan tarkastaa tapahtumassa. Lipulla voi olla yksi postiosoite, sama postiosoite voi olla usealla tapahtumapaikalla._
 >
-> | Kenttä           | Tyyppi     | Kuvaus                                              |
-> | ---------------- | ---------- | --------------------------------------------------- |
+> | Kenttä            | Tyyppi     | Kuvaus                                              |
+> | ----------------- | ---------- | --------------------------------------------------- |
 > | lippu_id          | int PK     | Lipun id                                            |
 > | myynti_id         | int FK     | Myyntitapahtuman id, viittaus myynnit -tauluun      |
 > | tapahtumalippu_id | int FK     | Tapahtumalipun id, viittaus tapahtumaliput -tauluun |
-> | tarkastuskoodi   | varchar(8) | Lipun tarkastuskoodi                                |
+> | tarkastuskoodi    | varchar(8) | Lipun tarkastuskoodi                                |
 
 ## Tekninen kuvaus
 
@@ -181,23 +181,27 @@ Tämän lisäksi
 
 #### Tapahtumat
 
-##### *Perus-URL (base URL)*
+##### _Perus-URL (base URL)_
+
 /tapahtumat
 
-##### *Päätepisteet (endpoints)*
+##### _Päätepisteet (endpoints)_
 
 ###### Hae kaikki tapahtumat
+
 Palauttaa kaikki tapahtumat.
 
-*Pyyntö:*
+_Pyyntö:_
+
 - HTTP-metodi: GET
 - Päätepiste: /tapahtumat/
 - Parametrit: ei parametreja
 
-*Esimerkki:*
+_Esimerkki:_
 GET /tapahtumat/
 
-*Vastaus:*
+_Vastaus:_
+
 ```
 {
     "tapahtumaId": 1,
@@ -211,31 +215,36 @@ GET /tapahtumat/
 ```
 
 ##### Hae tapahtuma ID:n perusteella
+
 Palauttaa yksittäisen tapahtuman tiedot.
 
-*Pyyntö:*
+_Pyyntö:_
+
 - HTTP-metodi: GET
 - Endpoint: /tapahtumat/{tapahtumaId}
 - Polkuparametrit: {tapahtumaId} (kokonaisluku, pakollinen): Tapahtuman yksilöllinen tunniste
 
-*Esimerkki:*
+_Esimerkki:_
 GET /tapahtumat/123
 
-*Vastaus:*
+_Vastaus:_
 kts. yllä
 
 ##### Luo uusi tapahtuma
+
 Luo uuden tapahtuman.
 
-*Pyyntö:*
+_Pyyntö:_
+
 - HTTP-metodi: POST
 - Endpoint: /tapahtumat/
 - Otsikot: Content-Type: application/json
 - Body: JSON-objekti, joka sisältää tapahtuman tiedot
 
-*Esimerkki:*
+_Esimerkki:_
 POST /tapahtumat/
 Content-Type: application/json
+
 ```
 {
   "tapahtumaNimi": "Konsertti",
@@ -248,22 +257,27 @@ Content-Type: application/json
 }
 }
 ```
-*Vastaus:*
+
+_Vastaus:_
+
 - Onnistunut vastaus: Luodun tapahtuman tiedot JSON-muodossa, HTTP-statuskoodi 201 (Created).
 
 ##### Muokkaa tapahtumaa
+
 Päivittää olemassa olevan tapahtuman tietoja.
 
-*Pyyntö:*
+_Pyyntö:_
+
 - HTTP-metodi: PUT
 - Endpoint: /tapahtumat/{tapahtumaId}
 - Polkuparametrit: {tapahtumaId} (kokonaisluku, pakollinen): Tapahtuman yksilöllinen tunniste
 - Otsikot: Content-Type: application/json
 - Body: JSON-objekti, joka sisältää päivitettävät tapahtuman tiedot
 
-*Esimerkki:*
+_Esimerkki:_
 PUT /tapahtumat/123
 Content-Type: application/json
+
 ```
 {
   "tapahtumaNimi": "Uudempi Konsertti",
@@ -272,49 +286,60 @@ Content-Type: application/json
   "lopetusaika": "2026-04-01T23:00:00",
   "kapasiteetti": 10000,
   "tapahtumapaikka": {
-    "tapahtumapaikkaId": 
+    "tapahtumapaikkaId":
 }
 }
 ```
-*Vastaus_*
+
+\_Vastaus\_\_
+
 - Onnistunut vastaus: Päivitetyn tapahtuman tiedot JSON-muodossa, HTTP-statuskoodi 200 (OK)
 - Jos tapahtumaa ei löydy: Virheviesti ja HTTP-statuskoodi 404 (Not Found)
 
 ##### Poista tapahtuma
+
 Poistaa tapahtuman.
 
-*Pyyntö:*
+_Pyyntö:_
+
 - HTTP-metodi: DELETE
 - Endpoint: /tapahtumat/{tapahtumaId}
 - Polkuparametrit: {tapahtumaId} (kokonaisluku, pakollinen): Tapahtuman yksilöllinen tunniste
 
-*Esimerkki:*
+_Esimerkki:_
 
 DELETE /tapahtumat/123
 
-*Vastaus:*
+_Vastaus:_
+
 - Onnistunut poisto: Tyhjä vastaus, HTTP-statuskoodi 204 (No Content)
 - Jos tapahtumaa ei löydy: Tyhjä vastaus, HTTP-statuskoodi 404 (Not Found)
 
 #### Myynnit
 
-##### *Perus-URL (base URL)*
+##### _Perus-URL (base URL)_
+
 /myynnit
 
-##### *Päätepisteet (endpoints)*
+##### _Päätepisteet (endpoints)_
 
 ###### Hae kaikki myynnit
+
 Palauttaa kaikki myynnit.
 
-*Pyyntö:*
+_Pyyntö:_
+
 - HTTP-metodi: GET
 - Päätepiste: /myynnit/
 - Parametrit: ei parametreja
 
-*Esimerkki:*
+_Esimerkki:_
 GET /myynnit/
 
-*Vastaus:*
+_Vastaus:_
+
+- Onnistunut haku:
+
 ```
 [
     {
@@ -347,32 +372,42 @@ GET /myynnit/
     }
 ]
 ```
+
+- Epäonnistunut haku: Virheviesti ja HTTP-statuskoodi 404 (Not Found).
+
 ##### Hae Myynti ID:n perusteella
+
 Palauttaa yksittäisen tapahtuman tiedot.
 
-*Pyyntö:*
+_Pyyntö:_
+
 - HTTP-metodi: GET
 - Endpoint: /myynnit/{myyntiId}
 - Polkuparametrit: {myyntiId} (kokonaisluku, pakollinen): Myynnin yksilöllinen tunniste
 
-*Esimerkki:*
+_Esimerkki:_
 GET /myynnit/123
 
-*Vastaus:*
-kts. yllä
+_Vastaus:_
+
+- Onnistunut vastaus: kts. yllä
+- Jos kyseistä myyntiä ei löydy: Virheviesti ("Myyntiä ei löytynyt id:llä (id numero)") ja HTTP-statuskoodi 404(Not Found)
 
 ##### Luo uusi Myynti
+
 Luo uuden myynnin.
 
-*Pyyntö:*
+_Pyyntö:_
+
 - HTTP-metodi: POST
 - Endpoint: /myynnit/
 - Otsikot: Content-Type: application/json
 - Body: JSON-objekti, joka sisältää tapahtuman tiedot
 
-*Esimerkki:*
+_Esimerkki:_
 POST /myynnit/
 Content-Type: application/json
+
 ```
      {
       "myyntiaika": "2024-02-29T12:00:00",
@@ -381,7 +416,9 @@ Content-Type: application/json
      "liput": []
    }
 ```
-*Vastaus:*
+
+_Vastaus:_
+
 - Onnistunut vastaus: Luodun myynnin tiedot JSON-muodossa, HTTP-statuskoodi 201 (Created).
 
 Muokkaa tapahtumaa
@@ -397,7 +434,7 @@ Body: JSON-objekti, joka sisältää päivitettävät tapahtuman osan tiedot
 Esimerkki: PATCH /myynnit/123 Content-Type: application/json
 
 {
-  "email":"esi@merkki.com"
+"email":"esi@merkki.com"
 }
 
 Vastaus:
@@ -405,42 +442,48 @@ Vastaus:
 Onnistunut vastaus: Päivitetyn tapahtuman tiedot JSON-muodossa, HTTP-statuskoodi 200 (OK)
 Jos tapahtumaa ei löydy: Virheviesti ja HTTP-statuskoodi 404 (Not Found)
 
-
 ##### Poista myynti
+
 Poistaa myynnin.
 
-*Pyyntö:*
+_Pyyntö:_
+
 - HTTP-metodi: DELETE
 - Endpoint: /myynnit/{myyntiId}
 - Polkuparametrit: {myyntiId} (kokonaisluku, pakollinen): Tapahtuman yksilöllinen tunniste
 
-*Esimerkki:*
+_Esimerkki:_
 
 DELETE /myynnit/123
 
-*Vastaus:*
+_Vastaus:_
+
 - Onnistunut poisto: Tyhjä vastaus, HTTP-statuskoodi 204 (No Content)
 - Jos tapahtumaa ei löydy: Tyhjä vastaus, HTTP-statuskoodi 404 (Not Found)
 
 #### Liput
 
-##### *Perus-URL (base URL)*
+##### _Perus-URL (base URL)_
+
 /liput
 
-##### *Päätepisteet (endpoints)*
+##### _Päätepisteet (endpoints)_
 
 ###### Hae kaikki liput
+
 Palauttaa kaikki liput.
 
-*Pyyntö:*
+_Pyyntö:_
+
 - HTTP-metodi: GET
 - Päätepiste: /liput/
 - Parametrit: ei parametreja
 
-*Esimerkki:*
+_Esimerkki:_
 GET /liput/
 
-*Vastaus:*
+_Vastaus:_
+
 ```
 [
     {
@@ -520,48 +563,213 @@ GET /liput/
     }
 ]
 ```
+
 - Onnistunut vastaus: lippujen tiedot JSON-muodossa, HTTP-statuskoodi 200 (OK).
 - Jos lippuja ei löydy: Virheviesti ja HTTP-statuskoodi 404 (Not Found).
 - Kun JPA ei pysty avaamaan EntityManager-yhteyttä tietokantaan: Virheviesti "Tietokantayhteys epäonnistui. Yritä uudelleen myöhemmin." ja HTTP-statuskoodi 503 (Service Unavailable).
 
 ##### Luo uusi lippu
+
 Luo uuden lipun.
 
-*Pyyntö:*
+_Pyyntö:_
+
 - HTTP-metodi: POST
 - Endpoint: /liput/
 - Otsikot: Content-Type: application/json
 - Body: JSON-objekti, joka sisältää lipun tiedot
 
-*Esimerkki:*
+_Esimerkki:_
 POST /liput/
 Content-Type: application/json
+
 ```
 {
     "myyntiId": 1,
     "tapahtumalippuId": 1
 }
 ```
-*Vastaus:*
+
+_Vastaus:_
+
 - Onnistunut vastaus: Luodun lipun tiedot JSON-muodossa, HTTP-statuskoodi 201 (Created).
 - Jos myyntiä tai tapahtumalippua ei löydy: Virheviesti ja HTTP-statuskoodi 404 (Not Found).
 - Kun JPA ei pysty avaamaan EntityManager-yhteyttä tietokantaan: Virheviesti "Tietokantayhteys epäonnistui. Yritä uudelleen myöhemmin." ja HTTP-statuskoodi 503 (Service Unavailable).
 
 ##### Poista lippu
+
 Poistaa lipun.
 
-*Pyyntö:*
+_Pyyntö:_
+
 - HTTP-metodi: DELETE
 - Endpoint: /liput/{lippuId}
 - Polkuparametrit: {lippuId} (kokonaisluku, pakollinen): Lipun yksilöllinen tunniste
 
-*Esimerkki:*
+_Esimerkki:_
 DELETE /liput/123
 
-*Vastaus:*
+_Vastaus:_
+
 - Onnistunut poisto: Tyhjä vastaus, HTTP-statuskoodi 200 (OK)
 - Jos lippua ei löydy: Virheviesti ja HTTP-statuskoodi 404 (Not Found)
 - Kun JPA ei pysty avaamaan EntityManager-yhteyttä tietokantaan: Virheviesti "Tietokantayhteys epäonnistui. Yritä uudelleen myöhemmin." ja HTTP-statuskoodi 503 (Service Unavailable).
+
+#### Tapahtumaliput
+
+##### _Perus-URL (base URL)_
+
+/tapahtumaliput
+
+##### _Päätepisteet (endpoints)_
+
+###### Lisää useampi tapahtumalippu
+
+Lisää yhden tai useamman tapahtumalipun tietylle tapahtumalle
+
+_Pyyntö_
+
+- HTTP-metodi: POST
+- Päätepiste: /
+- Otsikot: Content-Type: application/json
+- Body: JSON-objekti, joka sisältää tapahtumalipun tiedot
+
+_Esimerkki_
+POST /tapahtumaliput/
+Content-Type: application/json
+
+```
+[
+    {
+        "hinta": 25.00,
+        "asiakastyyppi": {
+            "asiakastyyppiId": 1
+        }
+    },
+    {
+        "hinta": 45.00,
+        "asiakastyyppi": {
+            "asiakastyyppiId": 2
+        }
+    },
+    {
+        "hinta": 30.00,
+        "asiakastyyppi": {
+            "asiakastyyppiId": 3
+        }
+    }
+]
+```
+
+_vastaus_
+
+- Onnistunut vastaus: Luotujen tapahtumalippujen tiedot JSON-muodossa, HTTP-statuskoodi 201 (Created).
+- Jos tapahtumalla on jo kyseisellä asiakastyypillä oleva tapahtumalippu, tulee vastauksena HTTP-statuskoodi 409 (Conflict). Virheviesti: "Tapahtumalippu asiakastyyppille Opiskelija ID:llä 1 on jo olemassa."
+
+##### Hae kaikki tapahtumaliput tapahtumalle
+
+Palauttaa kaikki tapahtumaliput tietylle tapahtumalle.
+
+_Pyyntö_
+
+- HTTP-metodi: GET
+- Endpoint: /tapahtumaliput/{tapahtumaId}
+- Polkuparametrit: {tapahtumaId} (kokonaisluku, pakollinen): Tapahtuman yksilöllinen tunniste
+
+_Esimerkki_
+GET /tapahtumaliput/123
+
+_Vastaus:_
+
+```
+[
+    {
+        "tapahtumalippuId": 1,
+        "hinta": 25.00,
+        "asiakastyyppi": {
+            "asiakastyyppiId": 1,
+            "asiakastyyppi": "Opiskelija"
+        }
+    },
+    {
+        "tapahtumalippuId": 2,
+        "hinta": 45.00,
+        "asiakastyyppi": {
+            "asiakastyyppiId": 2,
+            "asiakastyyppi": "Aikuinen"
+        }
+    }
+]
+```
+
+##### Hae tapahtumalippu ID:n perusteella
+
+Palauttaa yksittäisen tapahtumalipun tiedot.
+
+_Pyyntö_
+
+- HTTP-metodi: GET
+- Endpoint: /tapahtumaliput/tapahtumalippu/{tapahtumalippuId}
+- Polkuparametrit: {tapahtumalippuId} (kokonaisluku, pakollinen): Tapahtumalipun yksilöllinen tunniste
+
+_Esimerkki_
+GET /tapahtumaliput/tapahtumalippu/123
+
+_Vastaus_
+
+```
+{
+    "tapahtumalippuId": 1,
+    "hinta": 25.00,
+    "asiakastyyppi": {
+        "asiakastyyppiId": 1,
+        "asiakastyyppi": "Opiskelija"
+    }
+}
+```
+
+##### Päivitä tapahtumalippu
+
+Päivittää olemassa olevan tapahtumalipun tietoja. Näitä ovat hinta, asiakastyyppejä muokataan asiakastyyppiControllerin kautta.
+
+_Pyyntö_
+
+- HTTP-metodi: PATCH
+- Endpoint: /tapahtumaliput/{tapahtumalippuId}
+- Polkuparametrit: {tapahtumalippuId} (kokonaisluku, pakollinen): Tapahtumalipun yksilöllinen tunniste
+- Otsikot: Content-Type: application/json
+- Body: JSON-objekti, joka sisältää päivitettävät tapahtumalipun tiedot
+
+_Esimerkki_
+
+```
+{
+    "hinta": 35.00
+}
+```
+
+_Vastaus_
+
+- Onnistunut vastaus: Päivitetyn tapahtumalipun tiedot JSON-muodossa, HTTP-statuskoodi 200 (OK).
+- Jos tapahtumalippua ei löydy, virheviesti ja HTTP-statuskoodi 404 (Not Found).
+
+##### Poista tapahtumalippu
+
+Poistaa tapahtumalipun.
+
+_Pyyntö_
+
+- HTTP-metodi: DELETE
+- Endpoint: /tapahtumaliput/{tapahtumalippuId}
+- Polkuparametrit: {tapahtumalippuId} (kokonaisluku, pakollinen): Tapahtumalipun yksilöllinen tunniste
+
+_Esimerkki_
+DELETE /tapahtumaliput/123
+
+_Vastaus_
+
+- Onnistunut poisto: Tyhjä vastaus, HTTP-statuskoodi 204 (No Content).
+- Jos tapahtumalippua ei löydy: Virheviesti ja HTTP-statuskoodi 404 (Not Found).
 
 ## Testaus
 

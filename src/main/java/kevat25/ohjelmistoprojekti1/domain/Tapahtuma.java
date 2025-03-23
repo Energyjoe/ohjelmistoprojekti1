@@ -28,29 +28,28 @@ public class Tapahtuma {
 
     // Sarake tapahtumaId -.-.-.-.-.-.-.-.-.-
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "tapahtuma_id")
     private Long tapahtumaId;
 
     // Sarake tapahtuma -.-.-.-.-.-.-.-.-.-
     @Column(name = "tapahtuma")
-    @NotBlank (message = "Tapahtumalla tulee olla nimi")
-    @Size(max=100, message = "Tapahtuman nimi voi olla enintään 100 merkkiä") 
+    @NotBlank(message = "Tapahtumalla tulee olla nimi")
+    @Size(max = 100, message = "Tapahtuman nimi voi olla enintään 100 merkkiä")
     private String tapahtumaNimi;
 
-    // Kapasiteetti 
-    @NotNull (message = "Tapahtumalla tulee olla kapasiteetti")
+    // Kapasiteetti
+    @NotNull(message = "Tapahtumalla tulee olla kapasiteetti")
     private Integer kapasiteetti;
 
     // Sarake kuvaus -.-.-.-.-.-.-.-.-.-
     @Column(name = "kuvaus")
     private String tapahtumaKuvaus;
 
-    //Sarakkeet aloitusaika ja lopetusaika -.-.-.-.-.-.-.-.-.-
-    @NotNull (message = "Tapahtumalla tulee olla aloitusaika")
-    @Future (message = "Tapahtuman tulee olla tulevaisuudessa")
+    // Sarakkeet aloitusaika ja lopetusaika -.-.-.-.-.-.-.-.-.-
+    @NotNull(message = "Tapahtumalla tulee olla aloitusaika")
+    @Future(message = "Tapahtuman tulee olla tulevaisuudessa")
     private LocalDateTime aloitusaika;
-
 
     private LocalDateTime lopetusaika;
 
@@ -62,16 +61,17 @@ public class Tapahtuma {
     @NotNull(message = "Tapahtumalla tulee olla tapahtumapaikka")
     private Tapahtumapaikka tapahtumapaikka;
 
-    //OneToMany-yhteys Tapahtumat-tauluun -.-.-.-.-.-.-.-.-.-
+    // OneToMany-yhteys Tapahtumat-tauluun -.-.-.-.-.-.-.-.-.-
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "tapahtuma")
     private List<Tapahtumalippu> tapahtumaliput;
 
-     //Parametriton konstruktori -.-.-.-.-.-.-.-.-.-
-     public Tapahtuma() {
+    // Parametriton konstruktori -.-.-.-.-.-.-.-.-.-
+    public Tapahtuma() {
     }
 
-    //Parametrillinen konstruktori -.-.-.-.-.-.-.-.-.-
-    public Tapahtuma(String tapahtumaNimi, String tapahtumaKuvaus, LocalDateTime aloitusaika, LocalDateTime lopetusaika, Integer kapasiteetti, Tapahtumapaikka tapahtumapaikka) {
+    // Parametrillinen konstruktori -.-.-.-.-.-.-.-.-.-
+    public Tapahtuma(String tapahtumaNimi, String tapahtumaKuvaus, LocalDateTime aloitusaika, LocalDateTime lopetusaika,
+            Integer kapasiteetti, Tapahtumapaikka tapahtumapaikka) {
         this.tapahtumaNimi = tapahtumaNimi;
         this.tapahtumaKuvaus = tapahtumaKuvaus;
         this.aloitusaika = aloitusaika;
@@ -135,7 +135,7 @@ public class Tapahtuma {
         this.tapahtumapaikka = tapahtumapaikka;
     }
 
-    public void setKapasiteetti (Integer kapasiteetti) {
+    public void setKapasiteetti(Integer kapasiteetti) {
         this.kapasiteetti = kapasiteetti;
     }
 
@@ -148,12 +148,9 @@ public class Tapahtuma {
                 ", aloitusaika=" + aloitusaika +
                 ", lopetusaika=" + lopetusaika +
                 ", kapasiteetti=" + kapasiteetti +
-                ", tapahtumapaikka=" + (tapahtumapaikka != null ? tapahtumapaikka.getTapahtumapaikka() : "ei määritetty") +
+                ", tapahtumapaikka="
+                + (tapahtumapaikka != null ? tapahtumapaikka.getTapahtumapaikka() : "ei määritetty") +
                 '}';
     }
-    
 
-
-
-    
 }

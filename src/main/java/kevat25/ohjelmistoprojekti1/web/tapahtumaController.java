@@ -29,13 +29,20 @@ public class tapahtumaController {
     }
 
     @PostMapping("/")
-    public ResponseEntity<Tapahtuma> uusiTapahtuma(@Valid @RequestBody Tapahtuma uusiTapahtuma) {
+    public ResponseEntity<?> uusiTapahtuma(@Valid @RequestBody Tapahtuma uusiTapahtuma) {
 
         // Tallennetaan tapahtuma repositoryyn
+        try {
         Tapahtuma tallennettuTapahtuma = tapahtumaRepository.save(uusiTapahtuma);
 
         // Palauttaa HTTP-vastauksen
         return ResponseEntity.status(HttpStatus.CREATED).body(tallennettuTapahtuma);
+        }
+
+        //Mikäli ylläoleva ei onnistu, palauttaa virhekoodin.
+        catch (Exception e){
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Tapahtuman lisäys ei onnistunut. Syy: " + e.getMessage());
+        }
     }
 
     // Palauttaa Listan tapahtumista, tai virhekoodin, jos lista on tyhjä.
@@ -52,7 +59,7 @@ public class tapahtumaController {
     // Palauttaa tapahtuman tiedot, tai virheilmoitusken, jos kyseistä
     // tapahtumaId:tä ei löydy.
 
-  @GetMapping("/{tapahtumaId}")
+    @GetMapping("/{tapahtumaId}")
     public ResponseEntity<Tapahtuma> haeTapahtuma(@Valid @PathVariable Long tapahtumaId) {
         Optional<Tapahtuma> tapahtuma = tapahtumaRepository.findById(tapahtumaId);
 
@@ -93,31 +100,23 @@ public class tapahtumaController {
         muokattavaTapahtuma.setAloitusaika(uusiTapahtuma.getAloitusaika());
         muokattavaTapahtuma.setLopetusaika(uusiTapahtuma.getLopetusaika());
         muokattavaTapahtuma.setKapasiteetti(uusiTapahtuma.getKapasiteetti());
-
-        // Jos tapahtumapaikka on null, ei päivitetä sitä
-        if (uusiTapahtuma.getTapahtumapaikka() != null) {
-            muokattavaTapahtuma.setTapahtumapaikka(uusiTapahtuma.getTapahtumapaikka());
-        } else {
-            // Jos tapahtumapaikkaa ei ole, asetetaan null
-            muokattavaTapahtuma.setTapahtumapaikka(null);
-        }
+        muokattavaTapahtuma.setTapahtumapaikka(uusiTapahtuma.getTapahtumapaikka());
 
         Tapahtuma paivitettyTapahtuma = tapahtumaRepository.save(muokattavaTapahtuma);
 
         return ResponseEntity.status(HttpStatus.OK).body(paivitettyTapahtuma);
 
         /*
-         * Postman esimerkki Body, tapahtumapaikkaa ei ole koska niitä ei löyty vielä
-         * tietokannasta:
-         * 
          * {
-         * "tapahtumaNimi": "Uudempi Konsertti",
-         * "tapahtumaKuvaus": "Uudempi mahtavampi konsertti Helsingissä",
-         * "aloitusaika": "2026-04-01T19:00:00",
-         * "lopetusaika": "2026-04-01T23:00:00",
-         * "kapasiteetti": 10000
+         * "tapahtumaNimi": "Toinen konsertti",
+         * "tapahtumaKuvaus": "Mahtava konsertti Helsingissä",
+         * "aloitusaika": "2025-04-01T19:00:00",
+         * "lopetusaika": "2025-04-01T23:00:00",
+         * "kapasiteetti": 5000,
+         * "tapahtumapaikka": {
+         * "tapahtumapaikkaId": 1
          * }
-         * 
+         * }
          */
 
     }

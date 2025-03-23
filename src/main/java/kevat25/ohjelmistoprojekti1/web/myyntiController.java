@@ -1,6 +1,6 @@
 package kevat25.ohjelmistoprojekti1.web;
 
-import java.util.ArrayList;
+
 import java.util.List;
 import java.util.Optional;
 
@@ -12,13 +12,12 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.server.ResponseStatusException;
 
+import jakarta.persistence.EntityNotFoundException;
 import jakarta.transaction.Transactional;
 import jakarta.validation.Valid;
 import kevat25.ohjelmistoprojekti1.domain.Lippu;
@@ -97,13 +96,22 @@ public class myyntiController {
     // Hakee kaikki myyntitapahtumat
     @GetMapping("/")
     public List<MyyntiDTO> getAllMyynnit() {
-        return myyntiService.getAllMyynnit();
+        List<MyyntiDTO> myynnit = myyntiService.getAllMyynnit();
+        if (myynnit.isEmpty()) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Myyntejä ei löytynyt");
+        }
+        return myynnit;
     }
 
     // Hakee yksittäisen myyntitapahtuman tiedot
     @GetMapping("/{myyntiId}")
-    public MyyntiDTO getMyyntiById(@PathVariable Long myyntiId) {
-        return myyntiService.getMyyntiById(myyntiId);
+    public ResponseEntity<?> getMyyntiById(@PathVariable Long myyntiId) {
+        try {
+            MyyntiDTO myyntiDTO = myyntiService.getMyyntiById(myyntiId);
+            return ResponseEntity.ok(myyntiDTO);
+        } catch (EntityNotFoundException e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Myyntiä ei löytynyt id:llä " + myyntiId);
+    }
     }
 
     // Muokkaa myyntitapahtumaa
