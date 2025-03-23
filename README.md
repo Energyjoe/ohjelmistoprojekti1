@@ -291,7 +291,7 @@ Content-Type: application/json
 }
 ```
 
-_Vastaus\__
+\_Vastaus\_\_
 
 - Onnistunut vastaus: Päivitetyn tapahtuman tiedot JSON-muodossa, HTTP-statuskoodi 200 (OK)
 - Jos tapahtumaa ei löydy: Virheviesti ja HTTP-statuskoodi 404 (Not Found)
@@ -336,7 +336,14 @@ _Pyyntö:_
 _Esimerkki:_
 GET /myynnit/
 
+<<<<<<< HEAD
 _Vastaus:_
+
+=======
+_Vastaus:_
+
+- Onnistunut haku:
+  > > > > > > > 6383cb8e6582f479ca539d07b63274f28234c27d
 
 ```
 [
@@ -371,6 +378,11 @@ _Vastaus:_
 ]
 ```
 
+# <<<<<<< HEAD
+
+- Epäonnistunut haku: Virheviesti ja HTTP-statuskoodi 404 (Not Found).
+  > > > > > > > 6383cb8e6582f479ca539d07b63274f28234c27d
+
 ##### Hae Myynti ID:n perusteella
 
 Palauttaa yksittäisen tapahtuman tiedot.
@@ -385,7 +397,9 @@ _Esimerkki:_
 GET /myynnit/123
 
 _Vastaus:_
-kts. yllä
+
+- Onnistunut vastaus: kts. yllä
+- Jos kyseistä myyntiä ei löydy: Virheviesti ("Myyntiä ei löytynyt id:llä (id numero)") ja HTTP-statuskoodi 404(Not Found)
 
 ##### Luo uusi Myynti
 
