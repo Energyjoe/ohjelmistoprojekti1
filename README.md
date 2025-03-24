@@ -910,7 +910,7 @@ _Vastaus_
 ]
 ```
 - Onnistunut vastaus: 200 (OK)
-- Työntekijöitä ei löytynyt: 404 (Not Found) "Työntekijöitä ei löytynyt"
+- Työntekijöitä ei löytynyt: Palauttaa tyhjän listan 200 (OK)
 
 ##### Päivitä työntekijän tiedot (kaikki paitsi salasana)
 
@@ -953,7 +953,7 @@ _Vastaus_
 _Pyyntö_
 
 - HTTP-metodi: Put
-- Endpoint: /tyontekijat/vaihda-salasana/{tyontekijaId}
+- Endpoint: /tyontekijat/{tyontekijaId}/salasana
 - Polkuparametrit: {tyontekijaId} (kokonaisluku, pakollinen): Työntekijän yksilöllinen tunniste
 - Otsikot: Content-Type: application/json
 - Body: JSON-objekti, joka sisältää päivitettävät työntekijän tiedot

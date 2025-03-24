@@ -1,5 +1,6 @@
 package kevat25.ohjelmistoprojekti1.web;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -65,7 +66,7 @@ public class tyontekijaController {
         
         List<TyontekijaResponseDTO> tyontekijat = tyontekijaService.getAllTyontekijat(); 
         if (tyontekijat.isEmpty()) {
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Työntekijöitä ei löytynyt");
+            return new ArrayList<>();
         }
         return tyontekijat;
     }
@@ -80,7 +81,7 @@ public class tyontekijaController {
     }
 
     //Vaihda salasana
-    @PutMapping("/vaihda-salasana/{tyontekijaId}")
+    @PutMapping("/{tyontekijaId}/salasana")
     public ResponseEntity<String> updateSalasana(@PathVariable Long tyontekijaId, @Valid @RequestBody SalasanaUpdateDTO salasanaDto) {
 
         tyontekijaService.updateSalasana(tyontekijaId, salasanaDto);
@@ -95,7 +96,7 @@ public class tyontekijaController {
         Optional<Tyontekija> tyontekija = tyontekijaRepository.findById(tyontekijaId);
         if(tyontekija.isPresent()) {
             tyontekijaRepository.delete(tyontekija.get());
-            return ResponseEntity.status(HttpStatus.NO_CONTENT).body("Työntekijä poistettu onnistuneesti");
+            return ResponseEntity.noContent().build();
         } else {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Työntekijää ei löytynyt");
         }
