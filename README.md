@@ -991,7 +991,136 @@ DELETE /tyontekijat/1
 _Vastaus_
 
 - Onnistunut poisto: Tyhjä vastaus, HTTP-statuskoodi 204 (No Content).
-- Jos tapahtumalippua ei löydy: Virheviesti ja HTTP-statuskoodi 404 (Not Found) "Työntekijää ei löytynyt".
+- Jos työntekijää ei löydy: Virheviesti ja HTTP-statuskoodi 404 (Not Found) "Työntekijää ei löytynyt".
+
+### Asiakastyyppi
+
+#### _Perus-URL (base URL)_
+
+/asiakastyypit
+
+#### _Päätepisteet (endpoints)_
+
+##### Lisää uusi asiakastyyppi
+
+_Pyyntö_
+
+- HTTP-metodi: POST
+- Päätepiste: /
+- Otsikot: Content-Type: application/json
+- Body: JSON-objekti, joka sisältää myyjän tiedot
+
+_Esimerkki_
+POST /asiakastyypit/
+Content-Type: application/json
+
+```
+{
+    "asiakastyyppi": "VIP"
+}
+```
+
+_vastaus_
+```
+{
+    "asiakastyyppiId": 5,
+    "asiakastyyppi": "VIP"
+}
+```
+
+- Onnistunut vastaus: Luodun asiakastyypin tiedot JSON-muodossa, HTTP-statuskoodi 201 (Created).
+- JSON-arvo puuttuu: Palauttaa 400 (Bad Request).
+
+##### Hae kaikki asiakastyypit
+
+_Pyyntö_
+
+- HTTP-metodi: GET
+- Päätepiste: /
+- Otsikot: Content-Type: application/json
+- Body: JSON-objekti, joka sisältää myyjän tiedot
+
+_Esimerkki_
+POST /asiakastyypit/
+Content-Type: application/json
+
+_vastaus_
+```
+[
+    {
+        "asiakastyyppiId": 1,
+        "asiakastyyppi": "Opiskelija"
+    },
+    {
+        "asiakastyyppiId": 2,
+        "asiakastyyppi": "Aikuinen"
+    },
+    {
+        "asiakastyyppiId": 3,
+        "asiakastyyppi": "Eläkeläinen"
+    },
+    {
+        "asiakastyyppiId": 4,
+        "asiakastyyppi": "Varusmies"
+    },
+    {
+        "asiakastyyppiId": 5,
+        "asiakastyyppi": "VIP"
+    }
+]
+```
+
+- Onnistunut vastaus: Asiakastyypin tiedot JSON-muodossa, HTTP-statuskoodi 200 (OK).
+- JSON-arvo puuttuu: Palauttaa 404 (Not Found) "Asiakastyyppiä ei löytynyt".
+
+##### Muokkaa asiakastyypiä
+
+_Pyyntö_
+
+- HTTP-metodi: PATCH
+- Päätepiste: /asiakastyyppiId
+- Otsikot: Content-Type: application/json
+- Body: JSON-objekti, joka sisältää myyjän tiedot
+
+_Esimerkki_
+POST /asiakastyypit/5
+Content-Type: application/json
+
+```
+{
+    "asiakastyyppi": "Lapsi"
+}
+```
+
+_vastaus_
+```
+{
+    "asiakastyyppiId": 5,
+    "asiakastyyppi": "Lapsi"
+}
+```
+
+- Onnistunut vastaus: Muokatun asiakastyypin tiedot JSON-muodossa, HTTP-statuskoodi 200 (OK).
+- JSON-arvo puuttuu: Palauttaa 404 (Not Found) "Asiakastyyppiä ei löytynyt".
+
+##### Poista Asiakastyyppi
+
+Poistaa asiakastyypin.
+
+_Pyyntö_
+
+- HTTP-metodi: DELETE
+- Endpoint: /asiakastyypit/{asiakastyyppiId}
+- Polkuparametrit: {asiakastyyppiId} (kokonaisluku, pakollinen): Asiakastyypin yksilöllinen tunniste
+
+_Esimerkki_
+DELETE /asiakastyypit/5
+
+_Vastaus_
+
+- Onnistunut poisto: Tyhjä vastaus, HTTP-statuskoodi 204 (No Content).
+- Jos asiakastyyppiä ei löydy: Virheviesti ja HTTP-statuskoodi 404 (Not Found) "Asiakastyyppiä ei löytynyt".
+
 ## Testaus
 
 Tässä kohdin selvitetään, miten ohjelmiston oikea toiminta varmistetaan
