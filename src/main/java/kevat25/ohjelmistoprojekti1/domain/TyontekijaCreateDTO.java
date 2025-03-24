@@ -1,32 +1,33 @@
 package kevat25.ohjelmistoprojekti1.domain;
 
 import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 
 public class TyontekijaCreateDTO {
     
-    @NotNull
+    @NotEmpty(message = "Etunimi on pakollinen")
     private String etunimi;
     
-    @NotNull
+    @NotEmpty(message = "Sukunimi on pakollinen")
     private String sukunimi;
     
-    @NotNull
-    @Email
+    @Email(message = "Sähköpostiosoite ei ole kelvollinen")
+    @NotEmpty(message = "Sähköposti on pakollinen")
     private String email;
     
-    @NotNull
+    @NotEmpty(message = "Puhelinnumero on pakollinen")
     private String puhnro;
     
-    @NotNull
+    @NotEmpty(message = "Katuosoite on pakollinen")
     private String katuosoite;
     
-    @NotNull
+    @NotEmpty(message = "Salasana on pakollinen")
     @Size(min = 8, max = 60)
     private String bcrypthash;
     
-    @NotNull
+    @NotNull(message = "Postinumero on pakollinen")
     private Postinumero postinumero;
 
     public TyontekijaCreateDTO() {
