@@ -1,24 +1,32 @@
 package kevat25.ohjelmistoprojekti1.web;
 
+import java.util.List;
+import java.util.Optional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.server.ResponseStatusException;
 
 import jakarta.validation.Valid;
-import kevat25.ohjelmistoprojekti1.domain.*;
+import kevat25.ohjelmistoprojekti1.domain.SalasanaUpdateDTO;
+import kevat25.ohjelmistoprojekti1.domain.Tyontekija;
+import kevat25.ohjelmistoprojekti1.domain.TyontekijaCreateDTO;
+import kevat25.ohjelmistoprojekti1.domain.TyontekijaRepository;
+import kevat25.ohjelmistoprojekti1.domain.TyontekijaResponseDTO;
+import kevat25.ohjelmistoprojekti1.domain.TyontekijaUpdateDTO;
 import kevat25.ohjelmistoprojekti1.service.TyontekijaService;
 
-import java.util.Optional;
 
 
 
@@ -31,7 +39,7 @@ public class tyontekijaController {
     @Autowired
     private TyontekijaService tyontekijaService;
 
-    tyontekijaController(TyontekijaRepository tyontekijaRepository) {
+    public tyontekijaController(TyontekijaRepository tyontekijaRepository) {
         this.tyontekijaRepository = tyontekijaRepository;
     }
 
@@ -42,7 +50,25 @@ public class tyontekijaController {
         TyontekijaResponseDTO response = tyontekijaService.createTyontekija(createDto);        
         return ResponseEntity.status(HttpStatus.CREATED).body(response);
     }
+
+    //Hae työntekijän tiedot Id:n perusteella
+    @GetMapping("/{tyontekijaId}")
+    public ResponseEntity<TyontekijaResponseDTO> getTyontekijaById(@PathVariable Long tyontekijaId) {
+        
+        TyontekijaResponseDTO response = tyontekijaService.getTyontekijaById(tyontekijaId);
+        return ResponseEntity.ok(response);
+    }
     
+    //Hae kaikki työntekijät
+    @GetMapping("/")
+    public List<TyontekijaResponseDTO> getAllMyynnit() {
+        
+        List<TyontekijaResponseDTO> tyontekijat = tyontekijaService.getAllTyontekijat(); 
+        if (tyontekijat.isEmpty()) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Työntekijöitä ei löytynyt");
+        }
+        return tyontekijat;
+    }
 
     // Muokkaa työntekijää
     @PatchMapping("/{tyontekijaId}")

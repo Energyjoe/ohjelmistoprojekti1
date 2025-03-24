@@ -177,9 +177,9 @@ Tämän lisäksi
 - ohjelmiston pitää olla organisoitu komponentteihin niin, että turhalta toistolta
   vältytään
 
-### REST API -dokumentaatio
+## REST API -dokumentaatio
 
-#### Tapahtumat
+### Tapahtumat
 
 ##### _Perus-URL (base URL)_
 
@@ -315,7 +315,7 @@ _Vastaus:_
 - Onnistunut poisto: Tyhjä vastaus, HTTP-statuskoodi 204 (No Content)
 - Jos tapahtumaa ei löydy: Tyhjä vastaus, HTTP-statuskoodi 404 (Not Found)
 
-#### Myynnit
+### Myynnit
 
 ##### _Perus-URL (base URL)_
 
@@ -461,7 +461,7 @@ _Vastaus:_
 - Onnistunut poisto: Tyhjä vastaus, HTTP-statuskoodi 204 (No Content)
 - Jos tapahtumaa ei löydy: Tyhjä vastaus, HTTP-statuskoodi 404 (Not Found)
 
-#### Liput
+### Liput
 
 ##### _Perus-URL (base URL)_
 
@@ -615,7 +615,7 @@ _Vastaus:_
 - Jos lippua ei löydy: Virheviesti ja HTTP-statuskoodi 404 (Not Found)
 - Kun JPA ei pysty avaamaan EntityManager-yhteyttä tietokantaan: Virheviesti "Tietokantayhteys epäonnistui. Yritä uudelleen myöhemmin." ja HTTP-statuskoodi 503 (Service Unavailable).
 
-#### Tapahtumaliput
+### Tapahtumaliput
 
 ##### _Perus-URL (base URL)_
 
@@ -771,6 +771,227 @@ _Vastaus_
 - Onnistunut poisto: Tyhjä vastaus, HTTP-statuskoodi 204 (No Content).
 - Jos tapahtumalippua ei löydy: Virheviesti ja HTTP-statuskoodi 404 (Not Found).
 
+### Työntekijä
+
+#### _Perus-URL (base URL)_
+
+/tyontekijat
+
+#### _Päätepisteet (endpoints)_
+
+##### Lisää uusi työntekijä
+
+Lisää yhden uuden työntekijän ja asettaa tälle myös salasanan
+
+_Pyyntö_
+
+- HTTP-metodi: POST
+- Päätepiste: /
+- Otsikot: Content-Type: application/json
+- Body: JSON-objekti, joka sisältää myyjän tiedot
+
+_Esimerkki_
+POST /tyontekijat/
+Content-Type: application/json
+
+```
+{
+  "etunimi": "Matti",
+  "sukunimi": "Meikäläinen",
+  "email": "matti.meikalainen@example.com",
+  "puhnro": "0401234567",
+  "katuosoite": "Katu 123",
+  "postinumero": {
+    "postinumero": "00100",
+    "paikkakunta": "Helsinki"
+  },
+  "bcrypthash": "salasana123"
+}
+```
+
+_vastaus_
+```
+{
+  "tyontekijaId": 1,
+  "etunimi": "Matti",
+  "sukunimi": "Meikäläinen",
+  "email": "matti.meikalainen@example.com",
+  "puhnro": "0401234567",
+  "katuosoite": "Katu 123",
+  "postinumero": {
+    "postinumero": "00100",
+    "paikkakunta": "Helsinki"
+  }
+}
+```
+
+- Onnistunut vastaus: Luodun työntekijän tiedot JSON-muodossa, HTTP-statuskoodi 201 (Created).
+- JSON-arvo puuttuu: Palauttaa 400 (Bad Request) "_Kyseinen arvo_ on pakollinen"
+- Postinumero on väärä: Palauttaa 404 (Not Found) "Postinumeroa ei löydy"
+- Paikkakunta ei täsmää postinumeroon: Palauttaa 400 (Bad Request) "Paikkakunta ei täsmää postinumeroon"
+
+
+##### Hae työntekijää Id:n perusteella
+
+Hakee yhden työntekijän kaikki tiedot (paitsi salasanan)
+
+_Pyyntö_
+
+- HTTP-metodi: GET
+- Endpoint: /tyontekijat/{tyontekijaId}
+- Polkuparametrit: {tyontekijaId} (kokonaisluku, pakollinen): Työntekijän yksilöllinen tunniste
+
+_Esimerkki_
+GET /tyontekijat/1
+
+_Vastaus:_
+
+```
+{
+    "tyontekijaId": 1,
+    "etunimi": "Matti",
+    "sukunimi": "Meikäläinen",
+    "email": "matti.meikalainen@ticketguru.fi",
+    "puhnro": "0401234567",
+    "katuosoite": "Mannerheimintie 1",
+    "postinumero": "00100",
+    "paikkakunta": "Helsinki"
+}
+```
+- Onnistunut vastaus: 200 (OK)
+- Työntekijän Id:tä ei löydy: 404 (Not Found) "Työntekijää ei löydy id:llä: 99"
+
+##### Hae kaikki työntekijät
+
+Palauttaa Listan työntekijöistä
+
+_Pyyntö_
+
+- HTTP-metodi: GET
+- Endpoint: /tyontekijat/
+
+_Esimerkki_
+GET /tyontekijat/
+
+_Vastaus_
+
+```
+[
+    {
+        "tyontekijaId": 1,
+        "etunimi": "Matti",
+        "sukunimi": "Meikäläinen",
+        "email": "matti.meikalainen@ticketguru.fi",
+        "puhnro": "0401234567",
+        "katuosoite": "Mannerheimintie 1",
+        "postinumero": "00100",
+        "paikkakunta": "Helsinki"
+    },
+    {
+        "tyontekijaId": 2,
+        "etunimi": "Liisa",
+        "sukunimi": "Lahtinen",
+        "email": "liisa.lahtinen@ticketguru.fi",
+        "puhnro": "0507654321",
+        "katuosoite": "Urheilupuistontie 3",
+        "postinumero": "02100",
+        "paikkakunta": "Espoo"
+    },
+    {
+        "tyontekijaId": 3,
+        "etunimi": "Erkki",
+        "sukunimi": "Esimerkki",
+        "email": "esko.esimerkki@example.com",
+        "puhnro": "0440654321",
+        "katuosoite": "Esimerkkikatu 10",
+        "postinumero": "00180",
+        "paikkakunta": "Helsinki"
+    }
+]
+```
+- Onnistunut vastaus: 200 (OK)
+- Työntekijöitä ei löytynyt: 404 (Not Found) "Työntekijöitä ei löytynyt"
+
+##### Päivitä työntekijän tiedot (kaikki paitsi salasana)
+
+_Pyyntö_
+
+- HTTP-metodi: PATCH
+- Endpoint: /tyontekijat/{tyontekijaId}
+- Polkuparametrit: {tyontekijaId} (kokonaisluku, pakollinen): Työntekijän yksilöllinen tunniste
+- Otsikot: Content-Type: application/json
+- Body: JSON-objekti, joka sisältää päivitettävät työntekijän tiedot
+
+_Esimerkki_
+
+```
+{
+    "email": "erkki.esimerkki@example.com"
+}
+```
+
+_Vastaus_
+
+```
+{
+    "tyontekijaId": 3,
+    "etunimi": "Erkki",
+    "sukunimi": "Esimerkki",
+    "email": "erkki.esimerkki@example.com",
+    "puhnro": "0440654321",
+    "katuosoite": "Esimerkkikatu 10",
+    "postinumero": "00180",
+    "paikkakunta": "Helsinki"
+}
+```
+
+- Onnistunut vastaus: Päivitetyn työntekijän tiedot JSON-muodossa, HTTP-statuskoodi 200 (OK).
+- Jos työntekijää ei löydy, virheviesti ja HTTP-statuskoodi 404 (Not Found) "Työntekijää ei löydy".
+
+##### Vaihda työntekijän salasana
+
+_Pyyntö_
+
+- HTTP-metodi: Put
+- Endpoint: /tyontekijat/vaihda-salasana/{tyontekijaId}
+- Polkuparametrit: {tyontekijaId} (kokonaisluku, pakollinen): Työntekijän yksilöllinen tunniste
+- Otsikot: Content-Type: application/json
+- Body: JSON-objekti, joka sisältää päivitettävät työntekijän tiedot
+
+_Esimerkki_
+
+```
+{
+  "vanhaSalasana": "salasana123",
+  "uusiSalasana": "qwerty1234"
+}
+```
+
+_Vastaus_
+
+- Onnistunut vastaus: Päivitetyn työntekijän tiedot JSON-muodossa, HTTP-statuskoodi 200 (OK) "Salasana vaihdettu onnistuneesti".
+- Jos työntekijää ei löydy, virheviesti ja HTTP-statuskoodi 404 (Not Found) "Työntekijää ei löydy".
+- Jos vanha salasana on virheellinen: 400 (Bad Request) "Väärä vanha salasana"
+- Jos salasana ei ole oikean mittainen: 400 (Bad Request) "Uuden/Vanhan salasanan on oltava 8-60 merkkiä pitkä"
+- Jos salasana on tyhjä: 400 (Bad Request) "Uusi/Vanha salasana ei voi olla tyhjä"
+
+##### Poista työntekijä
+
+Poistaa työntekijän.
+
+_Pyyntö_
+
+- HTTP-metodi: DELETE
+- Endpoint: /tyontekijat/{tyontekijaId}
+- Polkuparametrit: {tyontekijaId} (kokonaisluku, pakollinen): Työntekijän yksilöllinen tunniste
+
+_Esimerkki_
+DELETE /tyontekijat/1
+
+_Vastaus_
+
+- Onnistunut poisto: Tyhjä vastaus, HTTP-statuskoodi 204 (No Content).
+- Jos tapahtumalippua ei löydy: Virheviesti ja HTTP-statuskoodi 404 (Not Found) "Työntekijää ei löytynyt".
 ## Testaus
 
 Tässä kohdin selvitetään, miten ohjelmiston oikea toiminta varmistetaan

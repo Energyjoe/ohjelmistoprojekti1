@@ -1,5 +1,9 @@
 package kevat25.ohjelmistoprojekti1.service;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.Collectors;
+
 import org.springframework.http.HttpStatus;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -28,7 +32,32 @@ public class TyontekijaService {
         this.passwordEncoder = passwordEncoder;
     }
 
+    //Haetaan yhden työntekijän tiedot
+    public TyontekijaResponseDTO getTyontekijaById(Long tyontekijaId) {
+        Tyontekija tyontekija = tyontekijaRepository.findById(tyontekijaId)
+        .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Työntekijää ei löydy id:llä: " + tyontekijaId));
+
+        return new TyontekijaResponseDTO(tyontekija);
+    }
+
+    //Haetaan kaikki työntekijät
+    public List<TyontekijaResponseDTO> getAllTyontekijat() {
+        Iterable<Tyontekija> iterableTyontekijat = tyontekijaRepository.findAll();  //Hakee kaikki myyntitapahtumat
+        List<Tyontekija> tyontekijat = new ArrayList<Tyontekija>(); // Luo Listamuuttujan myynneille
+
+        for (Tyontekija tyontekija : iterableTyontekijat) { // Looppaa iterable myyntien läpi ja lisää ne listaan
+            tyontekijat.add(tyontekija); // Add to the list
+        }
+
+        return tyontekijat.stream().map(tyontekija -> {
+            TyontekijaResponseDTO responseDto = getTyontekijaById(tyontekija.getTyontekijaId()); //Muokkaa tyontekija entityt TyontekijaResponseDTO -objekteiksi
+            return responseDto; 
+        }).collect(Collectors.toList()); //Kerää responseDTO -objektit listaan
+    }
+
+    //Luodaan uusi työntekijä
     public TyontekijaResponseDTO createTyontekija(TyontekijaCreateDTO createDto) {
+
         Tyontekija tyontekija = new Tyontekija();
         tyontekija.setEtunimi(createDto.getEtunimi());
         tyontekija.setSukunimi(createDto.getSukunimi());
@@ -41,10 +70,16 @@ public class TyontekijaService {
 
         // Haetaan postinumero tietokannasta ja lisätään käyttäjälle
         Postinumero postinumero = postinumeroRepository.findByPostinumero(createDto.getPostinumero().getPostinumero());
-        postinumero.setPaikkakunta(createDto.getPostinumero().getPaikkakunta());
-        if (postinumero.getPostinumero() == null || postinumero.getPaikkakunta() == null) {
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND);
+
+        if (postinumero == null) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Postinumeroa ei löydy");
         }
+
+        if (!postinumero.getPaikkakunta().equals(createDto.getPostinumero().getPaikkakunta())) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Paikkakunta ei täsmää postinumeroon");
+        }
+
+        postinumero.setPaikkakunta(createDto.getPostinumero().getPaikkakunta());
 
         tyontekija.setPostinumero(postinumero);
         Tyontekija savedTyontekija = tyontekijaRepository.save(tyontekija);
@@ -105,7 +140,7 @@ public class TyontekijaService {
 
         // Tarkistetaan, täsmääkö vanha salasana
         if (!passwordEncoder.matches(salasanaDto.getVanhaSalasana(), tyontekija.getBcrypthash())) {
-            throw new IllegalArgumentException("Vanha salasana ei ole oikein");
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Väärä vanha salasana");
         }
 
         // Päivitetään salasana

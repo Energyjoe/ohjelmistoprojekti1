@@ -2,6 +2,7 @@ package kevat25.ohjelmistoprojekti1.domain;
 
 //Palauttaa työntekijän tiedot ilman salasanaa.
 public class TyontekijaResponseDTO {
+    private Long tyontekijaId;
     private String etunimi;
     private String sukunimi;
     private String email;
@@ -11,6 +12,7 @@ public class TyontekijaResponseDTO {
     private String paikkakunta;
 
     public TyontekijaResponseDTO(Tyontekija t) {
+        this.tyontekijaId = t.getTyontekijaId();
         this.etunimi = t.getEtunimi();
         this.sukunimi = t.getSukunimi();
         this.email = t.getEmail();
@@ -18,6 +20,14 @@ public class TyontekijaResponseDTO {
         this.katuosoite = t.getKatuosoite();
         this.postinumero = t.getPostinumero().getPostinumero();
         this.paikkakunta = t.getPostinumero().getPaikkakunta();
+    }
+
+    public Long getTyontekijaId() {
+        return tyontekijaId;
+    }
+
+    public void setTyontekijaId(Long tyontekijaId) {
+        this.tyontekijaId = tyontekijaId;
     }
 
     public String getEtunimi() {
