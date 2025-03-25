@@ -1,7 +1,9 @@
 package kevat25.ohjelmistoprojekti1.web;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,9 +30,6 @@ import kevat25.ohjelmistoprojekti1.domain.TyontekijaResponseDTO;
 import kevat25.ohjelmistoprojekti1.domain.TyontekijaUpdateDTO;
 import kevat25.ohjelmistoprojekti1.service.TyontekijaService;
 
-
-
-
 @RestController
 @RequestMapping("/tyontekijat")
 public class tyontekijaController {
@@ -44,27 +43,27 @@ public class tyontekijaController {
         this.tyontekijaRepository = tyontekijaRepository;
     }
 
-    //Lisää työntekijä
+    // Lisää työntekijä
     @PostMapping("/")
     public ResponseEntity<TyontekijaResponseDTO> createTyontekija(@Valid @RequestBody TyontekijaCreateDTO createDto) {
-        
-        TyontekijaResponseDTO response = tyontekijaService.createTyontekija(createDto);        
+
+        TyontekijaResponseDTO response = tyontekijaService.createTyontekija(createDto);
         return ResponseEntity.status(HttpStatus.CREATED).body(response);
     }
 
-    //Hae työntekijän tiedot Id:n perusteella
+    // Hae työntekijän tiedot Id:n perusteella
     @GetMapping("/{tyontekijaId}")
     public ResponseEntity<TyontekijaResponseDTO> getTyontekijaById(@PathVariable Long tyontekijaId) {
-        
+
         TyontekijaResponseDTO response = tyontekijaService.getTyontekijaById(tyontekijaId);
         return ResponseEntity.ok(response);
     }
-    
-    //Hae kaikki työntekijät
+
+    // Hae kaikki työntekijät
     @GetMapping("/")
     public List<TyontekijaResponseDTO> getAllMyynnit() {
-        
-        List<TyontekijaResponseDTO> tyontekijat = tyontekijaService.getAllTyontekijat(); 
+
+        List<TyontekijaResponseDTO> tyontekijat = tyontekijaService.getAllTyontekijat();
         if (tyontekijat.isEmpty()) {
             return new ArrayList<>();
         }
@@ -73,28 +72,34 @@ public class tyontekijaController {
 
     // Muokkaa työntekijää
     @PatchMapping("/{tyontekijaId}")
-    public ResponseEntity<TyontekijaResponseDTO> updateTyontekija(@PathVariable Long tyontekijaId, @Valid @RequestBody TyontekijaUpdateDTO updateDto) {
-        
+    public ResponseEntity<TyontekijaResponseDTO> updateTyontekija(@PathVariable Long tyontekijaId,
+            @Valid @RequestBody TyontekijaUpdateDTO updateDto) {
+
         TyontekijaResponseDTO response = tyontekijaService.updateTyontekija(tyontekijaId, updateDto);
         return ResponseEntity.ok(response);
 
     }
 
-    //Vaihda salasana
+    // Vaihda salasana
     @PutMapping("/{tyontekijaId}/salasana")
-    public ResponseEntity<String> updateSalasana(@PathVariable Long tyontekijaId, @Valid @RequestBody SalasanaUpdateDTO salasanaDto) {
+    public ResponseEntity<Map<String, String>> updateSalasana(@PathVariable Long tyontekijaId,
+            @Valid @RequestBody SalasanaUpdateDTO salasanaDto) {
 
         tyontekijaService.updateSalasana(tyontekijaId, salasanaDto);
-        return ResponseEntity.ok("Salasana vaihdettu onnistuneesti");
+
+        Map<String, String> response = new HashMap<>();
+        response.put("message", "Salasana päivitetty onnistuneesti!");
+
+        return ResponseEntity.ok(response);
     }
 
-    //Poista työntekijä
+    // Poista työntekijä
     @DeleteMapping("/{tyontekijaId}")
     @ResponseBody
     public ResponseEntity<String> deleteTyontekija(@PathVariable Long tyontekijaId) {
 
         Optional<Tyontekija> tyontekija = tyontekijaRepository.findById(tyontekijaId);
-        if(tyontekija.isPresent()) {
+        if (tyontekija.isPresent()) {
             tyontekijaRepository.delete(tyontekija.get());
             return ResponseEntity.noContent().build();
         } else {
