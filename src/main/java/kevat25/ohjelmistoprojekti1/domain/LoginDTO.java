@@ -1,7 +1,11 @@
 package kevat25.ohjelmistoprojekti1.domain;
 
+import jakarta.validation.constraints.NotEmpty;
+
 public class LoginDTO {
+    @NotEmpty(message = "Sähköposti on pakollinen")
     private String email;
+    @NotEmpty(message = "Salasana on pakollinen")
     private String salasana;
 
     public LoginDTO() {}

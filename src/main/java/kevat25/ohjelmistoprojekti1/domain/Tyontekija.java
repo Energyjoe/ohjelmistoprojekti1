@@ -48,6 +48,7 @@ public class Tyontekija {
 
     @NotBlank (message = "Työntekijällä tulee olla sähköposti")
     @Email (message = "Sähköpostin tulee olla oikeassa muodossa")
+    @Column(unique=true)
     @Size(max=254, message = "Sähköposti voi olla enintään 254 merkkiä")
     private String email;
 
