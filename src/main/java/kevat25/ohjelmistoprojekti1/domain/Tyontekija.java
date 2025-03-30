@@ -25,7 +25,7 @@ import jakarta.validation.constraints.Size;
 public class Tyontekija {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY) // Tyontekija-id generoidaan automaattisesti tietokannan avulla
+    @GeneratedValue(strategy = GenerationType.AUTO) // Tyontekija-id generoidaan automaattisesti
     @Column(name = "tyontekija_id") // Taulun sarake, jossa säilytetään työntekijän id:tä
     private Long tyontekijaId;
 

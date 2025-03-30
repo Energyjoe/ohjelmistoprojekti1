@@ -803,7 +803,7 @@ Content-Type: application/json
   "katuosoite": "Katu 123",
   "postinumero": {
     "postinumero": "00100",
-    "paikkakunta": "Helsinki"
+    "paikkakunta": "HELSINKI"
   },
   "bcrypthash": "salasana123"
 }
@@ -820,7 +820,7 @@ _vastaus_
   "katuosoite": "Katu 123",
   "postinumero": {
     "postinumero": "00100",
-    "paikkakunta": "Helsinki"
+    "paikkakunta": "HELSINKI"
   }
 }
 ```
@@ -855,7 +855,7 @@ _Vastaus:_
     "puhnro": "0401234567",
     "katuosoite": "Mannerheimintie 1",
     "postinumero": "00100",
-    "paikkakunta": "Helsinki"
+    "paikkakunta": "HELSINKI"
 }
 ```
 - Onnistunut vastaus: 200 (OK)
@@ -885,7 +885,7 @@ _Vastaus_
         "puhnro": "0401234567",
         "katuosoite": "Mannerheimintie 1",
         "postinumero": "00100",
-        "paikkakunta": "Helsinki"
+        "paikkakunta": "HELSINKI"
     },
     {
         "tyontekijaId": 2,
@@ -895,7 +895,7 @@ _Vastaus_
         "puhnro": "0507654321",
         "katuosoite": "Urheilupuistontie 3",
         "postinumero": "02100",
-        "paikkakunta": "Espoo"
+        "paikkakunta": "ESPOO"
     },
     {
         "tyontekijaId": 3,
@@ -905,7 +905,7 @@ _Vastaus_
         "puhnro": "0440654321",
         "katuosoite": "Esimerkkikatu 10",
         "postinumero": "00180",
-        "paikkakunta": "Helsinki"
+        "paikkakunta": "HELSINKI"
     }
 ]
 ```
@@ -941,7 +941,7 @@ _Vastaus_
     "puhnro": "0440654321",
     "katuosoite": "Esimerkkikatu 10",
     "postinumero": "00180",
-    "paikkakunta": "Helsinki"
+    "paikkakunta": "HELSINKI"
 }
 ```
 
@@ -1120,6 +1120,37 @@ _Vastaus_
 
 - Onnistunut poisto: Tyhjä vastaus, HTTP-statuskoodi 204 (No Content).
 - Jos asiakastyyppiä ei löydy: Virheviesti ja HTTP-statuskoodi 404 (Not Found) "Asiakastyyppiä ei löytynyt".
+
+### Kirjautuminen
+
+_Pyyntö_
+
+- HTTP-metodi: POST
+- Päätepiste: /login
+- Otsikot: Content-Type: application/json
+- Body: JSON-objekti, joka sisältää kirjautumistiedot
+
+_Esimerkki_
+POST /login
+Content-Type: application/json
+
+```
+{
+  "email": "essi.esimerkki@ticketguru.fi",
+  "salasana": "qwerty1234"
+}
+```
+
+_vastaus_
+```
+{
+    "token": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJlc3NpLmVzaW1lcmtraUB0aWNrZXRndXJ1LmZpIiwiaWF0IjoxNzQzMzY2Mzk1LCJleHAiOjE3NDMzNjk5OTV9.9c8Rd-RqBtHxfKBUtN55PsixD06ghFUvdvm61MXl_eE"
+}
+```
+
+- Onnistunut vastaus: JWC-Token JSON-muodossa, HTTP-statuskoodi 200 (OK).
+- Väärä salasana tai sähköposti: HTTP-statuskoodi 403 (Forbidden).
+
 
 ## Testaus
 

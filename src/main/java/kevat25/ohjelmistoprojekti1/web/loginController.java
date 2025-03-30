@@ -1,5 +1,8 @@
 package kevat25.ohjelmistoprojekti1.web;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -22,7 +25,8 @@ public class loginController {
     private final SalasanaTarkistusService salasanaTarkistusService;
     private final TyontekijaRepository tyontekijaRepository;
 
-    public loginController(JwtService jwtService, SalasanaTarkistusService salasanaTarkistusService, TyontekijaRepository tyontekijaRepository) {
+    public loginController(JwtService jwtService, SalasanaTarkistusService salasanaTarkistusService,
+            TyontekijaRepository tyontekijaRepository) {
         this.jwtService = jwtService;
         this.salasanaTarkistusService = salasanaTarkistusService;
         this.tyontekijaRepository = tyontekijaRepository;
@@ -31,19 +35,25 @@ public class loginController {
     @PostMapping()
     public ResponseEntity<?> login(@RequestBody LoginDTO loginDto) {
 
-        //Haetaan työntekijä tietokannasta
+        // Haetaan työntekijä tietokannasta
         Tyontekija tyontekija = tyontekijaRepository.findByEmail(loginDto.getEmail())
-        .orElseThrow(() -> new ResponseStatusException(HttpStatus.UNAUTHORIZED, "Virheellinen sähköposti tai salasana"));
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.UNAUTHORIZED,
+                        "Virheellinen sähköposti tai salasana"));
 
-        //Tarkistetaan annettu salasana
-        boolean salasanaok = salasanaTarkistusService.tarkistaSalasana(loginDto.getSalasana(), tyontekija.getBcrypthash());
+        // Tarkistetaan annettu salasana
+        boolean salasanaok = salasanaTarkistusService.tarkistaSalasana(loginDto.getSalasana(),
+                tyontekija.getBcrypthash());
         if (!salasanaok) {
             throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "Virheellinen sähköposti tai salasana");
         }
 
-        //Luodaan ja palautetaan token
+        // Luodaan ja palautetaan token
         String token = jwtService.generateToken(loginDto.getEmail());
 
-        return ResponseEntity.ok(token);
+        Map<String, String> response = new HashMap<>();
+        response.put("token", token);
+
+        return ResponseEntity.ok(response);
+
     }
 }
