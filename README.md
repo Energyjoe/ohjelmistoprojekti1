@@ -179,6 +179,40 @@ Tämän lisäksi
 
 ## REST API -dokumentaatio
 
+Kaikkiin rajapinnan endpointteihin sovelletaan seuraavaa sääntöä: Jos client lähettää pyynnön ilman voimassa olevaa JWT-tunnistetta, palvelin palauttaa HTTP-statuskoodin 403 Forbidden.
+
+Jotta pääsy rajapintaan voidaan varmistaa, käyttäjän on ensin kirjauduttava sisään ja hankittava JWT-tunniste.
+
+### Kirjautuminen
+
+_Pyyntö_
+
+- HTTP-metodi: POST
+- Päätepiste: /login
+- Otsikot: Content-Type: application/json
+- Body: JSON-objekti, joka sisältää kirjautumistiedot
+
+_Esimerkki_
+POST /login
+Content-Type: application/json
+
+```
+{
+  "email": "essi.esimerkki@ticketguru.fi",
+  "salasana": "qwerty1234"
+}
+```
+
+_vastaus_
+```
+{
+    "token": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJlc3NpLmVzaW1lcmtraUB0aWNrZXRndXJ1LmZpIiwiaWF0IjoxNzQzMzY2Mzk1LCJleHAiOjE3NDMzNjk5OTV9.9c8Rd-RqBtHxfKBUtN55PsixD06ghFUvdvm61MXl_eE"
+}
+```
+
+- Onnistunut vastaus: JWC-Token JSON-muodossa, HTTP-statuskoodi 200 (OK).
+- Väärä salasana tai sähköposti: HTTP-statuskoodi 403 (Forbidden).
+
 ### Tapahtumat
 
 ##### _Perus-URL (base URL)_
@@ -1120,37 +1154,6 @@ _Vastaus_
 
 - Onnistunut poisto: Tyhjä vastaus, HTTP-statuskoodi 204 (No Content).
 - Jos asiakastyyppiä ei löydy: Virheviesti ja HTTP-statuskoodi 404 (Not Found) "Asiakastyyppiä ei löytynyt".
-
-### Kirjautuminen
-
-_Pyyntö_
-
-- HTTP-metodi: POST
-- Päätepiste: /login
-- Otsikot: Content-Type: application/json
-- Body: JSON-objekti, joka sisältää kirjautumistiedot
-
-_Esimerkki_
-POST /login
-Content-Type: application/json
-
-```
-{
-  "email": "essi.esimerkki@ticketguru.fi",
-  "salasana": "qwerty1234"
-}
-```
-
-_vastaus_
-```
-{
-    "token": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJlc3NpLmVzaW1lcmtraUB0aWNrZXRndXJ1LmZpIiwiaWF0IjoxNzQzMzY2Mzk1LCJleHAiOjE3NDMzNjk5OTV9.9c8Rd-RqBtHxfKBUtN55PsixD06ghFUvdvm61MXl_eE"
-}
-```
-
-- Onnistunut vastaus: JWC-Token JSON-muodossa, HTTP-statuskoodi 200 (OK).
-- Väärä salasana tai sähköposti: HTTP-statuskoodi 403 (Forbidden).
-
 
 ## Testaus
 
