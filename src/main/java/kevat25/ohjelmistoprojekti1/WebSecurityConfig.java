@@ -30,7 +30,7 @@ public class WebSecurityConfig {
                 // Määritä pääsynhallinta
                 .authorizeHttpRequests((requests) -> requests
                         // Salli pääsy kirjautumispolkuihin ilman autentikointia
-                        .requestMatchers("/login/**").permitAll()
+                        .requestMatchers("/**").permitAll()
                         .anyRequest().authenticated()) // Vaadi autentikointi muilta pyynnöiltä
                 // Lisää mukautettu JWT-suodatin ennen käyttäjätunnus-salasana-suodatinta
                 .addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class);
