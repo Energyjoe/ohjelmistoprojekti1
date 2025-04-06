@@ -204,6 +204,7 @@ Content-Type: application/json
 ```
 
 _vastaus_
+
 ```
 {
     "token": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJlc3NpLmVzaW1lcmtraUB0aWNrZXRndXJ1LmZpIiwiaWF0IjoxNzQzMzY2Mzk1LCJleHAiOjE3NDMzNjk5OTV9.9c8Rd-RqBtHxfKBUtN55PsixD06ghFUvdvm61MXl_eE"
@@ -844,6 +845,7 @@ Content-Type: application/json
 ```
 
 _vastaus_
+
 ```
 {
   "tyontekijaId": 1,
@@ -863,7 +865,6 @@ _vastaus_
 - JSON-arvo puuttuu: Palauttaa 400 (Bad Request) "_Kyseinen arvo_ on pakollinen"
 - Postinumero on väärä: Palauttaa 404 (Not Found) "Postinumeroa ei löydy"
 - Paikkakunta ei täsmää postinumeroon: Palauttaa 400 (Bad Request) "Paikkakunta ei täsmää postinumeroon"
-
 
 ##### Hae työntekijää Id:n perusteella
 
@@ -892,6 +893,7 @@ _Vastaus:_
     "paikkakunta": "HELSINKI"
 }
 ```
+
 - Onnistunut vastaus: 200 (OK)
 - Työntekijän Id:tä ei löydy: 404 (Not Found) "Työntekijää ei löydy id:llä: 99"
 
@@ -943,6 +945,7 @@ _Vastaus_
     }
 ]
 ```
+
 - Onnistunut vastaus: 200 (OK)
 - Työntekijöitä ei löytynyt: Palauttaa tyhjän listan 200 (OK)
 
@@ -1055,6 +1058,7 @@ Content-Type: application/json
 ```
 
 _vastaus_
+
 ```
 {
     "asiakastyyppiId": 5,
@@ -1079,6 +1083,7 @@ POST /asiakastyypit/
 Content-Type: application/json
 
 _vastaus_
+
 ```
 [
     {
@@ -1127,6 +1132,7 @@ Content-Type: application/json
 ```
 
 _vastaus_
+
 ```
 {
     "asiakastyyppiId": 5,
@@ -1166,17 +1172,13 @@ Tänne kirjataan myös lopuksi järjestelmän tunnetut ongelmat, joita ei ole ko
 
 ## Asennustiedot
 
-Järjestelmän asennus on syytä dokumentoida kahdesta näkökulmasta:
+Käytössä olevana tietokantana PostqreSQL. Tietokanta ajetaan Rahdissa ja yhteys määritellään Spring boot -projektin application-rahti.properties -tiedostossa. Käyttäjätunnus ja salasana löytyvät Rahti-palvelun secretistä ja niitä on käytettävä PostqgreSQL tietokantaa luotaessa.
 
-- järjestelmän kehitysympäristö: miten järjestelmän kehitysympäristön saisi
-  rakennettua johonkin toiseen koneeseen
+Rahtiprojekti löytyy osoitteesta: https://console-openshift-console.apps.2.rahti.csc.fi/project-details/ns/oprojekti1
 
-- järjestelmän asentaminen tuotantoympäristöön: miten järjestelmän saisi
-  asennettua johonkin uuteen ympäristöön.
+Spring boot -projektista löytyy data.sql tiedosto jossa on projektin testaukseen sopivaa testidataa sisältävä SQL-skripti, joka on myös ajettu rahtiin.
 
-Asennusohjeesta tulisi ainakin käydä ilmi, miten käytettävä tietokanta ja
-käyttäjät tulee ohjelmistoa asentaessa määritellä (käytettävä tietokanta,
-käyttäjätunnus, salasana, tietokannan luonti yms.).
+Tietokantaa voidaan käyttää myös paikallisesti, jolloin käytetään application-dev.properties tiedostoa. application.properties tiedostossa on spring.profiles.active= johon tulee muuttaa rahti/dev riippuen kumpaa halutaan käyttää.
 
 ## Käynnistys- ja käyttöohje
 
