@@ -179,6 +179,41 @@ Tämän lisäksi
 
 ## REST API -dokumentaatio
 
+Kaikkiin rajapinnan endpointteihin sovelletaan seuraavaa sääntöä: Jos client lähettää pyynnön ilman voimassa olevaa JWT-tunnistetta, palvelin palauttaa HTTP-statuskoodin 403 Forbidden.
+
+Jotta pääsy rajapintaan voidaan varmistaa, käyttäjän on ensin kirjauduttava sisään ja hankittava JWT-tunniste.
+
+### Kirjautuminen
+
+_Pyyntö_
+
+- HTTP-metodi: POST
+- Päätepiste: /login
+- Otsikot: Content-Type: application/json
+- Body: JSON-objekti, joka sisältää kirjautumistiedot
+
+_Esimerkki_
+POST /login
+Content-Type: application/json
+
+```
+{
+  "email": "essi.esimerkki@ticketguru.fi",
+  "salasana": "qwerty1234"
+}
+```
+
+_vastaus_
+
+```
+{
+    "token": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJlc3NpLmVzaW1lcmtraUB0aWNrZXRndXJ1LmZpIiwiaWF0IjoxNzQzMzY2Mzk1LCJleHAiOjE3NDMzNjk5OTV9.9c8Rd-RqBtHxfKBUtN55PsixD06ghFUvdvm61MXl_eE"
+}
+```
+
+- Onnistunut vastaus: JWC-Token JSON-muodossa, HTTP-statuskoodi 200 (OK).
+- Väärä salasana tai sähköposti: HTTP-statuskoodi 403 (Forbidden).
+
 ### Tapahtumat
 
 ##### _Perus-URL (base URL)_
@@ -810,6 +845,7 @@ Content-Type: application/json
 ```
 
 _vastaus_
+
 ```
 {
   "tyontekijaId": 1,
@@ -820,7 +856,7 @@ _vastaus_
   "katuosoite": "Katu 123",
   "postinumero": {
     "postinumero": "00100",
-    "paikkakunta": "Helsinki"
+    "paikkakunta": "HELSINKI"
   }
 }
 ```
@@ -829,7 +865,6 @@ _vastaus_
 - JSON-arvo puuttuu: Palauttaa 400 (Bad Request) "_Kyseinen arvo_ on pakollinen"
 - Postinumero on väärä: Palauttaa 404 (Not Found) "Postinumeroa ei löydy"
 - Paikkakunta ei täsmää postinumeroon: Palauttaa 400 (Bad Request) "Paikkakunta ei täsmää postinumeroon"
-
 
 ##### Hae työntekijää Id:n perusteella
 
@@ -855,9 +890,10 @@ _Vastaus:_
     "puhnro": "0401234567",
     "katuosoite": "Mannerheimintie 1",
     "postinumero": "00100",
-    "paikkakunta": "Helsinki"
+    "paikkakunta": "HELSINKI"
 }
 ```
+
 - Onnistunut vastaus: 200 (OK)
 - Työntekijän Id:tä ei löydy: 404 (Not Found) "Työntekijää ei löydy id:llä: 99"
 
@@ -885,7 +921,7 @@ _Vastaus_
         "puhnro": "0401234567",
         "katuosoite": "Mannerheimintie 1",
         "postinumero": "00100",
-        "paikkakunta": "Helsinki"
+        "paikkakunta": "HELSINKI"
     },
     {
         "tyontekijaId": 2,
@@ -895,7 +931,7 @@ _Vastaus_
         "puhnro": "0507654321",
         "katuosoite": "Urheilupuistontie 3",
         "postinumero": "02100",
-        "paikkakunta": "Espoo"
+        "paikkakunta": "ESPOO"
     },
     {
         "tyontekijaId": 3,
@@ -905,10 +941,11 @@ _Vastaus_
         "puhnro": "0440654321",
         "katuosoite": "Esimerkkikatu 10",
         "postinumero": "00180",
-        "paikkakunta": "Helsinki"
+        "paikkakunta": "HELSINKI"
     }
 ]
 ```
+
 - Onnistunut vastaus: 200 (OK)
 - Työntekijöitä ei löytynyt: Palauttaa tyhjän listan 200 (OK)
 
@@ -941,7 +978,7 @@ _Vastaus_
     "puhnro": "0440654321",
     "katuosoite": "Esimerkkikatu 10",
     "postinumero": "00180",
-    "paikkakunta": "Helsinki"
+    "paikkakunta": "HELSINKI"
 }
 ```
 
@@ -1021,6 +1058,7 @@ Content-Type: application/json
 ```
 
 _vastaus_
+
 ```
 {
     "asiakastyyppiId": 5,
@@ -1045,6 +1083,7 @@ POST /asiakastyypit/
 Content-Type: application/json
 
 _vastaus_
+
 ```
 [
     {
@@ -1093,6 +1132,7 @@ Content-Type: application/json
 ```
 
 _vastaus_
+
 ```
 {
     "asiakastyyppiId": 5,
@@ -1132,17 +1172,13 @@ Tänne kirjataan myös lopuksi järjestelmän tunnetut ongelmat, joita ei ole ko
 
 ## Asennustiedot
 
-Järjestelmän asennus on syytä dokumentoida kahdesta näkökulmasta:
+Käytössä olevana tietokantana PostqreSQL. Tietokanta ajetaan Rahdissa ja yhteys määritellään Spring boot -projektin application-rahti.properties -tiedostossa. Käyttäjätunnus ja salasana löytyvät Rahti-palvelun secretistä ja niitä on käytettävä PostqgreSQL tietokantaa luotaessa.
 
-- järjestelmän kehitysympäristö: miten järjestelmän kehitysympäristön saisi
-  rakennettua johonkin toiseen koneeseen
+Rahtiprojekti löytyy osoitteesta: https://console-openshift-console.apps.2.rahti.csc.fi/project-details/ns/oprojekti1
 
-- järjestelmän asentaminen tuotantoympäristöön: miten järjestelmän saisi
-  asennettua johonkin uuteen ympäristöön.
+Spring boot -projektista löytyy data.sql tiedosto jossa on projektin testaukseen sopivaa testidataa sisältävä SQL-skripti, joka on myös ajettu rahtiin.
 
-Asennusohjeesta tulisi ainakin käydä ilmi, miten käytettävä tietokanta ja
-käyttäjät tulee ohjelmistoa asentaessa määritellä (käytettävä tietokanta,
-käyttäjätunnus, salasana, tietokannan luonti yms.).
+Tietokantaa voidaan käyttää myös paikallisesti, jolloin käytetään application-dev.properties tiedostoa. application.properties tiedostossa on spring.profiles.active= johon tulee muuttaa rahti/dev riippuen kumpaa halutaan käyttää.
 
 ## Käynnistys- ja käyttöohje
 

@@ -39,6 +39,8 @@ public class Lippu {
     @Size(min = 8, max = 8, message = "Koodin pitää olla kahdeksan merkkiä pitkä")
     private String tarkistuskoodi;
 
+    private boolean tarkistettu;
+
     // Parametriton konstruktori
     public Lippu() {
     }
@@ -49,6 +51,7 @@ public class Lippu {
         this.tapahtumalippu = tapahtumalippu;
         this.myynti = myynti;
         this.tarkistuskoodi = tarkistuskoodi;
+        this.tarkistettu = false; // Oletuksena lippu ei ole tarkistettu
     }
 
     public Long getLippuId() {
@@ -83,10 +86,18 @@ public class Lippu {
         this.tarkistuskoodi = tarkistuskoodi;
     }
 
+    public boolean getTarkistettu() {
+        return tarkistettu;
+    }
+
+    public void setTarkistettu(boolean tarkistettu) {
+        this.tarkistettu = tarkistettu;
+    }
+
     @Override
     public String toString() {
         return "Lippu [lippuId=" + lippuId + ", tapahtumalippu=" + tapahtumalippu + ", myynti=" + myynti
-                + ", tarkistuskoodi=" + tarkistuskoodi + "]";
+                + ", tarkistuskoodi=" + tarkistuskoodi + ", tarkistettu=" + tarkistettu + "]";
     }
 
 }

@@ -17,6 +17,10 @@ public class LippuDTO {
     @Size(min=8, max=8, message = "Tarkistuskoodin tulee olla 8 merkkiä pitkä")
     private String tarkistuskoodi;
 
+    // Tarkistettu boolean
+    @NotNull (message = "Tarkistettu kyllä/ei on pakollinen tieto")
+    private boolean tarkistettu;
+
     @NotNull (message = "Myynnin id-numero on pakollinen tieto")
     private Long myyntiId; // Viite myynti-id:hen
 
@@ -41,6 +45,8 @@ public class LippuDTO {
     @Size(max=20, message = "Asiakastyypin nimi voi olla enintään 20 merkkiä")
     private String asiakastyyppi;
 
+
+
     // Parametriton konstruktori
     public LippuDTO() {
     }
@@ -51,6 +57,7 @@ public class LippuDTO {
             String asiakastyyppi) {
         this.lippuId = lippuId;
         this.tarkistuskoodi = tarkistuskoodi;
+        this.tarkistettu = false; // Oletuksena lippu ei ole tarkistettu
         this.myyntiId = myyntiId;
         this.tapahtumalippuId = tapahtumalippuId;
         this.tapahtumanNimi = tapahtumanNimi;
@@ -75,6 +82,13 @@ public class LippuDTO {
 
     public void setTarkistuskoodi(String tarkistuskoodi) {
         this.tarkistuskoodi = tarkistuskoodi;
+    }
+
+    public boolean getTarkistettu() {
+        return tarkistettu;
+    }
+    public void setTarkistettu(boolean tarkistettu) {
+        this.tarkistettu = tarkistettu;
     }
 
     public Long getMyyntiId() {

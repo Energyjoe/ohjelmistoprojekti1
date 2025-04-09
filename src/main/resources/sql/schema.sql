@@ -75,5 +75,6 @@ CREATE TABLE liput (
     FOREIGN KEY (myynti_id) REFERENCES myynnit(myynti_id),
     tapahtumalippu_id INTEGER NOT NULL,
     FOREIGN KEY (tapahtumalippu_id) REFERENCES tapahtumaliput(tapahtumalippu_id),
-    tarkistuskoodi CHAR(8) NOT NULL
+    tarkistuskoodi CHAR(8) NOT NULL,
+    tarkistettu BOOLEAN NOT NULL
 );
