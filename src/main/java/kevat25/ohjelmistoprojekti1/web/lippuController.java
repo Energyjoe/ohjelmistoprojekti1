@@ -20,9 +20,9 @@ import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.transaction.CannotCreateTransactionException;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -33,7 +33,6 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 
 import java.util.List;
 import java.util.Optional;
-
 
 @RestController
 @RequestMapping("/liput")
@@ -98,7 +97,7 @@ public class lippuController {
     }
 
     // Vaihtaa lipun tarkistusarvon, jos arvo on false -> true, ja päinvastoin
-    @PutMapping("/{lippuId}")
+    @PatchMapping("/{lippuId}")
     @ResponseBody
     public ResponseEntity<String> changeState(@PathVariable Long lippuId) {
         Optional<Lippu> lippu = lippuRepository.findById(lippuId);
