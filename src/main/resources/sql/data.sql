@@ -131,6 +131,16 @@ VALUES (
         'liisa.lahtinen@ticketguru.fi',
         '0507654321',
         '$2a$10$R69vjJEdj2w2WZe6O4o2Oe9Sp4yExoWOs97YPLmK9LmjJBYAcXyca'
+    ),
+    (
+        3,
+        '00100',
+        'Adminkuja 1',
+        'Admin',
+        'Admin',
+        'admin@oprojekti1.com',
+        '0401234567',
+        '$2y$10$BX15rKckXurJqyAZH/mr9embv86c7TsyqeiWaF7OTnVZeaEFZY1ny'
     );
 -- Insert sample data into myynti
 INSERT INTO myynnit (myynti_id, tyontekija_id, myyntiaika, email)
@@ -153,8 +163,8 @@ VALUES (
         'asiakas3@example.com'
     );
 -- Insert sample data into liput
-INSERT INTO liput (myynti_id, tapahtumalippu_id, tarkistuskoodi)
-VALUES (1, 1, 'ABCDEF01'),
-    (1, 2, 'BCDEF012'),
-    (2, 3, 'CDEF0123'),
-    (3, 4, 'DEF01234');
+INSERT INTO liput (myynti_id, tapahtumalippu_id, tarkistuskoodi, tarkistettu)
+VALUES (1, 1, 'ABCDEF01', false),
+    (1, 2, 'BCDEF012', false),
+    (2, 3, 'CDEF0123', false),
+    (3, 4, 'DEF01234', false);
