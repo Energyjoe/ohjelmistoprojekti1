@@ -650,6 +650,23 @@ _Vastaus:_
 - Jos lippua ei löydy: Virheviesti ja HTTP-statuskoodi 404 (Not Found)
 - Kun JPA ei pysty avaamaan EntityManager-yhteyttä tietokantaan: Virheviesti "Tietokantayhteys epäonnistui. Yritä uudelleen myöhemmin." ja HTTP-statuskoodi 503 (Service Unavailable).
 
+#### Merkitse lippu käytetyksi
+
+Vaihtaa lipun tarkistusarvon (true/false). 
+
+_Pyyntö:_
+- HTTP-metodi: PUT
+- Endpoint: /liput/{lippuId}
+- Polkuparametrit: {lippuId} (kokonaisluku, pakollinen): Lipun yksilöllinen tunniste
+
+_Esimerkki:_
+PUT /liput/123
+
+_Vastaus:_
+- Onnistunut tarkistustilan muutos: "Lipun tarkistustila vaihdettu"
+- Jos lippua ei löydy: Virheviesti ja HTTP-statuskoodi 404 (Not Found)
+- Kun JPA ei pysty avaamaan EntityManager-yhteyttä tietokantaan: Virheviesti "Tietokantayhteys epäonnistui. Yritä uudelleen myöhemmin." ja HTTP-statuskoodi 503 (Service Unavailable).
+
 ### Tapahtumaliput
 
 ##### _Perus-URL (base URL)_
