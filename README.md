@@ -803,7 +803,7 @@ Content-Type: application/json
   "katuosoite": "Katu 123",
   "postinumero": {
     "postinumero": "00100",
-    "paikkakunta": "Helsinki"
+    "paikkakunta": "HELSINKI"
   },
   "bcrypthash": "salasana123"
 }
