@@ -655,12 +655,12 @@ _Vastaus:_
 Vaihtaa lipun tarkistusarvon (true/false). 
 
 _Pyyntö:_
-- HTTP-metodi: PUT
+- HTTP-metodi: PATCH
 - Endpoint: /liput/{lippuId}
 - Polkuparametrit: {lippuId} (kokonaisluku, pakollinen): Lipun yksilöllinen tunniste
 
 _Esimerkki:_
-PUT /liput/123
+PATCH /liput/123
 
 _Vastaus:_
 - Onnistunut tarkistustilan muutos: "Lipun tarkistustila vaihdettu"
