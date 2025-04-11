@@ -18,6 +18,7 @@ import org.springframework.dao.DataAccessException;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.transaction.CannotCreateTransactionException;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
@@ -51,6 +52,7 @@ public class lippuController {
     }
 
     // Hakee kaikki liput
+    @CrossOrigin
     @GetMapping("/")
     @ResponseBody
     public List<Lippu> getLiput() {
@@ -96,8 +98,7 @@ public class lippuController {
         }
     }
 
-    // Vaihtaa lipun tarkistusarvon, jos arvo on false -> true, muuten antaa
-    // virheilmoituksen
+    // Vaihtaa lipun tarkistusarvon, jos arvo on false -> true, ja päinvastoin
     @PatchMapping("/{lippuId}")
     @ResponseBody
     public ResponseEntity<String> changeState(@PathVariable Long lippuId) {
