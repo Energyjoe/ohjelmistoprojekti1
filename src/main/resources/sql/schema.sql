@@ -6,18 +6,15 @@ DROP TABLE IF EXISTS asiakastyypit CASCADE;
 DROP TABLE IF EXISTS tapahtumat CASCADE;
 DROP TABLE IF EXISTS tapahtumapaikat CASCADE;
 DROP TABLE IF EXISTS postinumerot CASCADE;
-
 CREATE TABLE asiakastyypit (
     asiakastyyppi_id SERIAL PRIMARY KEY,
     asiakastyyppi VARCHAR(20) NOT NULL
 );
-
 CREATE TABLE postinumerot (
     postinumero CHAR(5) PRIMARY KEY,
     paikkakunta VARCHAR(50) NOT NULL,
     CHECK (char_length(postinumero) = 5)
 );
-
 CREATE TABLE tapahtumapaikat (
     tapahtumapaikka_id SERIAL PRIMARY KEY,
     postinumero CHAR(5),
@@ -28,7 +25,6 @@ CREATE TABLE tapahtumapaikat (
     puhnro VARCHAR(15),
     email VARCHAR(254)
 );
-
 CREATE TABLE tapahtumat (
     tapahtuma_id SERIAL PRIMARY KEY,
     tapahtumapaikka_id INTEGER NOT NULL,
@@ -39,16 +35,14 @@ CREATE TABLE tapahtumat (
     kuvaus TEXT,
     kapasiteetti INTEGER
 );
-
 CREATE TABLE tapahtumaliput (
     tapahtumalippu_id SERIAL PRIMARY KEY,
     asiakastyyppi_id INTEGER NOT NULL,
     FOREIGN KEY (asiakastyyppi_id) REFERENCES asiakastyypit(asiakastyyppi_id),
     tapahtuma_id INTEGER NOT NULL,
     FOREIGN KEY (tapahtuma_id) REFERENCES tapahtumat(tapahtuma_id),
-    hinta DECIMAL(6,2) NOT NULL
+    hinta DECIMAL(6, 2) NOT NULL
 );
-
 CREATE TABLE tyontekijat (
     tyontekija_id SERIAL PRIMARY KEY,
     postinumero CHAR(5),
@@ -60,7 +54,6 @@ CREATE TABLE tyontekijat (
     puhnro VARCHAR(15) NOT NULL,
     bcrypthash VARCHAR(60) NOT NULL
 );
-
 CREATE TABLE myynnit (
     myynti_id SERIAL PRIMARY KEY,
     tyontekija_id INTEGER NOT NULL,
@@ -68,13 +61,12 @@ CREATE TABLE myynnit (
     myyntiaika TIMESTAMP NOT NULL,
     email VARCHAR(254)
 );
-
-CREATE TABLE liput (   
+CREATE TABLE liput (
     lippu_id SERIAL PRIMARY KEY,
     myynti_id INTEGER NOT NULL,
     FOREIGN KEY (myynti_id) REFERENCES myynnit(myynti_id),
     tapahtumalippu_id INTEGER NOT NULL,
     FOREIGN KEY (tapahtumalippu_id) REFERENCES tapahtumaliput(tapahtumalippu_id),
     tarkistuskoodi CHAR(8) NOT NULL,
-    tarkistettu BOOLEAN NOT NULL
+    tarkistettu BOOLEAN NOT NULL DEFAULT FALSE
 );
