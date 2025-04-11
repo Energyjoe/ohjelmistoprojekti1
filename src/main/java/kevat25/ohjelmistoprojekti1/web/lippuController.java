@@ -96,16 +96,20 @@ public class lippuController {
         }
     }
 
-    // Vaihtaa lipun tarkistusarvon, jos arvo on false -> true, ja päinvastoin
+    // Vaihtaa lipun tarkistusarvon, jos arvo on false -> true, muuten antaa
+    // virheilmoituksen
     @PatchMapping("/{lippuId}")
     @ResponseBody
     public ResponseEntity<String> changeState(@PathVariable Long lippuId) {
         Optional<Lippu> lippu = lippuRepository.findById(lippuId);
         if (lippu.isPresent()) {
             boolean tarkistettu = lippu.get().getTarkistettu();
+            if (tarkistettu) {
+                throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Lippu on jo tarkistettu");
+            }
             lippu.get().setTarkistettu(!tarkistettu);
             lippuRepository.save(lippu.get());
-            return ResponseEntity.status(HttpStatus.OK).body("Lipun tarkistustila vaihdettu");
+            return ResponseEntity.status(HttpStatus.OK).body("Lipun tarkistustila vaihdettu tarkisetuksi");
         } else {
             // Jos lippua ei löydy, palautetaan 404 Not Found
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Lippua ei löytynyt");
