@@ -99,6 +99,7 @@ public class lippuController {
     }
 
     // Vaihtaa lipun tarkistusarvon, jos arvo on false -> true, ja päinvastoin
+    @CrossOrigin
     @PatchMapping("/{lippuId}")
     @ResponseBody
     public ResponseEntity<String> changeState(@PathVariable Long lippuId) {
