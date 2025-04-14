@@ -51,6 +51,20 @@ public class lippuController {
         this.SecurityFilterChain = SecurityFilterChain;
     }
 
+    // Hakee yhden lipun tiedot lippuId:n perusteella.
+    @CrossOrigin
+    @GetMapping("/{lippuId}")
+    @ResponseBody
+    public ResponseEntity<Lippu> getLippu(@PathVariable Long lippuId) {
+        Optional<Lippu> lippu = lippuRepository.findById(lippuId);
+        if (lippu.isPresent()) {
+            return ResponseEntity.ok(lippu.get());
+        } else {
+            // Jos lippua ei löydy, palautetaan 404 Not Found
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Lippua ei löytynyt");
+        }
+    }
+
     // Hakee kaikki liput
     @CrossOrigin
     @GetMapping("/")
