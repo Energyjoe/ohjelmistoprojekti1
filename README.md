@@ -504,7 +504,54 @@ _Vastaus:_
 
 ##### _Päätepisteet (endpoints)_
 
-###### Hae kaikki liput
+##### Hae yksittäinen lippu
+
+Palauttaa yksittäisen lipun LippuId:n perusteella
+
+_Pyyntö:_
+
+- HTTP-metodi: GET
+- Päätepiste: /liput/
+- Parametrit: {lippuId}
+
+_Esimerkki:_ GET /liput/2
+
+_Vastaus:_
+
+```
+{
+    "lippuId": 2,
+    "tapahtumalippu": {
+        "tapahtumalippuId": 2,
+        "hinta": 45.00,
+        "asiakastyyppi": {
+            "asiakastyyppiId": 2,
+            "asiakastyyppi": "Aikuinen"
+        },
+        "tapahtuma": {
+            "tapahtumaId": 1,
+            "tapahtumaNimi": "HIFK - Kärpät",
+            "kapasiteetti": null,
+            "tapahtumaKuvaus": "Liiga ottelu",
+            "aloitusaika": "2024-03-02T17:00:00",
+            "lopetusaika": "2024-03-02T19:30:00"
+        }
+    },
+    "myynti": {
+        "myyntiId": 1,
+        "myyntiaika": "2024-02-29T12:00:00",
+        "email": "asiakas1@example.com"
+    },
+    "tarkistuskoodi": "BCDEF012",
+    "tarkistettu": true
+}
+```
+
+Onnistunut vastaus: lipun tiedot JSON-muodossa, HTTP-statuskoodi 200 (OK).
+Jos lippuja ei löydy: Virheviesti ja HTTP-statuskoodi 404 (Not Found).
+Kun JPA ei pysty avaamaan EntityManager-yhteyttä tietokantaan: Virheviesti "Tietokantayhteys epäonnistui. Yritä uudelleen myöhemmin." ja HTTP-statuskoodi 503 (Service Unavailable).
+
+##### Hae kaikki liput
 
 Palauttaa kaikki liput.
 
@@ -652,9 +699,10 @@ _Vastaus:_
 
 #### Merkitse lippu käytetyksi
 
-Vaihtaa lipun tarkistusarvon (true/false). 
+Vaihtaa lipun tarkistusarvon (true/false).
 
 _Pyyntö:_
+
 - HTTP-metodi: PATCH
 - Endpoint: /liput/{lippuId}
 - Polkuparametrit: {lippuId} (kokonaisluku, pakollinen): Lipun yksilöllinen tunniste
@@ -663,6 +711,7 @@ _Esimerkki:_
 PATCH /liput/123
 
 _Vastaus:_
+
 - Onnistunut tarkistustilan muutos: "Lipun tarkistustila vaihdettu"
 - Jos lippua ei löydy: Virheviesti ja HTTP-statuskoodi 404 (Not Found)
 - Kun JPA ei pysty avaamaan EntityManager-yhteyttä tietokantaan: Virheviesti "Tietokantayhteys epäonnistui. Yritä uudelleen myöhemmin." ja HTTP-statuskoodi 503 (Service Unavailable).
