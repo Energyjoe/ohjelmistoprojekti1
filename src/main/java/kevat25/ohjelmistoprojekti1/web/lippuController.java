@@ -106,12 +106,9 @@ public class lippuController {
         Optional<Lippu> lippu = lippuRepository.findById(lippuId);
         if (lippu.isPresent()) {
             boolean tarkistettu = lippu.get().getTarkistettu();
-            if (tarkistettu) {
-                throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Lippu on jo tarkistettu");
-            }
             lippu.get().setTarkistettu(!tarkistettu);
             lippuRepository.save(lippu.get());
-            return ResponseEntity.status(HttpStatus.OK).body("Lipun tarkistustila vaihdettu tarkisetuksi");
+            return ResponseEntity.status(HttpStatus.OK).body("Lipun tarkistustila vaihdettu");
         } else {
             // Jos lippua ei löydy, palautetaan 404 Not Found
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Lippua ei löytynyt");
