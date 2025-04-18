@@ -25,7 +25,7 @@ import jakarta.validation.constraints.Size;
 public class Tyontekija {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO) // Tyontekija-id generoidaan automaattisesti
+    @GeneratedValue(strategy = GenerationType.IDENTITY) // Tyontekija-id generoidaan automaattisesti
     @Column(name = "tyontekija_id") // Taulun sarake, jossa säilytetään työntekijän id:tä
     private Long tyontekijaId;
 
@@ -34,30 +34,30 @@ public class Tyontekija {
     @JoinColumn(name = "postinumero") // Liittää postinumeron työntekijään
     private Postinumero postinumero;
 
-    @NotBlank (message= "Työntekijällä tulee olla postiosoite")
-    @Size(max=50, message = "Katuosoite voi olla enintään 50 merkkiä")
+    @NotBlank(message = "Työntekijällä tulee olla postiosoite")
+    @Size(max = 50, message = "Katuosoite voi olla enintään 50 merkkiä")
     private String katuosoite;
 
-    @NotBlank (message = "Työntekijällä tulee olla etunimi")
-    @Size(max=50, message = "Etunimi voi olla enintään 50 merkkiä")
+    @NotBlank(message = "Työntekijällä tulee olla etunimi")
+    @Size(max = 50, message = "Etunimi voi olla enintään 50 merkkiä")
     private String etunimi;
 
-    @NotBlank (message = "Työntekijällä tulee olla sukunimi")
-    @Size(max=50, message = "Sukunimi voi olla enintään 50 merkkiä")
+    @NotBlank(message = "Työntekijällä tulee olla sukunimi")
+    @Size(max = 50, message = "Sukunimi voi olla enintään 50 merkkiä")
     private String sukunimi;
 
-    @NotBlank (message = "Työntekijällä tulee olla sähköposti")
-    @Email (message = "Sähköpostin tulee olla oikeassa muodossa")
-    @Column(unique=true)
-    @Size(max=254, message = "Sähköposti voi olla enintään 254 merkkiä")
+    @NotBlank(message = "Työntekijällä tulee olla sähköposti")
+    @Email(message = "Sähköpostin tulee olla oikeassa muodossa")
+    @Column(unique = true)
+    @Size(max = 254, message = "Sähköposti voi olla enintään 254 merkkiä")
     private String email;
 
-    @NotBlank (message = "Työntekijällä tulee olla puhelinnumero")
-    @Size(max=15, message = "Puhelinnumero voi olla enintään 15 merkkiä")
+    @NotBlank(message = "Työntekijällä tulee olla puhelinnumero")
+    @Size(max = 15, message = "Puhelinnumero voi olla enintään 15 merkkiä")
     private String puhnro;
 
-    @NotNull (message = "Työntekijällä tulee olla salasana")
-    @Size(min=8, max=60, message = "Salasana voi olla enintään 60 merkkiä")
+    @NotNull(message = "Työntekijällä tulee olla salasana")
+    @Size(min = 8, max = 60, message = "Salasana voi olla enintään 60 merkkiä")
     private String bcrypthash;
 
     // Liittää työntekijät myynteihin; poistaa myynnit, jos työntekijä poistetaan
