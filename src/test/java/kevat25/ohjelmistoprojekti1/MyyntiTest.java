@@ -9,11 +9,12 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.exceptions.base.MockitoException;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
+import org.springframework.boot.test.context.SpringBootTest;
 
 import kevat25.ohjelmistoprojekti1.domain.Myynti;
 import kevat25.ohjelmistoprojekti1.domain.Tyontekija;
 
-@DataJpaTest
+@SpringBootTest
 public class MyyntiTest {
     
 @Test
@@ -28,6 +29,4 @@ void testMyynninLuominen() {
     assertEquals(myyntiaika, myynti.getMyyntiaika());
     assertEquals(tyontekija, myynti.getTyontekija());
 }
-
-
 }
