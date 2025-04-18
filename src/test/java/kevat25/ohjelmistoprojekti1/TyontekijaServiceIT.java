@@ -41,7 +41,7 @@ public class TyontekijaServiceIT {
                     "postinumero": "00100",
                      "paikkakunta": "Helsinki"
                    },
-                "bcrypthash": "$2a$12$WZmqRDGUxIik5VTgQ.x1gOJhXfF/GIQNVH8l/JqheRxRkx.UH0OQC"
+                "bcrypthash": "salasana123"
                  }
                  """;
 
