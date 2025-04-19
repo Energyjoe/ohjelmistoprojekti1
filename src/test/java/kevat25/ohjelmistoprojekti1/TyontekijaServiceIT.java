@@ -11,6 +11,9 @@ import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMock
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.web.servlet.MockMvc;
+
+import kevat25.ohjelmistoprojekti1.service.JwtService;
+
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -22,13 +25,17 @@ public class TyontekijaServiceIT {
     private final MockMvc mockMvc;
 
     @Autowired
+    private JwtService jwtService;
+
+    @Autowired
     public TyontekijaServiceIT(MockMvc mockMvc) {
         this.mockMvc = mockMvc;
     }
 
     @Test
     public void testCreateTyontekija() throws Exception {
-        String jwtToken = "Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbkBvcHJvamVrdGkxLmNvbSIsImlhdCI6MTc0NDk5NDQ4NiwiZXhwIjoxNzQ0OTk4MDg2fQ.BcvCsH5QmUtrbSvRoPqErKc7P81t-bOsGECPto4WiAg";
+
+        String jwtToken = TestUtil.generateTestToken(jwtService);
 
         String jsonPayload = """
                  {

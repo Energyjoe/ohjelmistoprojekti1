@@ -21,6 +21,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 
+import kevat25.ohjelmistoprojekti1.service.JwtService;
 import kevat25.ohjelmistoprojekti1.service.MyyntiService;
 
 /** Integraatio testi myyntiServicelle {@link MyyntiService} */
@@ -32,13 +33,16 @@ public class MyyntiServiceIT {
     private final MockMvc mockMvc;
 
     @Autowired
+    private JwtService jwtService;
+
+    @Autowired
     public MyyntiServiceIT(MockMvc mockMvc) {
         this.mockMvc = mockMvc;
     }
 
     @Test
     public void testGetAllMyynnitPalauttaaKaikkiMyynnit() throws Exception {
-        String jwtToken = "Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbkBvcHJvamVrdGkxLmNvbSIsImlhdCI6MTc0NDk4NjMwNiwiZXhwIjoxNzQ0OTg5OTA2fQ.6aMAA_PlaLz9HKXLM0KfpXpOFYoQrbR5-5kIKQX5Nr8";
+        String jwtToken = TestUtil.generateTestToken(jwtService);
 
         mockMvc.perform(get("/myynnit/")
                 .header("Authorization", jwtToken))
