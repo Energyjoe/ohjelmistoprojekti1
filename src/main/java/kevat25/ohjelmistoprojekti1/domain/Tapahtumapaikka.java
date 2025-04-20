@@ -52,7 +52,7 @@ public class Tapahtumapaikka {
     //postinumero
     @ManyToOne
     @JoinColumn(name = "postinumero")
-    @Size(min=5, max=5, message = "Postinumeron tulee olla 5 merkkiä")
+    //Poistettu @Size-annotaatio, koska se ei toimi Postinumero-oliolla
     private Postinumero postinumero;
 
     //OneToMany-viittaus Tapahtumat-tauluun
