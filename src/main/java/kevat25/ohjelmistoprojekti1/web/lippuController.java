@@ -16,6 +16,7 @@ import kevat25.ohjelmistoprojekti1.service.LippuService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.transaction.CannotCreateTransactionException;
 import org.springframework.web.bind.annotation.CrossOrigin;

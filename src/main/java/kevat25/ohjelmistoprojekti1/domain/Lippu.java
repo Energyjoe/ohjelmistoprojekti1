@@ -39,7 +39,8 @@ public class Lippu {
     @Size(min = 8, max = 8, message = "Koodin pitää olla kahdeksan merkkiä pitkä")
     private String tarkistuskoodi;
 
-    private boolean tarkistettu;
+    @Column(name = "tarkistettu")
+    private Boolean tarkistettu;
 
     // Parametriton konstruktori
     public Lippu() {
