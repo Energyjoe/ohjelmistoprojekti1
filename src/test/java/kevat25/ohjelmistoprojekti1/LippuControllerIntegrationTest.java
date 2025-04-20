@@ -19,6 +19,7 @@ import org.springframework.http.MediaType;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import static org.junit.jupiter.api.Assertions.*;
+import java.util.List;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
@@ -79,15 +80,15 @@ mockMvc = MockMvcBuilders.webAppContextSetup(webApplicationContext).build();
 void testPostLippu() throws Exception {
 
 
-// Generate a valid JWT token using TestUtil
+// Generoidaan jwt-token käyttäjälle
 String jwtToken = TestUtil.generateTestToken(jwtService);
     
-// Set up headers with authentication
+// Autentikointi
 HttpHeaders headers = new HttpHeaders();
 headers.set("Authorization", jwtToken);
     
 
-    // Create the necessary entities
+    // Luodaan lippua varten tarvittavat entiteetit
     Tyontekija tyontekija = new Tyontekija();
     tyontekija.setEtunimi("Testi");
     tyontekija.setSukunimi("Testityontekija");
@@ -125,20 +126,20 @@ headers.set("Authorization", jwtToken);
     tapahtumalippu.setAsiakastyyppi(asiakastyyppi); // Set a valid customer type
     tapahtumalippuRepository.save(tapahtumalippu);
 
-    // Create the DTO request
+    // Luodaan DTO lippua varten
     LippuPostDTO request = new LippuPostDTO();
     request.setMyyntiId(myynti.getMyyntiId());
     request.setTapahtumalippuId(tapahtumalippu.getTapahtumalippuId());
 
     HttpEntity<LippuPostDTO> entity = new HttpEntity<>(request, headers);
 
-    // Convert the request to JSON
+    // Muunnetaan pyyntö JSON-muotoon
     String requestJson = new ObjectMapper().writeValueAsString(request);
 
 
     
-// Send the POST request using MockMvc
-mockMvc.perform(post("/liput/")
+// Lähetetään POST-pyyntö ja tarkistetaan vastaus
+    mockMvc.perform(post("/liput/")
     .header("Authorization", jwtToken)
     .contentType(MediaType.APPLICATION_JSON)
     .content(requestJson))
@@ -148,7 +149,7 @@ mockMvc.perform(post("/liput/")
     .andExpect(jsonPath("$.myynti.myyntiId").value(myynti.getMyyntiId()))
     .andExpect(jsonPath("$.tarkistuskoodi").isNotEmpty())
     .andExpect(jsonPath("$.tarkistettu").value(false));
-    }
-}
 
+}
+}
 
