@@ -1230,13 +1230,13 @@ _Vastaus_
 ## Testaus:
 
 Ohjelman testattavat toiminnallisuudet:
-•	Lippujen myynti
-•	Lippujen luominen
-•	Lippujen tarkistus 
-•	Sisäänkirjautuminen
-•	Tapahtumapaikkojen lisääminen 
-•	Tapahtumien lisääminen
-•	Työntekijöiden lisääminen
+- Lippujen myynti
+- Lippujen luominen
+- Lippujen tarkistus
+- Sisäänkirjautuminen
+- Tapahtumapaikkojen lisääminen
+- Tapahtumien lisääminen
+- Työntekijöiden lisääminen
 
 Yksittäisten metodien toimintaa testataan yksikkötesteillä. Järjestelmän eri osien (HTTP-controllerit, tietokanta ja palveluluokka) yhteistoimintaa testataan integraatiotesteillä. Lipun myymistä testataan lipunmyynticlientin avulla end to end -testillä.
 
