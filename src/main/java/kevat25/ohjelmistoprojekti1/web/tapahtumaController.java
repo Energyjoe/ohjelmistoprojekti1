@@ -78,8 +78,13 @@ public class tapahtumaController {
     //Palauttaa jäljellä olevien lippujen määrän
     @GetMapping("/{tapahtumaId}/jaljella")
     public ResponseEntity<Integer> haeJaljellaOlevatLiput(@PathVariable Long tapahtumaId) {
-        int jaljella = lippuService.liputJaljella(tapahtumaId);
-        return ResponseEntity.ok(jaljella);
+        Optional<Tapahtuma> tapahtuma = tapahtumaRepository.findById(tapahtumaId);
+        if (tapahtuma.isPresent()) {
+            int jaljella = lippuService.liputJaljella(tapahtumaId);
+            return ResponseEntity.ok(jaljella);
+        } else {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+        }
     }
 
     @DeleteMapping("/{tapahtumaId}")
@@ -132,4 +137,7 @@ public class tapahtumaController {
          */
 
     }
+
+    //Jäljellä olevien lippujen tulostus
+
 }
