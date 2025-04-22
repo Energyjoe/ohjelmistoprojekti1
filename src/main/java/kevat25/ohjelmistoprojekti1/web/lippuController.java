@@ -33,6 +33,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
@@ -47,6 +48,10 @@ public class lippuController {
     private TapahtumalippuRepository tapahtumalippuRepository;
     @Autowired
     private LippuRepository lippuRepository;
+    @Autowired
+    private TapahtumaRepository tapahtumaRepository;
+    @Autowired
+    private LippuService lippuservice;
 
     lippuController(SecurityFilterChain SecurityFilterChain) {
         this.SecurityFilterChain = SecurityFilterChain;
@@ -90,6 +95,30 @@ public class lippuController {
 
         if (tapahtumalippu.isPresent() && myynti.isPresent()) {
             Long tapahtumaId = tapahtumalippu.get().getTapahtuma().getTapahtumaId();
+            
+            //Haetaan tapahtumaobjekti, jotta voidaan tarkistaa onko ennakkomyynti loppunut
+            Optional<Tapahtuma> tapahtumaOpt = tapahtumaRepository.findById(tapahtumaId);
+
+            if (tapahtumaOpt.isEmpty()) {
+                throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Tapahtumaa ei löytynyt");
+            }
+
+            Tapahtuma tapahtuma = tapahtumaOpt.get();
+
+            //Lasketaan ennakkomyynnin loppumisaika
+            LocalDateTime myynninLoppu = tapahtuma.getAloitusaika().minusHours(1);
+            
+            //Tarkistetaan, että ennakkomyynti ei ole loppunut
+            if (LocalDateTime.now().isAfter(myynninLoppu)) {
+                throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Ennakkomyynti on loppunut");
+            }
+
+            //Tarkistetaan, että lippuja on jäljellä
+            int liputJaljella = lippuservice.liputJaljella(tapahtumaId);
+            if (liputJaljella<=0) {
+                throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Tapahtuma on loppuunmyyty");
+            }
+
             String tarkistuskoodi = LippuService.generoiUniikkiTarkistuskoodi(tapahtumaId, lippuRepository);
 
             Lippu lippu = new Lippu(tapahtumalippu.get(), myynti.get(), tarkistuskoodi);
