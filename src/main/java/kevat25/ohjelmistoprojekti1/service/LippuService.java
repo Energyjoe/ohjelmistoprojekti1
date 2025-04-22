@@ -25,6 +25,8 @@ public class LippuService {
     private LippuRepository lippurepo; // Täältä haetaan myynti_id, johon lippu kuuluu, tarkistuskoodi ja
                                        // tapahtumalippu_id jonka kautta saadaan kyseisen tapahtuman tiedot
 
+    private TapahtumaRepository tapahtumarepo; //Täältä haetaan tapahtuman kapasiteetti
+
     public LippuDTO getLipputiedot(Long lippuId) {
 
         // Luodaan tyhjä LippuDTO objekti
@@ -88,6 +90,16 @@ public class LippuService {
         } while (lippuRepository.existsByTapahtumaAndTarkistuskoodi(tapahtumaId, tarkistuskoodi));
 
         return tarkistuskoodi;
+    }
+
+    public int liputJaljella(Long tapahtumaId) {
+        Tapahtuma tapahtuma = tapahtumarepo.findById(tapahtumaId)
+        .orElseThrow(() -> new RuntimeException("Tapahtumaa ei löytynyt"));
+
+        int kapasiteetti = tapahtuma.getKapasiteetti();
+        long myydyt = lippurepo.countByTapahtumaId(tapahtumaId);
+        int jaljella = kapasiteetti - (int) myydyt;
+        return jaljella;
     }
 
 }

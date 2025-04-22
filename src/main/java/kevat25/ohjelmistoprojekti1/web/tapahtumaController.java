@@ -3,6 +3,7 @@ package kevat25.ohjelmistoprojekti1.web;
 import java.util.List;
 import java.util.Optional;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -17,12 +18,16 @@ import org.springframework.web.bind.annotation.RestController;
 import jakarta.validation.Valid;
 import kevat25.ohjelmistoprojekti1.domain.Tapahtuma;
 import kevat25.ohjelmistoprojekti1.domain.TapahtumaRepository;
+import kevat25.ohjelmistoprojekti1.service.LippuService;
 
 @RestController
 @RequestMapping("/tapahtumat")
 public class tapahtumaController {
 
     private final TapahtumaRepository tapahtumaRepository;
+    
+    @Autowired
+    private LippuService lippuService; //Tämän kautta haetaan tapahtuman myytyjen lippujen määrä
 
     public tapahtumaController(TapahtumaRepository tapahtumaRepository) {
         this.tapahtumaRepository = tapahtumaRepository;
@@ -56,7 +61,7 @@ public class tapahtumaController {
         }
     }
 
-    // Palauttaa tapahtuman tiedot, tai virheilmoitusken, jos kyseistä
+    // Palauttaa tapahtuman tiedot, tai virheilmoituksen, jos kyseistä
     // tapahtumaId:tä ei löydy.
 
     @GetMapping("/{tapahtumaId}")
@@ -68,6 +73,13 @@ public class tapahtumaController {
         } else {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
         }
+    }
+
+    //Palauttaa jäljellä olevien lippujen määrän
+    @GetMapping("/{tapahtumaId}/jaljella")
+    public ResponseEntity<Integer> haeJaljellaOlevatLiput(@PathVariable Long tapahtumaId) {
+        int jaljella = lippuService.liputJaljella(tapahtumaId);
+        return ResponseEntity.ok(jaljella);
     }
 
     @DeleteMapping("/{tapahtumaId}")
