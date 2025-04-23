@@ -1227,14 +1227,20 @@ _Vastaus_
 - Onnistunut poisto: Tyhjä vastaus, HTTP-statuskoodi 204 (No Content).
 - Jos asiakastyyppiä ei löydy: Virheviesti ja HTTP-statuskoodi 404 (Not Found) "Asiakastyyppiä ei löytynyt".
 
-## Testaus
+## Testaus:
 
-Tässä kohdin selvitetään, miten ohjelmiston oikea toiminta varmistetaan
-testaamalla projektin aikana: millaisia testauksia tehdään ja missä vaiheessa.
-Testauksen tarkemmat sisällöt ja testisuoritusten tulosten raportit kirjataan
-erillisiin dokumentteihin.
+Ohjelman testattavat toiminnallisuudet:
+- Lippujen myynti
+- Lippujen luominen
+- Lippujen tarkistus
+- Sisäänkirjautuminen
+- Tapahtumapaikkojen lisääminen
+- Tapahtumien lisääminen
+- Työntekijöiden lisääminen
 
-Tänne kirjataan myös lopuksi järjestelmän tunnetut ongelmat, joita ei ole korjattu.
+Yksittäisten metodien toimintaa testataan yksikkötesteillä. Järjestelmän eri osien (HTTP-controllerit, tietokanta ja palveluluokka) yhteistoimintaa testataan integraatiotesteillä. Lipun myymistä testataan lipunmyynticlientin avulla end to end -testillä.
+
+(Tänne kirjataan myös lopuksi järjestelmän tunnetut ongelmat, joita ei ole korjattu.)
 
 ## Asennustiedot
 
