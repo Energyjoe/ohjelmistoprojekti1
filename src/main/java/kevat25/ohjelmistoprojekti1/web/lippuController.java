@@ -115,10 +115,10 @@ public class lippuController {
 
     // Vaihtaa lipun tarkistusarvon, jos arvo on false -> true, ja päinvastoin
     @CrossOrigin
-    @PatchMapping("/{lippuId}")
+    @PatchMapping("/{tarkistuskoodi}")
     @ResponseBody
-    public ResponseEntity<String> changeState(@PathVariable Long lippuId) {
-        Optional<Lippu> lippu = lippuRepository.findById(lippuId);
+    public ResponseEntity<String> changeState(@PathVariable String tarkistuskoodi) {
+        Optional<Lippu> lippu = lippuRepository.findByTarkistuskoodi(tarkistuskoodi);
         if (lippu.isPresent()) {
             boolean tarkistettu = lippu.get().getTarkistettu();
             lippu.get().setTarkistettu(!tarkistettu);

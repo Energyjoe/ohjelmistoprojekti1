@@ -1,6 +1,7 @@
 package kevat25.ohjelmistoprojekti1.domain;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
@@ -12,6 +13,9 @@ public interface LippuRepository extends CrudRepository<Lippu, Long> {
     List<Lippu> findByMyyntiMyyntiId(Long myyntiId);
 
     List<Lippu> findByLippuId(Long lippuId);
+
+    Optional<Lippu> findByTarkistuskoodi(String tarkistuskoodi);
+
 
     // Tämä on JPQL-kysely (Java Persistence Query Language), joka tarkistaa, onko
     // tietty tarkistuskoodi jo olemassa tietyn tapahtuma-ID:n alla.
