@@ -33,15 +33,16 @@ public class tapahtumaController {
 
         // Tallennetaan tapahtuma repositoryyn
         try {
-        Tapahtuma tallennettuTapahtuma = tapahtumaRepository.save(uusiTapahtuma);
+            Tapahtuma tallennettuTapahtuma = tapahtumaRepository.save(uusiTapahtuma);
 
-        // Palauttaa HTTP-vastauksen
-        return ResponseEntity.status(HttpStatus.CREATED).body(tallennettuTapahtuma);
+            // Palauttaa HTTP-vastauksen
+            return ResponseEntity.status(HttpStatus.CREATED).body(tallennettuTapahtuma);
         }
 
-        //Mikäli ylläoleva ei onnistu, palauttaa virhekoodin.
-        catch (Exception e){
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Tapahtuman lisäys ei onnistunut. Syy: " + e.getMessage());
+        // Mikäli ylläoleva ei onnistu, palauttaa virhekoodin.
+        catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                    .body("Tapahtuman lisäys ei onnistunut. Syy: " + e.getMessage());
         }
     }
 
@@ -84,7 +85,7 @@ public class tapahtumaController {
 
     @PutMapping("/{tapahtumaId}")
     public ResponseEntity<Object> muokkaaTapahtumaa(@Valid @PathVariable Long tapahtumaId,
-            @RequestBody Tapahtuma uusiTapahtuma) {
+            @Valid @RequestBody Tapahtuma uusiTapahtuma) {
 
         // etsitään muokattava tapahtuma id:n perusteella:
         Tapahtuma muokattavaTapahtuma = tapahtumaRepository.findById(tapahtumaId).orElse(null);
