@@ -350,6 +350,27 @@ _Vastaus:_
 - Onnistunut poisto: Tyhjä vastaus, HTTP-statuskoodi 204 (No Content)
 - Jos tapahtumaa ei löydy: Tyhjä vastaus, HTTP-statuskoodi 404 (Not Found)
 
+##### Laske tapahtumassa jäljellä olevat liput
+
+Laskee kuinka monta lippua on jäljellä tapahtumaan sen kapasiteetin ja myytyjen lippujen perusteella. 
+
+_Pyyntö:_
+- HTTP-metodi: GET
+- Endpoint: /tapahtumat/{tapahtumaId}/jaljella
+- Polkuparametrit: {tapahtumaId} (kokonaisluku, pakollinen): Tapahtuman yksilöllinen tunniste
+
+_Esimerkki:_
+
+GET /tapahtumat/123/jaljella
+
+_Vastaus:_
+
+- Onnistunut haku: Jäljellä olevien lippujen määrä
+- Jos tapahtumaa ei löydy: Tyhjä vastaus, HTTP-statuskoodi 404 (Not Found)
+
+
+
+
 ### Myynnit
 
 ##### _Perus-URL (base URL)_
@@ -549,6 +570,7 @@ _Vastaus:_
 
 Onnistunut vastaus: lipun tiedot JSON-muodossa, HTTP-statuskoodi 200 (OK).
 Jos lippuja ei löydy: Virheviesti ja HTTP-statuskoodi 404 (Not Found).
+
 Kun JPA ei pysty avaamaan EntityManager-yhteyttä tietokantaan: Virheviesti "Tietokantayhteys epäonnistui. Yritä uudelleen myöhemmin." ja HTTP-statuskoodi 503 (Service Unavailable).
 
 ##### Hae kaikki liput
@@ -675,7 +697,13 @@ Content-Type: application/json
 _Vastaus:_
 
 - Onnistunut vastaus: Luodun lipun tiedot JSON-muodossa, HTTP-statuskoodi 201 (Created).
+
 - Jos myyntiä tai tapahtumalippua ei löydy: Virheviesti ja HTTP-statuskoodi 404 (Not Found).
+
+- Jos ennakkomyynti on päättynyt: Virheviesti "Ennakkomyynti on päättynyt" ja HTTP-statuskoodi 400 (Bad Request)
+
+- Jos tapahtuma on myyty loppuun: Virheviesti "Tapahtuma on myyty loppuun" ja HTTP-statuskoodi 400 (Bad Request)
+
 - Kun JPA ei pysty avaamaan EntityManager-yhteyttä tietokantaan: Virheviesti "Tietokantayhteys epäonnistui. Yritä uudelleen myöhemmin." ja HTTP-statuskoodi 503 (Service Unavailable).
 
 ##### Poista lippu
