@@ -9,4 +9,6 @@ import org.springframework.data.rest.core.annotation.RepositoryRestResource;
 public interface TyontekijaRepository extends CrudRepository<Tyontekija, Long> {
 
     Optional<Tyontekija> findByEmail(String email);
+
+    boolean existsByEmail(String email);
 }

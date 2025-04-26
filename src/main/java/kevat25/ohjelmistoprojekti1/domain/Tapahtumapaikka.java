@@ -19,54 +19,54 @@ import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 
-
 @Entity
 @Table(name = "tapahtumapaikat")
 public class Tapahtumapaikka {
 
-    //tapahtumapaikkaId
+    // tapahtumapaikkaId
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "tapahtumapaikka_id")
     private Long tapahtumapaikkaId;
 
-    //tapahtumapaikka, katuosoite, puhnro, email
-    @NotBlank (message = "Tapahtumapaikalla tulee olla nimi")
-    @Size(max=50, message = "Tapahtumapaikan nimi voi olla enintään 50 merkkiä")
+    // tapahtumapaikka, katuosoite, puhnro, email
+    @NotBlank(message = "Tapahtumapaikalla tulee olla nimi")
+    @Size(max = 50, message = "Tapahtumapaikan nimi voi olla enintään 50 merkkiä")
     private String tapahtumapaikka;
-    
-    @NotBlank (message = "Tapahtumapaikalla tulee olla osoite")
-    @Size(max=50, message = "Katuosoite voi olla enintään 50 merkkiä")
-    private String katuosoite;
-    
-    @Size(max=15, message = "Puhelinnumero voi olla enintään 15 merkkiä")
-    private String puhnro;
-    
-    @Email (message = "Sähköpostin tulee olla oikeassa muodossa")
-    @Size (max=254, message = "Sähköposti voi olla enintään 254 merkkiä")
-    private String email; 
 
-    @NotNull (message = "Tapahtumapaikalla tulee olla kapasiteetti")
+    @NotBlank(message = "Tapahtumapaikalla tulee olla osoite")
+    @Size(max = 50, message = "Katuosoite voi olla enintään 50 merkkiä")
+    private String katuosoite;
+
+    @Size(max = 15, message = "Puhelinnumero voi olla enintään 15 merkkiä")
+    private String puhnro;
+
+    @Email(message = "Sähköpostin tulee olla oikeassa muodossa")
+    @Size(max = 254, message = "Sähköposti voi olla enintään 254 merkkiä")
+    private String email;
+
+    @NotNull(message = "Tapahtumapaikalla tulee olla kapasiteetti")
     private Integer kapasiteetti;
 
-    //postinumero
+    // postinumero
     @ManyToOne
     @JoinColumn(name = "postinumero")
-    //Poistettu @Size-annotaatio, koska se ei toimi Postinumero-oliolla
+    // Poistettu @Size-annotaatio, koska se ei toimi Postinumero-oliolla
     private Postinumero postinumero;
 
-    //OneToMany-viittaus Tapahtumat-tauluun
-    @OneToMany (cascade = CascadeType.ALL, mappedBy = "tapahtumapaikka")
+    // OneToMany-viittaus Tapahtumat-tauluun
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "tapahtumapaikka")
     @JsonManagedReference
     // https://www.baeldung.com/jackson-bidirectional-relationships-and-infinite-recursion
     private List<Tapahtuma> tapahtumat;
 
-    //parametriton konstruktori
+    // parametriton konstruktori
     public Tapahtumapaikka() {
     }
 
-    //parametrillinen konstruktori
-    public Tapahtumapaikka (String tapahtumapaikka, String katuosoite, String puhnro, String email, Integer kapasiteetti, Postinumero postinumero) {
+    // parametrillinen konstruktori
+    public Tapahtumapaikka(String tapahtumapaikka, String katuosoite, String puhnro, String email, Integer kapasiteetti,
+            Postinumero postinumero) {
         this.tapahtumapaikka = tapahtumapaikka;
         this.katuosoite = katuosoite;
         this.puhnro = puhnro;
@@ -75,7 +75,7 @@ public class Tapahtumapaikka {
         this.postinumero = postinumero;
     }
 
-    //getterit ja setterit
+    // getterit ja setterit
 
     public Long getTapahtumapaikkaId() {
         return tapahtumapaikkaId;
@@ -145,7 +145,5 @@ public class Tapahtumapaikka {
                 ", postinumero=" + postinumero +
                 '}';
     }
-
-
 
 }
