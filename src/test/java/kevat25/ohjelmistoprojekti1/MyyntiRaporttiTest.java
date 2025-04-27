@@ -11,6 +11,7 @@ import kevat25.ohjelmistoprojekti1.domain.Myynti;
 import kevat25.ohjelmistoprojekti1.domain.MyyntiRepository;
 import kevat25.ohjelmistoprojekti1.service.MyyntiRaporttiService;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertFalse;
 
 @SpringBootTest
 public class MyyntiRaporttiTest {
