@@ -18,7 +18,7 @@ public interface LippuRepository extends CrudRepository<Lippu, Long> {
 
 
     //Laskee tapahtuma-id:n perusteella kuinka monta lippua on myyty kyseiseen tapahtumaan 
-     @Query("SELECT COUNT(l) FROM Lippu l WHERE l.tapahtumalippu.tapahtuma.id = :tapahtumaId")
+    @Query("SELECT COUNT(l) FROM Lippu l JOIN l.tapahtumalippu tl WHERE tl.tapahtuma.tapahtumaId = :tapahtumaId")
     long countByTapahtumaId(@Param("tapahtumaId") Long tapahtumaId);
 
     // Tämä on JPQL-kysely (Java Persistence Query Language), joka tarkistaa, onko
