@@ -21,7 +21,7 @@ public class MyyntiRaporttiController {
     private MyyntiRaporttiService myyntiRaporttiService;
 
     //Päiväkohtaisten raporttien nouto
-    @GetMapping("/day")
+    @GetMapping("/paiva")
     public List<Myynti> getMyyntiByDay(@RequestParam("date") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate date) {
         return myyntiRaporttiService.getMyyntiByDay(date);
     }
