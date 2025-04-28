@@ -12,20 +12,22 @@ import org.springframework.data.rest.core.annotation.RepositoryRestResource;
 @RepositoryRestResource(collectionResourceRel = "myynnit", path = "myynnit")
 public interface MyyntiRepository extends CrudRepository<Myynti, Long> {
 
-    @Query("SELECT m FROM Myynti m WHERE FUNCTION('DATE', m.myyntiaika) = :date")
-    List<Myynti> findMyyntiByDay(@Param("date") LocalDate date);
+        @Query("SELECT m FROM Myynti m WHERE FUNCTION('DATE', m.myyntiaika) = :date")
+        List<Myynti> findMyyntiByDay(@Param("date") LocalDate date);
 
-    @Query("SELECT m FROM Myynti m WHERE m.myyntiaika BETWEEN :startDate AND :endDate")
-    List<Myynti> findMyyntiByDateRange(@Param("startDate") LocalDateTime startDate, 
-                                        @Param("endDate") LocalDateTime endDate);
+        @Query("SELECT m FROM Myynti m WHERE m.myyntiaika BETWEEN :startDate AND :endDate")
+        List<Myynti> findMyyntiByDateRange(@Param("startDate") LocalDateTime startDate,
+                        @Param("endDate") LocalDateTime endDate);
 
-    @Query("SELECT m FROM Myynti m WHERE m.tyontekija.id = :tyontekijaId")
-    List<Myynti> findMyyntiByTyontekija(@Param("tyontekijaId") Long tyontekijaId);
+        @Query("SELECT m FROM Myynti m WHERE m.tyontekija.id = :tyontekijaId")
+        List<Myynti> findMyyntiByTyontekija(@Param("tyontekijaId") Long tyontekijaId);
 
-    @Query("SELECT m FROM Myynti m WHERE m.tyontekija.id = :tyontekijaId AND m.myyntiaika BETWEEN :startDate AND :endDate")
-    List<Myynti> findMyyntiByTyontekijaAndDateRange(@Param("tyontekijaId") Long tyontekijaId,
-                                                    @Param("startDate") LocalDateTime startDate,
-                                                    @Param("endDate") LocalDateTime endDate);
+        @Query("SELECT m FROM Myynti m WHERE m.tyontekija.id = :tyontekijaId AND m.myyntiaika BETWEEN :startDate AND :endDate")
+        List<Myynti> findMyyntiByTyontekijaAndDateRange(@Param("tyontekijaId") Long tyontekijaId,
+                        @Param("startDate") LocalDateTime startDate,
+                        @Param("endDate") LocalDateTime endDate);
 
+        @Query("SELECT DISTINCT m FROM Myynti m JOIN m.liput l JOIN l.tapahtumalippu t WHERE t.tapahtuma.id = :tapahtumaId")
+        List<Myynti> findMyyntiByTapahtuma(@Param("tapahtumaId") Long tapahtumaId);
 
 }
