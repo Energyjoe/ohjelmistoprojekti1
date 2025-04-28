@@ -25,6 +25,7 @@ public class MyyntiRaporttiTest {
     @Test
     public void testGetMyyntiByDay() {
         LocalDate date = LocalDate.of(2024, 3, 2);
+        myyntiRepository.save(new Myynti(date, "Product A", 10, 100.0)); // Ensure test data exists
         List<Myynti> myynnit = myyntiRaporttiService.getMyyntiByDay(date);
         assertNotNull(myynnit);
         assertFalse(myynnit.isEmpty());
