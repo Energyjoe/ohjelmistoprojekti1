@@ -14,6 +14,7 @@ import org.springframework.stereotype.Service;
 import kevat25.ohjelmistoprojekti1.domain.Lippu;
 import kevat25.ohjelmistoprojekti1.domain.LippuRepository;
 import kevat25.ohjelmistoprojekti1.domain.Myynti;
+import kevat25.ohjelmistoprojekti1.domain.MyyntiDTO;
 import kevat25.ohjelmistoprojekti1.domain.MyyntiRaporttiDTO;
 import kevat25.ohjelmistoprojekti1.domain.MyyntiRepository;
 
@@ -78,6 +79,10 @@ public class MyyntiRaporttiService {
         }
 
         return raportti;
+    }
+
+    public List<Myynti> getMyyntiByTapahtuma(Long tapahtumaId) {
+        return myyntiRepository.findMyyntiByTapahtuma(tapahtumaId);
     }
 
 }

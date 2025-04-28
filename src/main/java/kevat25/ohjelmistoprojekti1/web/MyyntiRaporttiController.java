@@ -7,12 +7,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.server.ResponseStatusException;
 
 import kevat25.ohjelmistoprojekti1.domain.Myynti;
+import kevat25.ohjelmistoprojekti1.domain.MyyntiDTO;
 import kevat25.ohjelmistoprojekti1.domain.MyyntiRaporttiDTO;
 import kevat25.ohjelmistoprojekti1.service.MyyntiRaporttiService;
 
@@ -60,6 +62,12 @@ public class MyyntiRaporttiController {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Invalid tapahtumaId.");
         }
         return myyntiRaporttiService.haeMyyntiraporttiTapahtumalle(tapahtumaId);
+    }
+
+    @GetMapping("/tapahtuma/myynnit")
+    public List<Myynti> getMyyntiByTapahtuma(
+            @RequestParam("tapahtumaId") Long tapahtumaId) {
+        return myyntiRaporttiService.getMyyntiByTapahtuma(tapahtumaId);
     }
 
 }
