@@ -1257,6 +1257,102 @@ _Vastaus_
 
 ### Myyntiraportti
 
+##### _Päätepisteet (endpoints)_
+
+###### Päiväkohtainen myyntiraportti
+
+Palauttaa tietyn päivämäärän myyntitapahtumat.
+
+_Pyyntö_
+
+- HTTP-metodi: GET
+- Endpoint: /raportit/myynti/day
+- Polkuparametrit: {date}: Myyntipäivä
+
+_Esimerkki_
+GET /raportit/myynti/day?date=2025-04-28
+
+_Vastaus_
+
+- Onnistunut pyyntö: HTTP-statuskoodi 200 (OK) ja päivän myyntitapahtumat JSON-muodossa, esim. 
+    {
+        "myyntiId": 1,
+        "myyntiaika": "2024-02-29T12:00:00",
+        "email": "asiakas1@example.com"
+    }
+
+Jos tapahtumia ei ole, palautetaan tyhjä JSON.
+
+###### Myyntiraportti tietyltä aikaväliltä
+
+Palauttaa myyntitapahtumat annetulta päivämääräväliltä.
+
+_Pyyntö_
+
+- HTTP-metodi: GET
+- Endpoint: /raportit/myynti/range
+- Polkuparametrit: {startDate}, {endDate}: Aikavälin alku- ja loppupäivämäärä.
+
+_Esimerkki_
+GET /raportit/myynti/range?startDate=2025-04-01&endDate=2025-04-28
+
+_Vastaus_
+
+- Onnistunut pyyntö: HTTP-statuskoodi 200 (OK) ja listaus aikavälin myyntitapahtumista JSON-muodossa. Jos tapahtumia ei ole, palautetaan tyhjä JSON.
+
+###### Työntekijäkohtaiset raportit
+
+Palauttaa tiettyyn myyjään liittyvät myyntitapahtumat.
+
+_Pyyntö_
+
+- HTTP-metodi: GET
+- Endpoint: /raportit/myynti/tyontekija
+- Polkuparametrit: {id}: Työntekijän id.
+
+_Esimerkki_
+GET /raportit/myynti/tyontekija?id=1
+
+_Vastaus_
+
+- Onnistunut pyyntö: HTTP-statuskoodi 200 (OK) ja listaus työntekijän kirjaamista myyntitapahtumista JSON-muodossa. Jos tapahtumia ei ole, palautetaan tyhjä JSON.
+
+###### Työntekijäkohtainen myyntiraportti aikaväliltä
+
+Palauttaa tiettyyn työntekijään liittyvät myyntitapahtumat annetulta aikaväliltä.
+
+_Pyyntö_
+
+- HTTP-metodi: GET
+- Endpoint: /raportit/myynti/tyontekija/range
+- Polkuparametrit: {tyontekijaId}, {startDate}, {endDate}: Työntekijän id, aikavälin alku- ja loppupäivämäärä.
+
+_Esimerkki_
+GET /raportit/myynti/tyontekija/range?tyontekijaId=123&startDate=2025-04-01&endDate=2025-04-28
+
+_Vastaus_
+
+- Onnistunut pyyntö: HTTP-statuskoodi 200 (OK) ja listaus myyntitapahtumista JSON-muodossa. Jos tapahtumia ei ole, palautetaan tyhjä JSON.
+
+###### Tapahtumakohtainen myyntiraportti
+
+Palauttaa tiettyyn tapahtumaan liittyvät myyntitapahtumat.
+
+_Pyyntö_
+
+- HTTP-metodi: GET
+- Endpoint: /raportit/myynti/tapahtumaraportti
+- Polkuparametrit: {tapahtumaId}, {startDate}, {endDate}: Tapahtuman id.
+
+_Esimerkki_
+GET /raportit/myynti/tapahtumaraportti?tapahtumaId=2
+
+_Vastaus_
+
+- Onnistunut pyyntö: HTTP-statuskoodi 200 (OK) ja listaus myyntitapahtumista JSON-muodossa. Jos myyntitapahtumia ei ole, palautetaan tyhjä JSON.
+- Jos tapahtumaId:tä ei löydy: HTTP-status 400 (Bad request) ja viesti "Invalid tapahtumaId".
+
+
 #### _Perus-URL (base URL)_
 
 ## Testaus:
