@@ -1255,6 +1255,10 @@ _Vastaus_
 - Onnistunut poisto: Tyhjä vastaus, HTTP-statuskoodi 204 (No Content).
 - Jos asiakastyyppiä ei löydy: Virheviesti ja HTTP-statuskoodi 404 (Not Found) "Asiakastyyppiä ei löytynyt".
 
+### Myyntiraportti
+
+#### _Perus-URL (base URL)_
+
 ## Testaus:
 
 Ohjelman testattavat toiminnallisuudet:

@@ -30,7 +30,7 @@ public class WebSecurityConfig {
     @Bean
     public SecurityFilterChain SecurityFilterChain(HttpSecurity http) throws Exception {
         http
-               
+
                 // Poista CSRF-suojaus käytöstä (ei tarpeen JWT-pohjaisessa autentikoinnissa)
                 .csrf(customizer -> customizer.disable())
                 // Määritä pääsynhallinta
@@ -48,7 +48,5 @@ public class WebSecurityConfig {
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }
-
-
 
 }
