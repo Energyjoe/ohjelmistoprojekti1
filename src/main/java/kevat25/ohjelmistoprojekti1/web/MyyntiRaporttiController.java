@@ -5,12 +5,15 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.server.ResponseStatusException;
 
 import kevat25.ohjelmistoprojekti1.domain.Myynti;
+import kevat25.ohjelmistoprojekti1.domain.MyyntiRaporttiDTO;
 import kevat25.ohjelmistoprojekti1.service.MyyntiRaporttiService;
 
 @RestController
@@ -49,6 +52,14 @@ public class MyyntiRaporttiController {
             @RequestParam("startDate") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate startDate,
             @RequestParam("endDate") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate endDate) {
         return myyntiRaporttiService.getMyyntiByTyontekijaAndDateRange(tyontekijaId, startDate, endDate);
+    }
+
+    @GetMapping("/tapahtumaraportti")
+    public List<MyyntiRaporttiDTO> haeMyyntiraporttiTapahtumalle(@RequestParam("tapahtumaId") Long tapahtumaId) {
+        if (tapahtumaId == null || tapahtumaId <= 0) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Invalid tapahtumaId.");
+        }
+        return myyntiRaporttiService.haeMyyntiraporttiTapahtumalle(tapahtumaId);
     }
 
 }
