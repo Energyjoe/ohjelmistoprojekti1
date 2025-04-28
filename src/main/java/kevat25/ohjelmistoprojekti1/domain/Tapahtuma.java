@@ -28,7 +28,7 @@ public class Tapahtuma {
 
     // Sarake tapahtumaId -.-.-.-.-.-.-.-.-.-
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "tapahtuma_id")
     private Long tapahtumaId;
 

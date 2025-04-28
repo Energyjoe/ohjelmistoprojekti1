@@ -32,17 +32,18 @@ public class TyontekijaService {
         this.passwordEncoder = passwordEncoder;
     }
 
-    //Haetaan yhden työntekijän tiedot
+    // Haetaan yhden työntekijän tiedot
     public TyontekijaResponseDTO getTyontekijaById(Long tyontekijaId) {
         Tyontekija tyontekija = tyontekijaRepository.findById(tyontekijaId)
-        .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Työntekijää ei löydy id:llä: " + tyontekijaId));
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND,
+                        "Työntekijää ei löydy id:llä: " + tyontekijaId));
 
         return new TyontekijaResponseDTO(tyontekija);
     }
 
-    //Haetaan kaikki työntekijät
+    // Haetaan kaikki työntekijät
     public List<TyontekijaResponseDTO> getAllTyontekijat() {
-        Iterable<Tyontekija> iterableTyontekijat = tyontekijaRepository.findAll();  //Hakee kaikki myyntitapahtumat
+        Iterable<Tyontekija> iterableTyontekijat = tyontekijaRepository.findAll(); // Hakee kaikki myyntitapahtumat
         List<Tyontekija> tyontekijat = new ArrayList<Tyontekija>(); // Luo Listamuuttujan myynneille
 
         for (Tyontekija tyontekija : iterableTyontekijat) { // Looppaa iterable myyntien läpi ja lisää ne listaan
@@ -50,12 +51,15 @@ public class TyontekijaService {
         }
 
         return tyontekijat.stream().map(tyontekija -> {
-            TyontekijaResponseDTO responseDto = getTyontekijaById(tyontekija.getTyontekijaId()); //Muokkaa tyontekija entityt TyontekijaResponseDTO -objekteiksi
-            return responseDto; 
-        }).collect(Collectors.toList()); //Kerää responseDTO -objektit listaan
+            TyontekijaResponseDTO responseDto = getTyontekijaById(tyontekija.getTyontekijaId()); // Muokkaa tyontekija
+                                                                                                 // entityt
+                                                                                                 // TyontekijaResponseDTO
+                                                                                                 // -objekteiksi
+            return responseDto;
+        }).collect(Collectors.toList()); // Kerää responseDTO -objektit listaan
     }
 
-    //Luodaan uusi työntekijä
+    // Luodaan uusi työntekijä
     public TyontekijaResponseDTO createTyontekija(TyontekijaCreateDTO createDto) {
 
         Tyontekija tyontekija = new Tyontekija();
@@ -64,6 +68,11 @@ public class TyontekijaService {
         tyontekija.setEmail(createDto.getEmail());
         tyontekija.setPuhnro(createDto.getPuhnro());
         tyontekija.setKatuosoite(createDto.getKatuosoite());
+
+        // Tarkistetaan onko sähköpostiosoite jo käytössä
+        if (tyontekijaRepository.existsByEmail(tyontekija.getEmail())) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Sähköposti on jo käytössä");
+        }
 
         // Hashataan salasana ennen tallennusta
         tyontekija.setBcrypthash(passwordEncoder.encode(createDto.getBcrypthash()));

@@ -20,10 +20,35 @@ public class MyyntiRaporttiController {
     @Autowired
     private MyyntiRaporttiService myyntiRaporttiService;
 
-    //Päiväkohtaisten raporttien nouto
-    @GetMapping("/paiva")
-    public List<Myynti> getMyyntiByDay(@RequestParam("date") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate date) {
+    // Päiväkohtaisten raporttien nouto
+    @GetMapping("/day")
+    public List<Myynti> getMyyntiByDay(
+            @RequestParam("date") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate date) {
         return myyntiRaporttiService.getMyyntiByDay(date);
+    }
+
+    // Myynnit tietyltä aikaväliltä
+    @GetMapping("/range")
+    public List<Myynti> getMyyntiByDateRange(
+            @RequestParam("startDate") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate startDate,
+            @RequestParam("endDate") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate endDate) {
+        return myyntiRaporttiService.getMyyntiByDateRange(startDate, endDate);
+    }
+
+    // Työntekijäkohtaisten raporttien nouto
+    @GetMapping("/tyontekija")
+    public List<Myynti> getMyyntiByTyontekija(
+            @RequestParam("id") Long tyontekijaId) {
+        return myyntiRaporttiService.getMyyntiByTyontekija(tyontekijaId);
+    }
+
+    // Työntekijäkohtaiset myynnit tietyltä aikaväliltä
+    @GetMapping("/tyontekija/range")
+    public List<Myynti> getMyyntiByTyontekijaAndDateRange(
+            @RequestParam("tyontekijaId") Long tyontekijaId,
+            @RequestParam("startDate") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate startDate,
+            @RequestParam("endDate") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate endDate) {
+        return myyntiRaporttiService.getMyyntiByTyontekijaAndDateRange(tyontekijaId, startDate, endDate);
     }
 
 }

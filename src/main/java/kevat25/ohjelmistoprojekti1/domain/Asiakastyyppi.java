@@ -23,7 +23,7 @@ public class Asiakastyyppi {
     private Long asiakastyyppiId;
 
     @NotNull(message = "Asiakastyyppi on välttämätön tieto")
-    @Size(max=20)
+    @Size(max = 20)
     private String asiakastyyppi; // esim opiskelija, aikuinen, eläkeläinen, lapsi
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "asiakastyyppi") // cascade = mahdollistaa automaattisen

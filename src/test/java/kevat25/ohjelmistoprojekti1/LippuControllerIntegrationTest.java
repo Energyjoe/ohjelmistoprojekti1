@@ -117,7 +117,7 @@ headers.set("Authorization", jwtToken);
     tapahtumaRepository.save(tapahtuma);
 
     Asiakastyyppi asiakastyyppi = new Asiakastyyppi();
-    asiakastyyppi.setAsiakastyyppi("Aikuinen");
+    asiakastyyppi.setAsiakastyyppi("Testi");
     asiakastyyppiRepository.save(asiakastyyppi); // Save the Asiakastyyppi entity
 
     Tapahtumalippu tapahtumalippu = new Tapahtumalippu();
