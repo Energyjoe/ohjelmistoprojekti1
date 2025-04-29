@@ -39,7 +39,6 @@ public class Tapahtuma {
     private String tapahtumaNimi;
 
     // Kapasiteetti
-    @NotNull(message = "Tapahtumalla tulee olla kapasiteetti")
     private Integer kapasiteetti;
 
     // Sarake kuvaus -.-.-.-.-.-.-.-.-.-

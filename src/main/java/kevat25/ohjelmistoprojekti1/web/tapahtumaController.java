@@ -18,6 +18,8 @@ import org.springframework.web.bind.annotation.RestController;
 import jakarta.validation.Valid;
 import kevat25.ohjelmistoprojekti1.domain.Tapahtuma;
 import kevat25.ohjelmistoprojekti1.domain.TapahtumaRepository;
+import kevat25.ohjelmistoprojekti1.domain.Tapahtumapaikka;
+import kevat25.ohjelmistoprojekti1.domain.TapahtumapaikkaRepository;
 import kevat25.ohjelmistoprojekti1.service.LippuService;
 
 @RestController
@@ -29,6 +31,9 @@ public class tapahtumaController {
     @Autowired
     private LippuService lippuService; //Tämän kautta haetaan tapahtuman myytyjen lippujen määrä
 
+    @Autowired
+    private TapahtumapaikkaRepository tapahtumapaikkaRepository; //Täältä haetaan tapahtumapaikan kapasiteetti
+
     public tapahtumaController(TapahtumaRepository tapahtumaRepository) {
         this.tapahtumaRepository = tapahtumaRepository;
     }
@@ -38,6 +43,25 @@ public class tapahtumaController {
 
         // Tallennetaan tapahtuma repositoryyn
         try {
+
+            //Jos tapahtuman kapasiteettiä ei määritellä, se korvataan tapahtumapaikan kapasiteetilla
+            if (uusiTapahtuma.getKapasiteetti()==null) {
+
+                Long tapahtumapaikkaId = uusiTapahtuma.getTapahtumapaikka().getTapahtumapaikkaId();
+                Optional<Tapahtumapaikka> paikkaOpt= tapahtumapaikkaRepository.findById(tapahtumapaikkaId);
+
+                if (paikkaOpt.isPresent()) {
+                Tapahtumapaikka paikka = paikkaOpt.get();
+                Integer paikkaKapasiteetti = paikka.getKapasiteetti();
+
+                uusiTapahtuma.setKapasiteetti(paikkaKapasiteetti);
+                }
+                else {
+                    return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                    .body("Tapahtumapaikkaa ID:llä " + tapahtumapaikkaId + " ei löytynyt.");
+                }
+            }
+
             Tapahtuma tallennettuTapahtuma = tapahtumaRepository.save(uusiTapahtuma);
 
             // Palauttaa HTTP-vastauksen
