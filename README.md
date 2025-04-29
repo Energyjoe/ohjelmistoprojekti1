@@ -267,7 +267,7 @@ kts. yllä
 
 ##### Luo uusi tapahtuma
 
-Luo uuden tapahtuman.
+Luo uuden tapahtuman. Tapahtuman voi luoda joko niin, että sen kapasiteetti muodostuu tapahtumapaikan kapasiteetin mukaan tai niin, että sille määritellään oma kapasiteetti.
 
 _Pyyntö:_
 
@@ -279,6 +279,8 @@ _Pyyntö:_
 _Esimerkki:_
 POST /tapahtumat/
 Content-Type: application/json
+
+_Tapahtuman luominen itse määritellyllä kapasiteetilla:_
 
 ```
 {
@@ -292,6 +294,17 @@ Content-Type: application/json
 }
 }
 ```
+_Tapahtuman luominen tapahtumapaikan kapasiteetilla:_
+```
+{
+  "tapahtumaNimi": "Konsertti",
+  "tapahtumaKuvaus": "Mahtava konsertti Helsingissä",
+  "aloitusaika": "2025-04-01T19:00:00",
+  "lopetusaika": "2025-04-01T23:00:00",
+  "tapahtumapaikka": {
+    "tapahtumapaikkaId": 1
+}
+}
 
 _Vastaus:_
 
