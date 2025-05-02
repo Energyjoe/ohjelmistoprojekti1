@@ -1,21 +1,30 @@
 package kevat25.ohjelmistoprojekti1.service;
 
+import java.math.BigDecimal;
+import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.Optional;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.web.server.ResponseStatusException;
 
 import jakarta.persistence.EntityNotFoundException;
 import kevat25.ohjelmistoprojekti1.domain.Asiakastyyppi;
-import kevat25.ohjelmistoprojekti1.domain.AsiakastyyppiRepository;
 import kevat25.ohjelmistoprojekti1.domain.Lippu;
 import kevat25.ohjelmistoprojekti1.domain.LippuDTO;
 import kevat25.ohjelmistoprojekti1.domain.LippuRepository;
 import kevat25.ohjelmistoprojekti1.domain.Tapahtumalippu;
+
 import kevat25.ohjelmistoprojekti1.domain.Myynti;
 import kevat25.ohjelmistoprojekti1.domain.Tapahtuma;
 import kevat25.ohjelmistoprojekti1.domain.TapahtumaRepository;
 import kevat25.ohjelmistoprojekti1.domain.TapahtumalippuRepository;
+import kevat25.ohjelmistoprojekti1.domain.Tyontekija;
+import kevat25.ohjelmistoprojekti1.domain.TyontekijaRepository;
+import kevat25.ohjelmistoprojekti1.domain.MyyntiRepository;
 
 //Tämä Service class yhdistää dataa eri entityistä LippuDTO:hon repositorien avulla.
 @Service
@@ -27,6 +36,16 @@ public class LippuService {
 
     @Autowired                                   
     private TapahtumaRepository tapahtumarepo; //Täältä haetaan tapahtuman kapasiteetti
+
+    @Autowired
+    private TapahtumalippuRepository tapahtumalippurepo; //Täältä haetaan tapahtumalippu_id:n perusteella asiakastyyppi ja hinta
+
+    @Autowired
+    private TyontekijaRepository tyontekijaRepository; //Täältä haetaan työntekijä, joka myi lipun
+
+    @Autowired
+    private MyyntiRepository myyntiRepository; 
+
 
     public LippuDTO getLipputiedot(Long lippuId) {
 
@@ -113,7 +132,9 @@ public class LippuService {
         } else {
             throw new RuntimeException("Tapahtumaa ei löytynyt");
         }
-
+    }
+    
+ 
     }
 
-}
+

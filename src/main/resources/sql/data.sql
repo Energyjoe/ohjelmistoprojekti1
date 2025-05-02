@@ -13,6 +13,8 @@ VALUES (1, 'Opiskelija'),
     (2, 'Aikuinen'),
     (3, 'Eläkeläinen'),
     (4, 'Lapsi');
+    (5, 'Ovilippu');
+
 -- Insert sample data into tapahtumapaikat
 INSERT INTO tapahtumapaikat (
         tapahtumapaikka_id,
@@ -101,6 +103,8 @@ VALUES (1, 1, 25.00),
     (4, 1, 15.00),
     (1, 5, 80.00),
     (2, 5, 120.00);
+    (1, 5, 0.00),
+    
 -- Insert sample data into tyontekijat
 INSERT INTO tyontekijat (
         tyontekija_id,
