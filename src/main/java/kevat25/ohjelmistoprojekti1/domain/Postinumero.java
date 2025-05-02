@@ -2,6 +2,8 @@ package kevat25.ohjelmistoprojekti1.domain;
 
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
@@ -10,16 +12,15 @@ import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
 
-
 @Entity
 @Table(name = "postinumerot")
 public class Postinumero {
     @Id
-    @Size(min=5, max=5, message = "Postinumeron tulee olla 5 merkkiä")
+    @Size(min = 5, max = 5, message = "Postinumeron tulee olla 5 merkkiä")
     private String postinumero;
 
-    @NotBlank (message = "Paikkakunnan nimi ei voi olla tyhjä")
-    @Size(max=50, message = "Paikkakunnan nimi voi olla maksimissaan 50 merkkiä")
+    @NotBlank(message = "Paikkakunnan nimi ei voi olla tyhjä")
+    @Size(max = 50, message = "Paikkakunnan nimi voi olla maksimissaan 50 merkkiä")
     private String paikkakunta;
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "postinumero")
@@ -30,7 +31,7 @@ public class Postinumero {
 
     public Postinumero() {
     }
-    
+
     public Postinumero(String postinumero, String paikkakunta) {
         this.postinumero = postinumero;
         this.paikkakunta = paikkakunta;
@@ -52,6 +53,7 @@ public class Postinumero {
         this.paikkakunta = paikkakunta;
     }
 
+    @JsonIgnore
     public List<Tapahtumapaikka> getTapahtumapaikat() {
         return tapahtumapaikat;
     }
@@ -60,6 +62,7 @@ public class Postinumero {
         this.tapahtumapaikat = tapahtumapaikat;
     }
 
+    @JsonIgnore
     public List<Tyontekija> getTyontekijat() {
         return tyontekijat;
     }
@@ -73,6 +76,4 @@ public class Postinumero {
         return "Postinumero [postinumero=" + postinumero + ", paikkakunta=" + paikkakunta + "]";
     }
 
-    
-    
 }

@@ -2,6 +2,7 @@ package kevat25.ohjelmistoprojekti1.domain;
 
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import jakarta.persistence.CascadeType;
@@ -51,6 +52,7 @@ public class Tapahtumapaikka {
     // postinumero
     @ManyToOne
     @JoinColumn(name = "postinumero")
+    @JsonBackReference
     // Poistettu @Size-annotaatio, koska se ei toimi Postinumero-oliolla
     private Postinumero postinumero;
 
