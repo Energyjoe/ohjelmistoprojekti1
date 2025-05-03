@@ -158,24 +158,86 @@ Lipunmyyntijärjestelmän käyttäjärooleja ovat myyjä, asiakas, lipuntarkasta
 
 ## Tekninen kuvaus
 
-Teknisessä kuvauksessa esitetään järjestelmän toteutuksen suunnittelussa tehdyt tekniset
-ratkaisut, esim.
 
-- Missä mikäkin järjestelmän komponentti ajetaan (tietokone, palvelinohjelma)
-  ja komponenttien väliset yhteydet (vaikkapa tähän tyyliin:
-  https://security.ufl.edu/it-workers/risk-assessment/creating-an-information-systemdata-flow-diagram/)
-- Palvelintoteutuksen yleiskuvaus: teknologiat, deployment-ratkaisut yms.
-- Keskeisten rajapintojen kuvaukset, esimerkit REST-rajapinta. Tarvittaessa voidaan rajapinnan käyttöä täsmentää
-  UML-sekvenssikaavioilla.
-- Toteutuksen yleisiä ratkaisuja, esim. turvallisuus.
+### 1. Järjestelmän komponentit ja sijoitus
+Järjestelmä koostuu seuraavista pääkomponenteista:
 
-Tämän lisäksi
+#### Frontend (Asiakaskäyttöliittymä)
 
-- ohjelmakoodin tulee olla kommentoitua
-- luokkien, metodien ja muuttujien tulee olla kuvaavasti nimettyjä ja noudattaa
-  johdonmukaisia nimeämiskäytäntöjä
-- ohjelmiston pitää olla organisoitu komponentteihin niin, että turhalta toistolta
-  vältytään
+- Toteutettu esimerkiksi Reactilla, käyttö selaimen kautta. Client-tiimi hoitaa Frontend-toteutuksen.
+
+- Ajetaan käyttäjän omalla tietokoneella tai mobiililaitteella.
+
+- Kommunikoi backendin kanssa REST-rajapinnan kautta.
+
+#### Backend-palvelin
+
+- Toteutettu Java Spring Boot -sovelluksena.
+
+- Ajetaan joko paikallisesti kehityksessä tai Rahti- palvelimella tuotantoympäristössä 
+
+- Sisältää REST-rajapinnat ja liiketoimintalogiikan.
+
+- Vastuussa autentikoinnista, tiedon validoinnista ja tiedon tallennuksesta.
+
+#### Tietokanta
+
+- Käytössä on Postgres -tietokanta.
+
+- Yhdistetty Spring Boot -sovellukseen JDBC:n ja Spring Data JPA:n avulla.
+
+#### Komponenttien välinen tiedonkulku:
+Frontend <-HTTP REST-> Spring Boot Backend <-JPA-> Postgres
+
+Clientistä tuleva pyyntö lähtee HTTP-kutsuna Spring Bootin Backenfille, joka kommunikoi Postgres-tietokannan kanssa Spring Data JPA:n avulla.
+
+### 2. Palvelintoteutuksen yleiskuvaus
+
+#### Käytetyt teknologiat:
+- Java 17
+- Spring Boot
+- Spring Web
+- Spring Data JPA
+- PostgreSQL
+- JSON Web Token (JWT) -autentikointi
+- Maven
+
+#### Deployment-ratkaisu:
+
+- Sovellus voidaan ajaa paikallisesti (mvn spring-boot:run) tai Rahdin kautta.
+
+- Sovellus käynnistyy main()-metodista, joka löytyy Application.java-luokasta.
+
+### 3. Turvallisuusratkaisut
+#### JWT-autentikointi:
+- Käyttäjä saa tokenin kirjautumisen yhteydessä (kts. dokumentaation login -osio). Kaikki suojatut rajapinnat vaativat validin Authorization-headerin (Bearer <token>).
+
+#### CORS-konfiguraatio on asetettu sallimaan frontendin domainin.
+
+#### Tiedon validointi tehdään sekä frontendissä että backendissä (@Valid-annotaatiot ja DTO-luokat).
+
+### 4. Koodin laatu ja rakenne
+#### Kommentointi: 
+- Kaikki merkittävät luokat ja metodit on kommentoitu Javadoc-tyyliin.
+
+#### Nimeämiskäytännöt: 
+- Luokat, metodit ja muuttujat on nimetty selkeästi yhdistäen suomalaisia nimiä englanninkielisiin termeihin (esim. LippuController, etsiLippu(), tapahtumaRepository).
+
+#### Modulaarisuus:
+Sovellus on jaettu loogisiin paketteihin:
+
+- /domain – entiteetit, DTO:t ja JPA-repositiorit
+
+- /web – REST-kontrollerit
+
+- /test - Testit
+
+- /service – Service-luokat
+
+### Data flow -kaavio:
+
+![Dataflow-kaavio](dataflow.png)
+
 
 ## REST API -dokumentaatio
 
