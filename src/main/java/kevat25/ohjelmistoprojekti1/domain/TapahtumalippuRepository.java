@@ -11,6 +11,7 @@ import org.springframework.stereotype.Repository;
 public interface TapahtumalippuRepository extends CrudRepository<Tapahtumalippu, Long> {
 
     List<Tapahtumalippu> findByTapahtuma(Tapahtuma tapahtuma);
+    Tapahtumalippu findByTapahtumaAndAsiakastyyppi(Tapahtuma tapahtuma, Asiakastyyppi asiakastyyppi);
 
     boolean existsByTapahtumaAndAsiakastyyppi(Tapahtuma tapahtuma, Asiakastyyppi asiakastyyppi);
 

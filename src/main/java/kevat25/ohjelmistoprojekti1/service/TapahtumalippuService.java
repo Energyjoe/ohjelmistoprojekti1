@@ -34,7 +34,7 @@ public class TapahtumalippuService {
         this.lippuRepository = lippuRepository;
     }
 
-    // Lisätään tapahtumalippu tapahtumaan
+    // Lisätään tapahtumaliput tapahtumaan
     public List<String> addTapahtumaliput(Long tapahtumaId, List<Tapahtumalippu> tapahtumaliput) {
         Optional<Tapahtuma> tapahtumaOptional = tapahtumaRepository.findById(tapahtumaId);
         if (!tapahtumaOptional.isPresent()) {
@@ -73,6 +73,39 @@ public class TapahtumalippuService {
 
         return conflictMessages;
     }
+
+    //Lisätään yksittäinen tapahtumalippu tapahtumaan
+  ////  public Tapahtumalippu lisaaTapahtumalippu(Long tapahtumaId, Tapahtumalippu tapahtumalippu) {
+   ////     Optional<Tapahtuma> tapahtumaOptional = tapahtumaRepository.findById(tapahtumaId);
+   //     if (!tapahtumaOptional.isPresent()) {
+   //         throw new EntityNotFoundException("Tapahtumaa ei löytynyt.");
+   //     }
+   //     Tapahtuma tapahtuma = tapahtumaOptional.get();
+
+
+    //    Optional<Asiakastyyppi> asiakastyyppiOptional = asiakastyyppiRepository
+    //                .findById(tapahtumalippu.getAsiakastyyppi().getAsiakastyyppiId());
+    //        if (!asiakastyyppiOptional.isPresent()) {
+     //           throw new ResponseStatusException(HttpStatus.NOT_FOUND,
+    //                    "Asiakastyyppiä ei löydy id:llä " + tapahtumalippu.getAsiakastyyppi().getAsiakastyyppiId());
+    //        }
+    //        Asiakastyyppi asiakastyyppi = asiakastyyppiOptional.get();
+
+    //        boolean exists = tapahtumalippuRepository.existsByTapahtumaAndAsiakastyyppi(tapahtuma, asiakastyyppi);
+    //        if (exists) {
+    //            throw new ResponseStatusException(HttpStatus.BAD_REQUEST,
+     //                   "Tapahtumalippu asiakastyyppille " + asiakastyyppi.getAsiakastyyppi() + " ID:llä "
+    //                            + asiakastyyppi.getAsiakastyyppiId() + " on jo olemassa.");
+    //        } else {
+    //            tapahtumalippu.setTapahtuma(tapahtuma);
+    //            tapahtumalippu.setAsiakastyyppi(asiakastyyppi);
+     //           tapahtumalippuRepository.save(tapahtumalippu);
+    //        }
+
+   //         return tapahtumalippu;
+   
+   // }
+
 
     // Haetaan tapahtumaan liittyvät tapahtumaliput
     public List<Tapahtumalippu> haeLiput(Long tapahtumaId) {

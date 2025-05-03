@@ -305,6 +305,7 @@ _Tapahtuman luominen tapahtumapaikan kapasiteetilla:_
     "tapahtumapaikkaId": 1
 }
 }
+```
 
 _Vastaus:_
 
@@ -334,7 +335,7 @@ Content-Type: application/json
   "lopetusaika": "2026-04-01T23:00:00",
   "kapasiteetti": 10000,
   "tapahtumapaikka": {
-    "tapahtumapaikkaId":
+    "tapahtumapaikkaId": 1
 }
 }
 ```
@@ -381,7 +382,15 @@ _Vastaus:_
 - Onnistunut haku: Jäljellä olevien lippujen määrä
 - Jos tapahtumaa ei löydy: Tyhjä vastaus, HTTP-statuskoodi 404 (Not Found)
 
+##### Tulosta oviliput ennakkomyynnin sulkeutumisen jälkeen
 
+Tulostaa jäljellä olevat liput ovelle ennakkomyynnin sulkeutuessa.
+
+_Pyyntö:_
+- HTTP-metodi: POST
+- Endpoint: /tapahtumat/{tapahtumaId}/oviliput
+- Polkuparametrit: {tapahtumaId} (kokonaisluku, pakollinen): Tapahtuman yksilöllinen tunniste
+- Body: Tyhjä
 
 
 ### Myynnit

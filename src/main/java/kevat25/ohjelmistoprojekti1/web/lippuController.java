@@ -164,66 +164,6 @@ public class lippuController {
         }
     }
 
-    //Luo oviliput ennakkomyynnin päätyttyä -.-.-.-.-.-
-    @PostMapping("/oviliput")
-
-    public ResponseEntity<List<LippuDTO>> postOviliput(@RequestBody LippuPostDTO request) {
-
-        Long tapahtumalippuId = request.getTapahtumalippuId();
-        Long myyntiId = request.getMyyntiId();
-        Optional<Myynti> myyntiOpt = myyntiRepository.findById(myyntiId);
-        Optional<Tapahtumalippu> tapahtumalippuOpt = tapahtumalippuRepository.findById(tapahtumalippuId);
-        
-        if (tapahtumalippuOpt.isPresent() && myyntiOpt.isPresent()) {
-            Tapahtumalippu tapahtumalippu = tapahtumalippuOpt.get();
-            Myynti myynti = myyntiOpt.get();
-            Long tapahtumaId = tapahtumalippu.getTapahtuma().getTapahtumaId();
-
-            // Haetaan tapahtumaobjekti, jotta voidaan tarkistaa onko ennakkomyynti loppunut
-            Optional<Tapahtuma> tapahtumaOpt = tapahtumaRepository.findById(tapahtumaId);
-            if (tapahtumaOpt.isEmpty()) {
-                throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Tapahtumaa ei löytynyt");
-            }
-
-            Tapahtuma tapahtuma = tapahtumaOpt.get();
-            LocalDateTime myynninLoppu = tapahtuma.getAloitusaika().minusHours(1);
-            
-            // Tarkistetaan, että ennakkomyynti on loppunut
-            if (LocalDateTime.now().isBefore(myynninLoppu)) {
-                throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Ennakkomyynti ei ole vielä loppunut");
-            }
-            // Tarkistetaan, että lippuja on jäljellä
-            int liputJaljella = lippuservice.liputJaljella(tapahtumaId);
-            if (liputJaljella <= 0) {
-                throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Tapahtuma on loppuunmyyty");
-            }
-
-            // Luodaan oviliput
-            List oviliput = new ArrayList<>();
-            for (int i = 0; i < liputJaljella; i++) {
-                String tarkistuskoodi = LippuService.generoiUniikkiTarkistuskoodi(tapahtumaId, lippuRepository);
-                Lippu lippu = new Lippu(tapahtumalippu, myynti, tarkistuskoodi);
-                lippuRepository.save(lippu);
-
-
-                // Muunnetaan Lippu LippuDTO:ksi
-                LippuDTO lippuDTO = new LippuDTO(
-                    lippu.getLippuId(),
-                    lippu.getTarkistuskoodi(),
-                    lippu.getMyynti().getMyyntiId(),
-                    lippu.getTapahtumalippu().getTapahtumalippuId(),
-                    tapahtuma.getTapahtumaNimi(),
-                    tapahtuma.getAloitusaika(),
-                    tapahtumalippu.getHinta(),
-                    tapahtumalippu.getAsiakastyyppi().getAsiakastyyppi()
-                );
-                oviliput.add(lippuDTO);
-            }
-            return ResponseEntity.status(HttpStatus.CREATED).body(oviliput);
-        }
-        throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Tapahtumaa tai myyntiä ei löytynyt");
-    }
-
 
     // Metodi käsittelee tietokantavirheet
     @ExceptionHandler(DataAccessException.class)

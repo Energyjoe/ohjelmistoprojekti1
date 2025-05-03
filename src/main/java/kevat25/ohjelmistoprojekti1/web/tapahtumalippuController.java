@@ -30,7 +30,7 @@ public class tapahtumalippuController {
     @Autowired
     private TapahtumalippuRepository tapahtumalippuRepository;
 
-    // POST-pyyntö, joka lisää useamman tapahtumalipun
+    
     // POST-pyyntö, joka lisää useamman tapahtumalipun
     @PostMapping("/{tapahtumaId}")
     public ResponseEntity<?> addTapahtumaliput(@PathVariable Long tapahtumaId,
@@ -67,6 +67,27 @@ public class tapahtumalippuController {
      * ]
      */
 
+    //Lisää yksittäisen tapahtumalipputyypin tapahtumalle
+   // @PostMapping("/{tapahtumaId}/lisaa")
+   // public ResponseEntity<?> lisääYksittäinenTapahtumalippu(@PathVariable Long tapahtumaId, @RequestBody Tapahtumalippu tapahtumalippu) {
+   // try {
+   //     Tapahtumalippu savedLippu = tapahtumalippuService.lisaaTapahtumalippu(tapahtumaId, tapahtumalippu);
+   //     return ResponseEntity.status(HttpStatus.CREATED).body(savedLippu);
+   // } catch (EntityNotFoundException e) {
+   //     throw new ResponseStatusException(HttpStatus.NOT_FOUND, e.getMessage());
+   // }
+//}
+
+/*
+ * POST JSON pyyntö:
+ * {
+ * "hinta": 10.00,
+ * "asiakastyyppi": {
+ * "asiakastyyppiId: 5"
+ * }
+ * }
+ */
+
     // Hakee kaikki liput tietylle tapahtumalle
     @GetMapping("/{tapahtumaId}")
     public ResponseEntity<List<Tapahtumalippu>> haeLiput(@PathVariable Long tapahtumaId) {
@@ -90,6 +111,7 @@ public class tapahtumalippuController {
                 .orElseGet(() -> ResponseEntity.notFound().build());
     }
 
+    //Muokkaa tapahtumalippua
     @PatchMapping("/{tapahtumalippuId}")
     public ResponseEntity<Tapahtumalippu> paivitaTapahtumalippu(@PathVariable Long tapahtumalippuId,
             @RequestBody Map<String, Object> updates) {

@@ -7,4 +7,6 @@ import org.springframework.stereotype.Repository;
 @RepositoryRestResource(collectionResourceRel = "asiakastyypit", path = "asiakastyypit")
 public interface AsiakastyyppiRepository extends CrudRepository<Asiakastyyppi, Long> {
 
+    Asiakastyyppi findByAsiakastyyppi(String asiakastyyppi);
+
 }
