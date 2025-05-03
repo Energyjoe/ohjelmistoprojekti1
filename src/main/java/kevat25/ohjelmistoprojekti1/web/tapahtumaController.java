@@ -165,11 +165,28 @@ public class tapahtumaController {
         }
 
         muokattavaTapahtuma.setTapahtumaNimi(uusiTapahtuma.getTapahtumaNimi());
+        if (uusiTapahtuma.getTapahtumaNimi() == null) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Tapahtumalla on oltava nimi");
+        }
+
         muokattavaTapahtuma.setTapahtumaKuvaus(uusiTapahtuma.getTapahtumaKuvaus());
+        if (uusiTapahtuma.getTapahtumaKuvaus() == null) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Tapahtumalla on oltava kuvaus");
+        }
+
         muokattavaTapahtuma.setAloitusaika(uusiTapahtuma.getAloitusaika());
+        if (uusiTapahtuma.getAloitusaika() == null) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Tapahtumalla on oltava aloitusaika");
+        } 
+
         muokattavaTapahtuma.setLopetusaika(uusiTapahtuma.getLopetusaika());
+      
         muokattavaTapahtuma.setKapasiteetti(uusiTapahtuma.getKapasiteetti());
+
         muokattavaTapahtuma.setTapahtumapaikka(uusiTapahtuma.getTapahtumapaikka());
+        if (uusiTapahtuma.getTapahtumapaikka() == null) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Tapahtumalla on oltava tapahtumapaikka");
+        }
 
         Tapahtuma paivitettyTapahtuma = tapahtumaRepository.save(muokattavaTapahtuma);
 
