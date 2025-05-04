@@ -158,8 +158,8 @@ Lipunmyyntijärjestelmän käyttäjärooleja ovat myyjä, asiakas, lipuntarkasta
 
 ## Tekninen kuvaus
 
-
 ### 1. Järjestelmän komponentit ja sijoitus
+
 Järjestelmä koostuu seuraavista pääkomponenteista:
 
 #### Frontend (Asiakaskäyttöliittymä)
@@ -174,7 +174,7 @@ Järjestelmä koostuu seuraavista pääkomponenteista:
 
 - Toteutettu Java Spring Boot -sovelluksena.
 
-- Ajetaan joko paikallisesti kehityksessä tai Rahti- palvelimella tuotantoympäristössä 
+- Ajetaan joko paikallisesti kehityksessä tai Rahti- palvelimella tuotantoympäristössä
 
 - Sisältää REST-rajapinnat ja liiketoimintalogiikan.
 
@@ -187,6 +187,7 @@ Järjestelmä koostuu seuraavista pääkomponenteista:
 - Yhdistetty Spring Boot -sovellukseen JDBC:n ja Spring Data JPA:n avulla.
 
 #### Komponenttien välinen tiedonkulku:
+
 Frontend <-HTTP REST-> Spring Boot Backend <-JPA-> Postgres
 
 Clientistä tuleva pyyntö lähtee HTTP-kutsuna Spring Bootin Backenfille, joka kommunikoi Postgres-tietokannan kanssa Spring Data JPA:n avulla.
@@ -194,6 +195,7 @@ Clientistä tuleva pyyntö lähtee HTTP-kutsuna Spring Bootin Backenfille, joka 
 ### 2. Palvelintoteutuksen yleiskuvaus
 
 #### Käytetyt teknologiat:
+
 - Java 17
 - Spring Boot
 - Spring Web
@@ -209,7 +211,9 @@ Clientistä tuleva pyyntö lähtee HTTP-kutsuna Spring Bootin Backenfille, joka 
 - Sovellus käynnistyy main()-metodista, joka löytyy Application.java-luokasta.
 
 ### 3. Turvallisuusratkaisut
+
 #### JWT-autentikointi:
+
 - Käyttäjä saa tokenin kirjautumisen yhteydessä (kts. dokumentaation login -osio). Kaikki suojatut rajapinnat vaativat validin Authorization-headerin (Bearer <token>).
 
 #### CORS-konfiguraatio on asetettu sallimaan frontendin domainin.
@@ -217,13 +221,17 @@ Clientistä tuleva pyyntö lähtee HTTP-kutsuna Spring Bootin Backenfille, joka 
 #### Tiedon validointi tehdään sekä frontendissä että backendissä (@Valid-annotaatiot ja DTO-luokat).
 
 ### 4. Koodin laatu ja rakenne
-#### Kommentointi: 
+
+#### Kommentointi:
+
 - Kaikki merkittävät luokat ja metodit on kommentoitu Javadoc-tyyliin.
 
-#### Nimeämiskäytännöt: 
+#### Nimeämiskäytännöt:
+
 - Luokat, metodit ja muuttujat on nimetty selkeästi yhdistäen suomalaisia nimiä englanninkielisiin termeihin (esim. LippuController, etsiLippu(), tapahtumaRepository).
 
 #### Modulaarisuus:
+
 Sovellus on jaettu loogisiin paketteihin:
 
 - /domain – entiteetit, DTO:t ja JPA-repositiorit
@@ -237,7 +245,6 @@ Sovellus on jaettu loogisiin paketteihin:
 ### Data flow -kaavio:
 
 ![Dataflow-kaavio](dataflow.png)
-
 
 ## REST API -dokumentaatio
 
@@ -356,7 +363,9 @@ _Tapahtuman luominen itse määritellyllä kapasiteetilla:_
 }
 }
 ```
+
 _Tapahtuman luominen tapahtumapaikan kapasiteetilla:_
+
 ```
 {
   "tapahtumaNimi": "Konsertti",
@@ -428,9 +437,10 @@ _Vastaus:_
 
 ##### Laske tapahtumassa jäljellä olevat liput
 
-Laskee kuinka monta lippua on jäljellä tapahtumaan sen kapasiteetin ja myytyjen lippujen perusteella. 
+Laskee kuinka monta lippua on jäljellä tapahtumaan sen kapasiteetin ja myytyjen lippujen perusteella.
 
 _Pyyntö:_
+
 - HTTP-metodi: GET
 - Endpoint: /tapahtumat/{tapahtumaId}/jaljella
 - Polkuparametrit: {tapahtumaId} (kokonaisluku, pakollinen): Tapahtuman yksilöllinen tunniste
@@ -449,11 +459,11 @@ _Vastaus:_
 Tulostaa jäljellä olevat liput ovelle ennakkomyynnin sulkeutuessa.
 
 _Pyyntö:_
+
 - HTTP-metodi: POST
 - Endpoint: /tapahtumat/{tapahtumaId}/oviliput
 - Polkuparametrit: {tapahtumaId} (kokonaisluku, pakollinen): Tapahtuman yksilöllinen tunniste
 - Body: Tyhjä
-
 
 ### Myynnit
 
@@ -1339,6 +1349,190 @@ _Vastaus_
 - Onnistunut poisto: Tyhjä vastaus, HTTP-statuskoodi 204 (No Content).
 - Jos asiakastyyppiä ei löydy: Virheviesti ja HTTP-statuskoodi 404 (Not Found) "Asiakastyyppiä ei löytynyt".
 
+### Tapahtumapaikka
+
+##### _Perus-URL (base URL)_
+
+/tapahtumapaikat
+
+##### _Päätepisteet (endpoints)_
+
+###### Lisää uusi tapahtumapaikka
+
+_Pyyntö:_
+
+- HTTP-metodi: POST
+- Päätepiste: /tapahtumapaikat/
+- Otsikot: Content-Type: application/json
+- Body: JSON-objekti, joka sisältää tapahtumapaikan tiedot
+
+_Esimerkki_
+
+POST /tapahtumapaikat/
+Content-Type: application/json
+
+```
+{
+  "tapahtumapaikka": "Kulttuurikeskus",
+  "katuosoite": "Esimerkkikatu 12",
+  "puhnro": "0401234567",
+  "email": "info@kulttuuri.fi",
+  "kapasiteetti": 200,
+  "postinumero": {
+    "postinumero": "00100",
+    "paikkakunta": "Helsinki"
+  }
+}
+```
+
+_Vastaus:_
+
+```
+{
+  "tapahtumapaikkaId": 1,
+  "tapahtumapaikka": "Kulttuurikeskus",
+  "katuosoite": "Esimerkkikatu 12",
+  "puhnro": "0401234567",
+  "email": "info@kulttuuri.fi",
+  "kapasiteetti": 200,
+  "postinumero": {
+    "postinumero": "00100",
+    "paikkakunta": "Helsinki"
+  }
+}
+```
+
+- Onnistunut vastaus: 201 Created
+- Virheelliset tiedot: 400 Bad Request
+
+###### Hae kaikki tapahtumapaikat
+
+Palauttaa kaikki tapahtumapaikat.
+
+_Pyyntö:_
+
+- HTTP-metodi: GET
+- Päätepiste: /tapahtumapaikat/
+- Parametrit: ei parametreja.
+
+_Esimerkki:_
+GET /tapahtumatpaikat/
+
+_Vastaus:_
+
+```
+[
+  {
+    "tapahtumapaikkaId": 1,
+    "tapahtumapaikka": "Kulttuurikeskus",
+    "katuosoite": "Esimerkkikatu 12",
+    "puhnro": "0401234567",
+    "email": "info@kulttuuri.fi",
+    "kapasiteetti": 200,
+    "postinumero": {
+      "postinumero": "00100",
+      "paikkakunta": "Helsinki"
+    }
+  }
+]
+
+```
+
+Onnistunut pyyntö: Lista tapahtumapaikoista. 200 OK
+Jos tapahtumapaikkoja ei löydy: 404 Not Found
+
+###### Hae yksittäinen tapahtumapaikka tapahtumapaikkaId:llä
+
+Palauttaa yksittäisen tapahtumapaikan.
+
+_Pyyntö:_
+
+- HTTP-metodi: GET
+- Päätepiste: /tapahtumapaikat/{tapahtumapaikkaId}
+- Parametrit: ei parametreja.
+
+_Esimerkki:_
+GET /tapahtumatpaikat/1
+
+_Vastaus:_
+
+```
+{
+  "tapahtumapaikkaId": 1,
+  "tapahtumapaikka": "Kulttuurikeskus",
+  "katuosoite": "Esimerkkikatu 12",
+  "puhnro": "0401234567",
+  "email": "info@kulttuuri.fi",
+  "kapasiteetti": 200,
+  "postinumero": {
+    "postinumero": "00100",
+    "paikkakunta": "Helsinki"
+  }
+}
+```
+
+Onnistunut pyyntö: Tapahtumapaikan tiedot. 200 OK
+Jos tapahtumapaikkaa ei löydy: 404 Not Found
+
+###### Muokkaa tapahtumapaikkaa
+
+Muokkaa yksittäisen tapahtumapaikan tietoja.
+
+_Pyyntö:_
+
+- HTTP-metodi: PATCH
+- Päätepiste: /tapahtumapaikat/{tapahtumapaikkaId}
+- Otsikot: Content-Type: application/json
+- Body: Päivitettävät kentät JSON-muodossa (postinumeroa ei voi muuttaa)
+
+_Esimerkki:_
+PATCH /tapahtumatpaikat/1
+Content-Type: application/json
+
+```
+{
+ "tapahtumapaikka": "Uusi Kulttuurikeskus",
+ "kapasiteetti": 300
+}
+
+```
+
+_Vastaus:_
+
+```
+{
+  "tapahtumapaikkaId": 1,
+  "tapahtumapaikka": "Uusi Kulttuurikeskus",
+  "katuosoite": "Esimerkkikatu 12",
+  "puhnro": "0401234567",
+  "email": "info@kulttuuri.fi",
+  "kapasiteetti": 300,
+  "postinumero": {
+    "postinumero": "00100",
+    "paikkakunta": "Helsinki"
+  }
+}
+```
+
+Onnistunut pyyntö: 200 OK
+Jos tapahtumapaikkaa ei löydy: 404 Not Found
+
+###### Poista tapahtumapaikka
+
+Poistaa yksittäisen tapahtumapaikan.
+
+_Pyyntö:_
+
+- HTTP-metodi: DELETE
+- Päätepiste: /tapahtumapaikat/{tapahtumapaikkaId}
+- Parametrit: ei parametreja
+
+_Esimerkki:_
+DELETE /tapahtumatpaikat/1
+
+Onnistunut pyyntö: 204 No Content
+Jos tapahtumapaikkaa ei löydy: 404 Not Found
+
 ### Myyntiraportti
 
 ##### _Päätepisteet (endpoints)_
@@ -1358,12 +1552,12 @@ GET /raportit/myynti/day?date=2025-04-28
 
 _Vastaus_
 
-- Onnistunut pyyntö: HTTP-statuskoodi 200 (OK) ja päivän myyntitapahtumat JSON-muodossa, esim. 
-    {
-        "myyntiId": 1,
-        "myyntiaika": "2024-02-29T12:00:00",
-        "email": "asiakas1@example.com"
-    }
+- Onnistunut pyyntö: HTTP-statuskoodi 200 (OK) ja päivän myyntitapahtumat JSON-muodossa, esim.
+  {
+  "myyntiId": 1,
+  "myyntiaika": "2024-02-29T12:00:00",
+  "email": "asiakas1@example.com"
+  }
 
 Jos tapahtumia ei ole, palautetaan tyhjä JSON.
 
@@ -1436,12 +1630,12 @@ _Vastaus_
 - Onnistunut pyyntö: HTTP-statuskoodi 200 (OK) ja listaus myyntitapahtumista JSON-muodossa. Jos myyntitapahtumia ei ole, palautetaan tyhjä JSON.
 - Jos tapahtumaId:tä ei löydy: HTTP-status 400 (Bad request) ja viesti "Invalid tapahtumaId".
 
-
 #### _Perus-URL (base URL)_
 
 ## Testaus:
 
 Ohjelman testattavat toiminnallisuudet:
+
 - Lippujen myynti
 - Lippujen luominen
 - Lippujen tarkistus
