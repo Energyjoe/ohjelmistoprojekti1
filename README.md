@@ -1019,12 +1019,12 @@ Lisää yhden tai useamman tapahtumalipun tietylle tapahtumalle
 _Pyyntö_
 
 - HTTP-metodi: POST
-- Päätepiste: /
+- Päätepiste: /{tapahtumaId}
 - Otsikot: Content-Type: application/json
 - Body: JSON-objekti, joka sisältää tapahtumalipun tiedot
 
 _Esimerkki_
-POST /tapahtumaliput/
+POST /tapahtumaliput/1
 Content-Type: application/json
 
 ```
