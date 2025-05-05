@@ -29,14 +29,13 @@ public class WebSecurityConfig {
 
     @Bean
     public SecurityFilterChain SecurityFilterChain(HttpSecurity http) throws Exception {
-        http
 
-                // Poista CSRF-suojaus käytöstä (ei tarpeen JWT-pohjaisessa autentikoinnissa)
-                .csrf(customizer -> customizer.disable())
+        // Poista CSRF-suojaus käytöstä (ei tarpeen JWT-pohjaisessa autentikoinnissa)
+        http.csrf(customizer -> customizer.disable())
                 // Määritä pääsynhallinta
                 .authorizeHttpRequests((requests) -> requests
                         // Salli pääsy kirjautumispolkuihin ilman autentikointia
-                        .requestMatchers("/login/**").permitAll()
+                        .requestMatchers("/login/**", "/error", "/favicon.ico").permitAll()
                         .anyRequest().authenticated()) // Vaadi autentikointi muilta pyynnöiltä
                 // Lisää mukautettu JWT-suodatin ennen käyttäjätunnus-salasana-suodatinta
                 .addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class)
