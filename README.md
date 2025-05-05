@@ -315,7 +315,7 @@ Content-Type: application/json
   "katuosoite": "Katu 123",
   "postinumero": {
     "postinumero": "00100",
-    "paikkakunta": "HELSINKI"
+    "paikkakunta": "Helsinki"
   },
   "bcrypthash": "salasana123"
 }
@@ -333,7 +333,7 @@ _vastaus_
   "katuosoite": "Katu 123",
   "postinumero": {
     "postinumero": "00100",
-    "paikkakunta": "HELSINKI"
+    "paikkakunta": "Helsinki"
   }
 }
 ```
@@ -367,7 +367,7 @@ _Vastaus:_
     "puhnro": "0401234567",
     "katuosoite": "Mannerheimintie 1",
     "postinumero": "00100",
-    "paikkakunta": "HELSINKI"
+    "paikkakunta": "Helsinki"
 }
 ```
 
@@ -398,7 +398,7 @@ _Vastaus_
         "puhnro": "0401234567",
         "katuosoite": "Mannerheimintie 1",
         "postinumero": "00100",
-        "paikkakunta": "HELSINKI"
+        "paikkakunta": "Helsinki"
     },
     {
         "tyontekijaId": 2,
@@ -408,7 +408,7 @@ _Vastaus_
         "puhnro": "0507654321",
         "katuosoite": "Urheilupuistontie 3",
         "postinumero": "02100",
-        "paikkakunta": "ESPOO"
+        "paikkakunta": "Espoo"
     },
     {
         "tyontekijaId": 3,
@@ -418,7 +418,7 @@ _Vastaus_
         "puhnro": "0440654321",
         "katuosoite": "Esimerkkikatu 10",
         "postinumero": "00180",
-        "paikkakunta": "HELSINKI"
+        "paikkakunta": "Helsinki"
     }
 ]
 ```
@@ -455,7 +455,7 @@ _Vastaus_
     "puhnro": "0440654321",
     "katuosoite": "Esimerkkikatu 10",
     "postinumero": "00180",
-    "paikkakunta": "HELSINKI"
+    "paikkakunta": "Helsinki"
 }
 ```
 
@@ -1650,7 +1650,7 @@ Yksittäisten metodien toimintaa testataan yksikkötesteillä. Järjestelmän er
 
 Käytössä olevana tietokantana PostqreSQL. Tietokanta ajetaan Rahdissa ja yhteys määritellään Spring boot -projektin application-rahti.properties -tiedostossa. Käyttäjätunnus ja salasana löytyvät Rahti-palvelun secretistä ja niitä on käytettävä PostqgreSQL tietokantaa luotaessa.
 
-Rahtiprojekti löytyy osoitteesta: https://console-openshift-console.apps.2.rahti.csc.fi/project-details/ns/oprojekti1
+Rahtiprojekti löytyy osoitteesta: https://ohjelmistoprojekti-1-git-oprojekti1.2.rahtiapp.fi
 
 Spring boot -projektista löytyy data.sql tiedosto jossa on projektin testaukseen sopivaa testidataa sisältävä SQL-skripti, joka on myös ajettu rahtiin.
 
