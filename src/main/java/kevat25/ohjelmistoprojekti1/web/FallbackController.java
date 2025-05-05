@@ -1,4 +1,4 @@
-package kevat25.ohjelmistoprojekti1.web;
+/*package kevat25.ohjelmistoprojekti1.web;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -19,4 +19,4 @@ public class FallbackController {
         error.put("Virhe", "Reittiä ei löytynyt: " + request.getRequestURI());
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(error);
     }
-}
+}*/
