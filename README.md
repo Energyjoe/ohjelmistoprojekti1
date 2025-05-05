@@ -283,6 +283,414 @@ _vastaus_
 - Onnistunut vastaus: JWC-Token JSON-muodossa, HTTP-statuskoodi 200 (OK).
 - Väärä salasana tai sähköposti: HTTP-statuskoodi 403 (Forbidden).
 
+### Työntekijä
+
+#### _Perus-URL (base URL)_
+
+/tyontekijat
+
+#### _Päätepisteet (endpoints)_
+
+##### Lisää uusi työntekijä
+
+Lisää yhden uuden työntekijän ja asettaa tälle myös salasanan
+
+_Pyyntö_
+
+- HTTP-metodi: POST
+- Päätepiste: /
+- Otsikot: Content-Type: application/json
+- Body: JSON-objekti, joka sisältää myyjän tiedot
+
+_Esimerkki_
+POST /tyontekijat/
+Content-Type: application/json
+
+```
+{
+  "etunimi": "Matti",
+  "sukunimi": "Meikäläinen",
+  "email": "matti.meikalainen@example.com",
+  "puhnro": "0401234567",
+  "katuosoite": "Katu 123",
+  "postinumero": {
+    "postinumero": "00100",
+    "paikkakunta": "HELSINKI"
+  },
+  "bcrypthash": "salasana123"
+}
+```
+
+_vastaus_
+
+```
+{
+  "tyontekijaId": 1,
+  "etunimi": "Matti",
+  "sukunimi": "Meikäläinen",
+  "email": "matti.meikalainen@example.com",
+  "puhnro": "0401234567",
+  "katuosoite": "Katu 123",
+  "postinumero": {
+    "postinumero": "00100",
+    "paikkakunta": "HELSINKI"
+  }
+}
+```
+
+- Onnistunut vastaus: Luodun työntekijän tiedot JSON-muodossa, HTTP-statuskoodi 201 (Created).
+- JSON-arvo puuttuu: Palauttaa 400 (Bad Request) "_Kyseinen arvo_ on pakollinen"
+- Postinumero on väärä: Palauttaa 404 (Not Found) "Postinumeroa ei löydy"
+- Paikkakunta ei täsmää postinumeroon: Palauttaa 400 (Bad Request) "Paikkakunta ei täsmää postinumeroon"
+
+##### Hae työntekijää Id:n perusteella
+
+Hakee yhden työntekijän kaikki tiedot (paitsi salasanan)
+
+_Pyyntö_
+
+- HTTP-metodi: GET
+- Endpoint: /tyontekijat/{tyontekijaId}
+- Polkuparametrit: {tyontekijaId} (kokonaisluku, pakollinen): Työntekijän yksilöllinen tunniste
+
+_Esimerkki_
+GET /tyontekijat/1
+
+_Vastaus:_
+
+```
+{
+    "tyontekijaId": 1,
+    "etunimi": "Matti",
+    "sukunimi": "Meikäläinen",
+    "email": "matti.meikalainen@ticketguru.fi",
+    "puhnro": "0401234567",
+    "katuosoite": "Mannerheimintie 1",
+    "postinumero": "00100",
+    "paikkakunta": "HELSINKI"
+}
+```
+
+- Onnistunut vastaus: 200 (OK)
+- Työntekijän Id:tä ei löydy: 404 (Not Found) "Työntekijää ei löydy id:llä: 99"
+
+##### Hae kaikki työntekijät
+
+Palauttaa Listan työntekijöistä
+
+_Pyyntö_
+
+- HTTP-metodi: GET
+- Endpoint: /tyontekijat/
+
+_Esimerkki_
+GET /tyontekijat/
+
+_Vastaus_
+
+```
+[
+    {
+        "tyontekijaId": 1,
+        "etunimi": "Matti",
+        "sukunimi": "Meikäläinen",
+        "email": "matti.meikalainen@ticketguru.fi",
+        "puhnro": "0401234567",
+        "katuosoite": "Mannerheimintie 1",
+        "postinumero": "00100",
+        "paikkakunta": "HELSINKI"
+    },
+    {
+        "tyontekijaId": 2,
+        "etunimi": "Liisa",
+        "sukunimi": "Lahtinen",
+        "email": "liisa.lahtinen@ticketguru.fi",
+        "puhnro": "0507654321",
+        "katuosoite": "Urheilupuistontie 3",
+        "postinumero": "02100",
+        "paikkakunta": "ESPOO"
+    },
+    {
+        "tyontekijaId": 3,
+        "etunimi": "Erkki",
+        "sukunimi": "Esimerkki",
+        "email": "esko.esimerkki@example.com",
+        "puhnro": "0440654321",
+        "katuosoite": "Esimerkkikatu 10",
+        "postinumero": "00180",
+        "paikkakunta": "HELSINKI"
+    }
+]
+```
+
+- Onnistunut vastaus: 200 (OK)
+- Työntekijöitä ei löytynyt: Palauttaa tyhjän listan 200 (OK)
+
+##### Päivitä työntekijän tiedot (kaikki paitsi salasana)
+
+_Pyyntö_
+
+- HTTP-metodi: PATCH
+- Endpoint: /tyontekijat/{tyontekijaId}
+- Polkuparametrit: {tyontekijaId} (kokonaisluku, pakollinen): Työntekijän yksilöllinen tunniste
+- Otsikot: Content-Type: application/json
+- Body: JSON-objekti, joka sisältää päivitettävät työntekijän tiedot
+
+_Esimerkki_
+
+```
+{
+    "email": "erkki.esimerkki@example.com"
+}
+```
+
+_Vastaus_
+
+```
+{
+    "tyontekijaId": 3,
+    "etunimi": "Erkki",
+    "sukunimi": "Esimerkki",
+    "email": "erkki.esimerkki@example.com",
+    "puhnro": "0440654321",
+    "katuosoite": "Esimerkkikatu 10",
+    "postinumero": "00180",
+    "paikkakunta": "HELSINKI"
+}
+```
+
+- Onnistunut vastaus: Päivitetyn työntekijän tiedot JSON-muodossa, HTTP-statuskoodi 200 (OK).
+- Jos työntekijää ei löydy, virheviesti ja HTTP-statuskoodi 404 (Not Found) "Työntekijää ei löydy".
+
+##### Vaihda työntekijän salasana
+
+_Pyyntö_
+
+- HTTP-metodi: Put
+- Endpoint: /tyontekijat/{tyontekijaId}/salasana
+- Polkuparametrit: {tyontekijaId} (kokonaisluku, pakollinen): Työntekijän yksilöllinen tunniste
+- Otsikot: Content-Type: application/json
+- Body: JSON-objekti, joka sisältää päivitettävät työntekijän tiedot
+
+_Esimerkki_
+
+```
+{
+  "vanhaSalasana": "salasana123",
+  "uusiSalasana": "qwerty1234"
+}
+```
+
+_Vastaus_
+
+- Onnistunut vastaus: Päivitetyn työntekijän tiedot JSON-muodossa, HTTP-statuskoodi 200 (OK) "Salasana vaihdettu onnistuneesti".
+- Jos työntekijää ei löydy, virheviesti ja HTTP-statuskoodi 404 (Not Found) "Työntekijää ei löydy".
+- Jos vanha salasana on virheellinen: 400 (Bad Request) "Väärä vanha salasana"
+- Jos salasana ei ole oikean mittainen: 400 (Bad Request) "Uuden/Vanhan salasanan on oltava 8-60 merkkiä pitkä"
+- Jos salasana on tyhjä: 400 (Bad Request) "Uusi/Vanha salasana ei voi olla tyhjä"
+
+##### Poista työntekijä
+
+Poistaa työntekijän.
+
+_Pyyntö_
+
+- HTTP-metodi: DELETE
+- Endpoint: /tyontekijat/{tyontekijaId}
+- Polkuparametrit: {tyontekijaId} (kokonaisluku, pakollinen): Työntekijän yksilöllinen tunniste
+
+_Esimerkki_
+DELETE /tyontekijat/1
+
+_Vastaus_
+
+- Onnistunut poisto: Tyhjä vastaus, HTTP-statuskoodi 204 (No Content).
+- Jos työntekijää ei löydy: Virheviesti ja HTTP-statuskoodi 404 (Not Found) "Työntekijää ei löytynyt".
+
+### Tapahtumapaikka
+
+##### _Perus-URL (base URL)_
+
+/tapahtumapaikat
+
+##### _Päätepisteet (endpoints)_
+
+###### Lisää uusi tapahtumapaikka
+
+_Pyyntö:_
+
+- HTTP-metodi: POST
+- Päätepiste: /tapahtumapaikat/
+- Otsikot: Content-Type: application/json
+- Body: JSON-objekti, joka sisältää tapahtumapaikan tiedot
+
+_Esimerkki_
+
+POST /tapahtumapaikat/
+Content-Type: application/json
+
+```
+{
+  "tapahtumapaikka": "Kulttuurikeskus",
+  "katuosoite": "Esimerkkikatu 12",
+  "puhnro": "0401234567",
+  "email": "info@kulttuuri.fi",
+  "kapasiteetti": 200,
+  "postinumero": {
+    "postinumero": "00100",
+    "paikkakunta": "Helsinki"
+  }
+}
+```
+
+_Vastaus:_
+
+```
+{
+  "tapahtumapaikkaId": 1,
+  "tapahtumapaikka": "Kulttuurikeskus",
+  "katuosoite": "Esimerkkikatu 12",
+  "puhnro": "0401234567",
+  "email": "info@kulttuuri.fi",
+  "kapasiteetti": 200,
+  "postinumero": {
+    "postinumero": "00100",
+    "paikkakunta": "Helsinki"
+  }
+}
+```
+
+- Onnistunut vastaus: 201 Created
+- Virheelliset tiedot: 400 Bad Request
+
+##### Hae kaikki tapahtumapaikat
+
+Palauttaa kaikki tapahtumapaikat.
+
+_Pyyntö:_
+
+- HTTP-metodi: GET
+- Päätepiste: /tapahtumapaikat/
+- Parametrit: ei parametreja.
+
+_Esimerkki:_
+GET /tapahtumatpaikat/
+
+_Vastaus:_
+
+```
+[
+  {
+    "tapahtumapaikkaId": 1,
+    "tapahtumapaikka": "Kulttuurikeskus",
+    "katuosoite": "Esimerkkikatu 12",
+    "puhnro": "0401234567",
+    "email": "info@kulttuuri.fi",
+    "kapasiteetti": 200,
+    "postinumero": {
+      "postinumero": "00100",
+      "paikkakunta": "Helsinki"
+    }
+  }
+]
+
+```
+
+Onnistunut pyyntö: Lista tapahtumapaikoista. 200 OK
+Jos tapahtumapaikkoja ei löydy: 404 Not Found
+
+##### Hae yksittäinen tapahtumapaikka tapahtumapaikkaId:llä
+
+Palauttaa yksittäisen tapahtumapaikan.
+
+_Pyyntö:_
+
+- HTTP-metodi: GET
+- Päätepiste: /tapahtumapaikat/{tapahtumapaikkaId}
+- Parametrit: ei parametreja.
+
+_Esimerkki:_
+GET /tapahtumatpaikat/1
+
+_Vastaus:_
+
+```
+{
+  "tapahtumapaikkaId": 1,
+  "tapahtumapaikka": "Kulttuurikeskus",
+  "katuosoite": "Esimerkkikatu 12",
+  "puhnro": "0401234567",
+  "email": "info@kulttuuri.fi",
+  "kapasiteetti": 200,
+  "postinumero": {
+    "postinumero": "00100",
+    "paikkakunta": "Helsinki"
+  }
+}
+```
+
+Onnistunut pyyntö: Tapahtumapaikan tiedot. 200 OK
+Jos tapahtumapaikkaa ei löydy: 404 Not Found
+
+##### Muokkaa tapahtumapaikkaa
+
+Muokkaa yksittäisen tapahtumapaikan tietoja.
+
+_Pyyntö:_
+
+- HTTP-metodi: PATCH
+- Päätepiste: /tapahtumapaikat/{tapahtumapaikkaId}
+- Otsikot: Content-Type: application/json
+- Body: Päivitettävät kentät JSON-muodossa (postinumeroa ei voi muuttaa)
+
+_Esimerkki:_
+PATCH /tapahtumatpaikat/1
+Content-Type: application/json
+
+```
+{
+ "tapahtumapaikka": "Uusi Kulttuurikeskus",
+ "kapasiteetti": 300
+}
+
+```
+
+_Vastaus:_
+
+```
+{
+  "tapahtumapaikkaId": 1,
+  "tapahtumapaikka": "Uusi Kulttuurikeskus",
+  "katuosoite": "Esimerkkikatu 12",
+  "puhnro": "0401234567",
+  "email": "info@kulttuuri.fi",
+  "kapasiteetti": 300,
+  "postinumero": {
+    "postinumero": "00100",
+    "paikkakunta": "Helsinki"
+  }
+}
+```
+
+Onnistunut pyyntö: 200 OK
+Jos tapahtumapaikkaa ei löydy: 404 Not Found
+
+##### Poista tapahtumapaikka
+
+Poistaa yksittäisen tapahtumapaikan.
+
+_Pyyntö:_
+
+- HTTP-metodi: DELETE
+- Päätepiste: /tapahtumapaikat/{tapahtumapaikkaId}
+- Parametrit: ei parametreja
+
+_Esimerkki:_
+DELETE /tapahtumatpaikat/1
+
+Onnistunut pyyntö: 204 No Content
+Jos tapahtumapaikkaa ei löydy: 404 Not Found
+
 ### Tapahtumat
 
 ##### _Perus-URL (base URL)_
@@ -464,6 +872,293 @@ _Pyyntö:_
 - Endpoint: /tapahtumat/{tapahtumaId}/oviliput
 - Polkuparametrit: {tapahtumaId} (kokonaisluku, pakollinen): Tapahtuman yksilöllinen tunniste
 - Body: Tyhjä
+
+### Asiakastyyppi
+
+#### _Perus-URL (base URL)_
+
+/asiakastyypit
+
+#### _Päätepisteet (endpoints)_
+
+##### Lisää uusi asiakastyyppi
+
+_Pyyntö_
+
+- HTTP-metodi: POST
+- Päätepiste: /
+- Otsikot: Content-Type: application/json
+- Body: JSON-objekti, joka sisältää myyjän tiedot
+
+_Esimerkki_
+POST /asiakastyypit/
+Content-Type: application/json
+
+```
+{
+    "asiakastyyppi": "VIP"
+}
+```
+
+_vastaus_
+
+```
+{
+    "asiakastyyppiId": 5,
+    "asiakastyyppi": "VIP"
+}
+```
+
+- Onnistunut vastaus: Luodun asiakastyypin tiedot JSON-muodossa, HTTP-statuskoodi 201 (Created).
+- JSON-arvo puuttuu: Palauttaa 400 (Bad Request).
+
+##### Hae kaikki asiakastyypit
+
+_Pyyntö_
+
+- HTTP-metodi: GET
+- Päätepiste: /
+- Otsikot: Content-Type: application/json
+- Body: JSON-objekti, joka sisältää myyjän tiedot
+
+_Esimerkki_
+POST /asiakastyypit/
+Content-Type: application/json
+
+_vastaus_
+
+```
+[
+    {
+        "asiakastyyppiId": 1,
+        "asiakastyyppi": "Opiskelija"
+    },
+    {
+        "asiakastyyppiId": 2,
+        "asiakastyyppi": "Aikuinen"
+    },
+    {
+        "asiakastyyppiId": 3,
+        "asiakastyyppi": "Eläkeläinen"
+    },
+    {
+        "asiakastyyppiId": 4,
+        "asiakastyyppi": "Varusmies"
+    },
+    {
+        "asiakastyyppiId": 5,
+        "asiakastyyppi": "VIP"
+    }
+]
+```
+
+- Onnistunut vastaus: Asiakastyypin tiedot JSON-muodossa, HTTP-statuskoodi 200 (OK).
+- JSON-arvo puuttuu: Palauttaa 404 (Not Found) "Asiakastyyppiä ei löytynyt".
+
+##### Muokkaa asiakastyypiä
+
+_Pyyntö_
+
+- HTTP-metodi: PATCH
+- Päätepiste: /asiakastyyppiId
+- Otsikot: Content-Type: application/json
+- Body: JSON-objekti, joka sisältää myyjän tiedot
+
+_Esimerkki_
+POST /asiakastyypit/5
+Content-Type: application/json
+
+```
+{
+    "asiakastyyppi": "Lapsi"
+}
+```
+
+_vastaus_
+
+```
+{
+    "asiakastyyppiId": 5,
+    "asiakastyyppi": "Lapsi"
+}
+```
+
+- Onnistunut vastaus: Muokatun asiakastyypin tiedot JSON-muodossa, HTTP-statuskoodi 200 (OK).
+- JSON-arvo puuttuu: Palauttaa 404 (Not Found) "Asiakastyyppiä ei löytynyt".
+
+##### Poista Asiakastyyppi
+
+Poistaa asiakastyypin.
+
+_Pyyntö_
+
+- HTTP-metodi: DELETE
+- Endpoint: /asiakastyypit/{asiakastyyppiId}
+- Polkuparametrit: {asiakastyyppiId} (kokonaisluku, pakollinen): Asiakastyypin yksilöllinen tunniste
+
+_Esimerkki_
+DELETE /asiakastyypit/5
+
+_Vastaus_
+
+- Onnistunut poisto: Tyhjä vastaus, HTTP-statuskoodi 204 (No Content).
+- Jos asiakastyyppiä ei löydy: Virheviesti ja HTTP-statuskoodi 404 (Not Found) "Asiakastyyppiä ei löytynyt".
+
+### Tapahtumaliput
+
+##### _Perus-URL (base URL)_
+
+/tapahtumaliput
+
+##### _Päätepisteet (endpoints)_
+
+###### Lisää useampi tapahtumalippu
+
+Lisää yhden tai useamman tapahtumalipun tietylle tapahtumalle
+
+_Pyyntö_
+
+- HTTP-metodi: POST
+- Päätepiste: /
+- Otsikot: Content-Type: application/json
+- Body: JSON-objekti, joka sisältää tapahtumalipun tiedot
+
+_Esimerkki_
+POST /tapahtumaliput/
+Content-Type: application/json
+
+```
+[
+    {
+        "hinta": 25.00,
+        "asiakastyyppi": {
+            "asiakastyyppiId": 1
+        }
+    },
+    {
+        "hinta": 45.00,
+        "asiakastyyppi": {
+            "asiakastyyppiId": 2
+        }
+    },
+    {
+        "hinta": 30.00,
+        "asiakastyyppi": {
+            "asiakastyyppiId": 3
+        }
+    }
+]
+```
+
+_vastaus_
+
+- Onnistunut vastaus: Luotujen tapahtumalippujen tiedot JSON-muodossa, HTTP-statuskoodi 201 (Created).
+- Jos tapahtumalla on jo kyseisellä asiakastyypillä oleva tapahtumalippu, tulee vastauksena HTTP-statuskoodi 409 (Conflict). Virheviesti: "Tapahtumalippu asiakastyyppille Opiskelija ID:llä 1 on jo olemassa."
+
+##### Hae kaikki tapahtumaliput tapahtumalle
+
+Palauttaa kaikki tapahtumaliput tietylle tapahtumalle.
+
+_Pyyntö_
+
+- HTTP-metodi: GET
+- Endpoint: /tapahtumaliput/{tapahtumaId}
+- Polkuparametrit: {tapahtumaId} (kokonaisluku, pakollinen): Tapahtuman yksilöllinen tunniste
+
+_Esimerkki_
+GET /tapahtumaliput/123
+
+_Vastaus:_
+
+```
+[
+    {
+        "tapahtumalippuId": 1,
+        "hinta": 25.00,
+        "asiakastyyppi": {
+            "asiakastyyppiId": 1,
+            "asiakastyyppi": "Opiskelija"
+        }
+    },
+    {
+        "tapahtumalippuId": 2,
+        "hinta": 45.00,
+        "asiakastyyppi": {
+            "asiakastyyppiId": 2,
+            "asiakastyyppi": "Aikuinen"
+        }
+    }
+]
+```
+
+##### Hae tapahtumalippu ID:n perusteella
+
+Palauttaa yksittäisen tapahtumalipun tiedot.
+
+_Pyyntö_
+
+- HTTP-metodi: GET
+- Endpoint: /tapahtumaliput/tapahtumalippu/{tapahtumalippuId}
+- Polkuparametrit: {tapahtumalippuId} (kokonaisluku, pakollinen): Tapahtumalipun yksilöllinen tunniste
+
+_Esimerkki_
+GET /tapahtumaliput/tapahtumalippu/123
+
+_Vastaus_
+
+```
+{
+    "tapahtumalippuId": 1,
+    "hinta": 25.00,
+    "asiakastyyppi": {
+        "asiakastyyppiId": 1,
+        "asiakastyyppi": "Opiskelija"
+    }
+}
+```
+
+##### Päivitä tapahtumalippu
+
+Päivittää olemassa olevan tapahtumalipun tietoja. Näitä ovat hinta, asiakastyyppejä muokataan asiakastyyppiControllerin kautta.
+
+_Pyyntö_
+
+- HTTP-metodi: PATCH
+- Endpoint: /tapahtumaliput/{tapahtumalippuId}
+- Polkuparametrit: {tapahtumalippuId} (kokonaisluku, pakollinen): Tapahtumalipun yksilöllinen tunniste
+- Otsikot: Content-Type: application/json
+- Body: JSON-objekti, joka sisältää päivitettävät tapahtumalipun tiedot
+
+_Esimerkki_
+
+```
+{
+    "hinta": 35.00
+}
+```
+
+_Vastaus_
+
+- Onnistunut vastaus: Päivitetyn tapahtumalipun tiedot JSON-muodossa, HTTP-statuskoodi 200 (OK).
+- Jos tapahtumalippua ei löydy, virheviesti ja HTTP-statuskoodi 404 (Not Found).
+
+##### Poista tapahtumalippu
+
+Poistaa tapahtumalipun.
+
+_Pyyntö_
+
+- HTTP-metodi: DELETE
+- Endpoint: /tapahtumaliput/{tapahtumalippuId}
+- Polkuparametrit: {tapahtumalippuId} (kokonaisluku, pakollinen): Tapahtumalipun yksilöllinen tunniste
+
+_Esimerkki_
+DELETE /tapahtumaliput/123
+
+_Vastaus_
+
+- Onnistunut poisto: Tyhjä vastaus, HTTP-statuskoodi 204 (No Content).
+- Jos tapahtumalippua ei löydy: Virheviesti ja HTTP-statuskoodi 404 (Not Found).
 
 ### Myynnit
 
@@ -838,706 +1533,11 @@ _Vastaus:_
 - Jos lippua ei löydy: Virheviesti ja HTTP-statuskoodi 404 (Not Found)
 - Kun JPA ei pysty avaamaan EntityManager-yhteyttä tietokantaan: Virheviesti "Tietokantayhteys epäonnistui. Yritä uudelleen myöhemmin." ja HTTP-statuskoodi 503 (Service Unavailable).
 
-### Tapahtumaliput
-
-##### _Perus-URL (base URL)_
-
-/tapahtumaliput
-
-##### _Päätepisteet (endpoints)_
-
-###### Lisää useampi tapahtumalippu
-
-Lisää yhden tai useamman tapahtumalipun tietylle tapahtumalle
-
-_Pyyntö_
-
-- HTTP-metodi: POST
-- Päätepiste: /
-- Otsikot: Content-Type: application/json
-- Body: JSON-objekti, joka sisältää tapahtumalipun tiedot
-
-_Esimerkki_
-POST /tapahtumaliput/
-Content-Type: application/json
-
-```
-[
-    {
-        "hinta": 25.00,
-        "asiakastyyppi": {
-            "asiakastyyppiId": 1
-        }
-    },
-    {
-        "hinta": 45.00,
-        "asiakastyyppi": {
-            "asiakastyyppiId": 2
-        }
-    },
-    {
-        "hinta": 30.00,
-        "asiakastyyppi": {
-            "asiakastyyppiId": 3
-        }
-    }
-]
-```
-
-_vastaus_
-
-- Onnistunut vastaus: Luotujen tapahtumalippujen tiedot JSON-muodossa, HTTP-statuskoodi 201 (Created).
-- Jos tapahtumalla on jo kyseisellä asiakastyypillä oleva tapahtumalippu, tulee vastauksena HTTP-statuskoodi 409 (Conflict). Virheviesti: "Tapahtumalippu asiakastyyppille Opiskelija ID:llä 1 on jo olemassa."
-
-##### Hae kaikki tapahtumaliput tapahtumalle
-
-Palauttaa kaikki tapahtumaliput tietylle tapahtumalle.
-
-_Pyyntö_
-
-- HTTP-metodi: GET
-- Endpoint: /tapahtumaliput/{tapahtumaId}
-- Polkuparametrit: {tapahtumaId} (kokonaisluku, pakollinen): Tapahtuman yksilöllinen tunniste
-
-_Esimerkki_
-GET /tapahtumaliput/123
-
-_Vastaus:_
-
-```
-[
-    {
-        "tapahtumalippuId": 1,
-        "hinta": 25.00,
-        "asiakastyyppi": {
-            "asiakastyyppiId": 1,
-            "asiakastyyppi": "Opiskelija"
-        }
-    },
-    {
-        "tapahtumalippuId": 2,
-        "hinta": 45.00,
-        "asiakastyyppi": {
-            "asiakastyyppiId": 2,
-            "asiakastyyppi": "Aikuinen"
-        }
-    }
-]
-```
-
-##### Hae tapahtumalippu ID:n perusteella
-
-Palauttaa yksittäisen tapahtumalipun tiedot.
-
-_Pyyntö_
-
-- HTTP-metodi: GET
-- Endpoint: /tapahtumaliput/tapahtumalippu/{tapahtumalippuId}
-- Polkuparametrit: {tapahtumalippuId} (kokonaisluku, pakollinen): Tapahtumalipun yksilöllinen tunniste
-
-_Esimerkki_
-GET /tapahtumaliput/tapahtumalippu/123
-
-_Vastaus_
-
-```
-{
-    "tapahtumalippuId": 1,
-    "hinta": 25.00,
-    "asiakastyyppi": {
-        "asiakastyyppiId": 1,
-        "asiakastyyppi": "Opiskelija"
-    }
-}
-```
-
-##### Päivitä tapahtumalippu
-
-Päivittää olemassa olevan tapahtumalipun tietoja. Näitä ovat hinta, asiakastyyppejä muokataan asiakastyyppiControllerin kautta.
-
-_Pyyntö_
-
-- HTTP-metodi: PATCH
-- Endpoint: /tapahtumaliput/{tapahtumalippuId}
-- Polkuparametrit: {tapahtumalippuId} (kokonaisluku, pakollinen): Tapahtumalipun yksilöllinen tunniste
-- Otsikot: Content-Type: application/json
-- Body: JSON-objekti, joka sisältää päivitettävät tapahtumalipun tiedot
-
-_Esimerkki_
-
-```
-{
-    "hinta": 35.00
-}
-```
-
-_Vastaus_
-
-- Onnistunut vastaus: Päivitetyn tapahtumalipun tiedot JSON-muodossa, HTTP-statuskoodi 200 (OK).
-- Jos tapahtumalippua ei löydy, virheviesti ja HTTP-statuskoodi 404 (Not Found).
-
-##### Poista tapahtumalippu
-
-Poistaa tapahtumalipun.
-
-_Pyyntö_
-
-- HTTP-metodi: DELETE
-- Endpoint: /tapahtumaliput/{tapahtumalippuId}
-- Polkuparametrit: {tapahtumalippuId} (kokonaisluku, pakollinen): Tapahtumalipun yksilöllinen tunniste
-
-_Esimerkki_
-DELETE /tapahtumaliput/123
-
-_Vastaus_
-
-- Onnistunut poisto: Tyhjä vastaus, HTTP-statuskoodi 204 (No Content).
-- Jos tapahtumalippua ei löydy: Virheviesti ja HTTP-statuskoodi 404 (Not Found).
-
-### Työntekijä
-
-#### _Perus-URL (base URL)_
-
-/tyontekijat
-
-#### _Päätepisteet (endpoints)_
-
-##### Lisää uusi työntekijä
-
-Lisää yhden uuden työntekijän ja asettaa tälle myös salasanan
-
-_Pyyntö_
-
-- HTTP-metodi: POST
-- Päätepiste: /
-- Otsikot: Content-Type: application/json
-- Body: JSON-objekti, joka sisältää myyjän tiedot
-
-_Esimerkki_
-POST /tyontekijat/
-Content-Type: application/json
-
-```
-{
-  "etunimi": "Matti",
-  "sukunimi": "Meikäläinen",
-  "email": "matti.meikalainen@example.com",
-  "puhnro": "0401234567",
-  "katuosoite": "Katu 123",
-  "postinumero": {
-    "postinumero": "00100",
-    "paikkakunta": "HELSINKI"
-  },
-  "bcrypthash": "salasana123"
-}
-```
-
-_vastaus_
-
-```
-{
-  "tyontekijaId": 1,
-  "etunimi": "Matti",
-  "sukunimi": "Meikäläinen",
-  "email": "matti.meikalainen@example.com",
-  "puhnro": "0401234567",
-  "katuosoite": "Katu 123",
-  "postinumero": {
-    "postinumero": "00100",
-    "paikkakunta": "HELSINKI"
-  }
-}
-```
-
-- Onnistunut vastaus: Luodun työntekijän tiedot JSON-muodossa, HTTP-statuskoodi 201 (Created).
-- JSON-arvo puuttuu: Palauttaa 400 (Bad Request) "_Kyseinen arvo_ on pakollinen"
-- Postinumero on väärä: Palauttaa 404 (Not Found) "Postinumeroa ei löydy"
-- Paikkakunta ei täsmää postinumeroon: Palauttaa 400 (Bad Request) "Paikkakunta ei täsmää postinumeroon"
-
-##### Hae työntekijää Id:n perusteella
-
-Hakee yhden työntekijän kaikki tiedot (paitsi salasanan)
-
-_Pyyntö_
-
-- HTTP-metodi: GET
-- Endpoint: /tyontekijat/{tyontekijaId}
-- Polkuparametrit: {tyontekijaId} (kokonaisluku, pakollinen): Työntekijän yksilöllinen tunniste
-
-_Esimerkki_
-GET /tyontekijat/1
-
-_Vastaus:_
-
-```
-{
-    "tyontekijaId": 1,
-    "etunimi": "Matti",
-    "sukunimi": "Meikäläinen",
-    "email": "matti.meikalainen@ticketguru.fi",
-    "puhnro": "0401234567",
-    "katuosoite": "Mannerheimintie 1",
-    "postinumero": "00100",
-    "paikkakunta": "HELSINKI"
-}
-```
-
-- Onnistunut vastaus: 200 (OK)
-- Työntekijän Id:tä ei löydy: 404 (Not Found) "Työntekijää ei löydy id:llä: 99"
-
-##### Hae kaikki työntekijät
-
-Palauttaa Listan työntekijöistä
-
-_Pyyntö_
-
-- HTTP-metodi: GET
-- Endpoint: /tyontekijat/
-
-_Esimerkki_
-GET /tyontekijat/
-
-_Vastaus_
-
-```
-[
-    {
-        "tyontekijaId": 1,
-        "etunimi": "Matti",
-        "sukunimi": "Meikäläinen",
-        "email": "matti.meikalainen@ticketguru.fi",
-        "puhnro": "0401234567",
-        "katuosoite": "Mannerheimintie 1",
-        "postinumero": "00100",
-        "paikkakunta": "HELSINKI"
-    },
-    {
-        "tyontekijaId": 2,
-        "etunimi": "Liisa",
-        "sukunimi": "Lahtinen",
-        "email": "liisa.lahtinen@ticketguru.fi",
-        "puhnro": "0507654321",
-        "katuosoite": "Urheilupuistontie 3",
-        "postinumero": "02100",
-        "paikkakunta": "ESPOO"
-    },
-    {
-        "tyontekijaId": 3,
-        "etunimi": "Erkki",
-        "sukunimi": "Esimerkki",
-        "email": "esko.esimerkki@example.com",
-        "puhnro": "0440654321",
-        "katuosoite": "Esimerkkikatu 10",
-        "postinumero": "00180",
-        "paikkakunta": "HELSINKI"
-    }
-]
-```
-
-- Onnistunut vastaus: 200 (OK)
-- Työntekijöitä ei löytynyt: Palauttaa tyhjän listan 200 (OK)
-
-##### Päivitä työntekijän tiedot (kaikki paitsi salasana)
-
-_Pyyntö_
-
-- HTTP-metodi: PATCH
-- Endpoint: /tyontekijat/{tyontekijaId}
-- Polkuparametrit: {tyontekijaId} (kokonaisluku, pakollinen): Työntekijän yksilöllinen tunniste
-- Otsikot: Content-Type: application/json
-- Body: JSON-objekti, joka sisältää päivitettävät työntekijän tiedot
-
-_Esimerkki_
-
-```
-{
-    "email": "erkki.esimerkki@example.com"
-}
-```
-
-_Vastaus_
-
-```
-{
-    "tyontekijaId": 3,
-    "etunimi": "Erkki",
-    "sukunimi": "Esimerkki",
-    "email": "erkki.esimerkki@example.com",
-    "puhnro": "0440654321",
-    "katuosoite": "Esimerkkikatu 10",
-    "postinumero": "00180",
-    "paikkakunta": "HELSINKI"
-}
-```
-
-- Onnistunut vastaus: Päivitetyn työntekijän tiedot JSON-muodossa, HTTP-statuskoodi 200 (OK).
-- Jos työntekijää ei löydy, virheviesti ja HTTP-statuskoodi 404 (Not Found) "Työntekijää ei löydy".
-
-##### Vaihda työntekijän salasana
-
-_Pyyntö_
-
-- HTTP-metodi: Put
-- Endpoint: /tyontekijat/{tyontekijaId}/salasana
-- Polkuparametrit: {tyontekijaId} (kokonaisluku, pakollinen): Työntekijän yksilöllinen tunniste
-- Otsikot: Content-Type: application/json
-- Body: JSON-objekti, joka sisältää päivitettävät työntekijän tiedot
-
-_Esimerkki_
-
-```
-{
-  "vanhaSalasana": "salasana123",
-  "uusiSalasana": "qwerty1234"
-}
-```
-
-_Vastaus_
-
-- Onnistunut vastaus: Päivitetyn työntekijän tiedot JSON-muodossa, HTTP-statuskoodi 200 (OK) "Salasana vaihdettu onnistuneesti".
-- Jos työntekijää ei löydy, virheviesti ja HTTP-statuskoodi 404 (Not Found) "Työntekijää ei löydy".
-- Jos vanha salasana on virheellinen: 400 (Bad Request) "Väärä vanha salasana"
-- Jos salasana ei ole oikean mittainen: 400 (Bad Request) "Uuden/Vanhan salasanan on oltava 8-60 merkkiä pitkä"
-- Jos salasana on tyhjä: 400 (Bad Request) "Uusi/Vanha salasana ei voi olla tyhjä"
-
-##### Poista työntekijä
-
-Poistaa työntekijän.
-
-_Pyyntö_
-
-- HTTP-metodi: DELETE
-- Endpoint: /tyontekijat/{tyontekijaId}
-- Polkuparametrit: {tyontekijaId} (kokonaisluku, pakollinen): Työntekijän yksilöllinen tunniste
-
-_Esimerkki_
-DELETE /tyontekijat/1
-
-_Vastaus_
-
-- Onnistunut poisto: Tyhjä vastaus, HTTP-statuskoodi 204 (No Content).
-- Jos työntekijää ei löydy: Virheviesti ja HTTP-statuskoodi 404 (Not Found) "Työntekijää ei löytynyt".
-
-### Asiakastyyppi
-
-#### _Perus-URL (base URL)_
-
-/asiakastyypit
-
-#### _Päätepisteet (endpoints)_
-
-##### Lisää uusi asiakastyyppi
-
-_Pyyntö_
-
-- HTTP-metodi: POST
-- Päätepiste: /
-- Otsikot: Content-Type: application/json
-- Body: JSON-objekti, joka sisältää myyjän tiedot
-
-_Esimerkki_
-POST /asiakastyypit/
-Content-Type: application/json
-
-```
-{
-    "asiakastyyppi": "VIP"
-}
-```
-
-_vastaus_
-
-```
-{
-    "asiakastyyppiId": 5,
-    "asiakastyyppi": "VIP"
-}
-```
-
-- Onnistunut vastaus: Luodun asiakastyypin tiedot JSON-muodossa, HTTP-statuskoodi 201 (Created).
-- JSON-arvo puuttuu: Palauttaa 400 (Bad Request).
-
-##### Hae kaikki asiakastyypit
-
-_Pyyntö_
-
-- HTTP-metodi: GET
-- Päätepiste: /
-- Otsikot: Content-Type: application/json
-- Body: JSON-objekti, joka sisältää myyjän tiedot
-
-_Esimerkki_
-POST /asiakastyypit/
-Content-Type: application/json
-
-_vastaus_
-
-```
-[
-    {
-        "asiakastyyppiId": 1,
-        "asiakastyyppi": "Opiskelija"
-    },
-    {
-        "asiakastyyppiId": 2,
-        "asiakastyyppi": "Aikuinen"
-    },
-    {
-        "asiakastyyppiId": 3,
-        "asiakastyyppi": "Eläkeläinen"
-    },
-    {
-        "asiakastyyppiId": 4,
-        "asiakastyyppi": "Varusmies"
-    },
-    {
-        "asiakastyyppiId": 5,
-        "asiakastyyppi": "VIP"
-    }
-]
-```
-
-- Onnistunut vastaus: Asiakastyypin tiedot JSON-muodossa, HTTP-statuskoodi 200 (OK).
-- JSON-arvo puuttuu: Palauttaa 404 (Not Found) "Asiakastyyppiä ei löytynyt".
-
-##### Muokkaa asiakastyypiä
-
-_Pyyntö_
-
-- HTTP-metodi: PATCH
-- Päätepiste: /asiakastyyppiId
-- Otsikot: Content-Type: application/json
-- Body: JSON-objekti, joka sisältää myyjän tiedot
-
-_Esimerkki_
-POST /asiakastyypit/5
-Content-Type: application/json
-
-```
-{
-    "asiakastyyppi": "Lapsi"
-}
-```
-
-_vastaus_
-
-```
-{
-    "asiakastyyppiId": 5,
-    "asiakastyyppi": "Lapsi"
-}
-```
-
-- Onnistunut vastaus: Muokatun asiakastyypin tiedot JSON-muodossa, HTTP-statuskoodi 200 (OK).
-- JSON-arvo puuttuu: Palauttaa 404 (Not Found) "Asiakastyyppiä ei löytynyt".
-
-##### Poista Asiakastyyppi
-
-Poistaa asiakastyypin.
-
-_Pyyntö_
-
-- HTTP-metodi: DELETE
-- Endpoint: /asiakastyypit/{asiakastyyppiId}
-- Polkuparametrit: {asiakastyyppiId} (kokonaisluku, pakollinen): Asiakastyypin yksilöllinen tunniste
-
-_Esimerkki_
-DELETE /asiakastyypit/5
-
-_Vastaus_
-
-- Onnistunut poisto: Tyhjä vastaus, HTTP-statuskoodi 204 (No Content).
-- Jos asiakastyyppiä ei löydy: Virheviesti ja HTTP-statuskoodi 404 (Not Found) "Asiakastyyppiä ei löytynyt".
-
-### Tapahtumapaikka
-
-##### _Perus-URL (base URL)_
-
-/tapahtumapaikat
-
-##### _Päätepisteet (endpoints)_
-
-###### Lisää uusi tapahtumapaikka
-
-_Pyyntö:_
-
-- HTTP-metodi: POST
-- Päätepiste: /tapahtumapaikat/
-- Otsikot: Content-Type: application/json
-- Body: JSON-objekti, joka sisältää tapahtumapaikan tiedot
-
-_Esimerkki_
-
-POST /tapahtumapaikat/
-Content-Type: application/json
-
-```
-{
-  "tapahtumapaikka": "Kulttuurikeskus",
-  "katuosoite": "Esimerkkikatu 12",
-  "puhnro": "0401234567",
-  "email": "info@kulttuuri.fi",
-  "kapasiteetti": 200,
-  "postinumero": {
-    "postinumero": "00100",
-    "paikkakunta": "Helsinki"
-  }
-}
-```
-
-_Vastaus:_
-
-```
-{
-  "tapahtumapaikkaId": 1,
-  "tapahtumapaikka": "Kulttuurikeskus",
-  "katuosoite": "Esimerkkikatu 12",
-  "puhnro": "0401234567",
-  "email": "info@kulttuuri.fi",
-  "kapasiteetti": 200,
-  "postinumero": {
-    "postinumero": "00100",
-    "paikkakunta": "Helsinki"
-  }
-}
-```
-
-- Onnistunut vastaus: 201 Created
-- Virheelliset tiedot: 400 Bad Request
-
-###### Hae kaikki tapahtumapaikat
-
-Palauttaa kaikki tapahtumapaikat.
-
-_Pyyntö:_
-
-- HTTP-metodi: GET
-- Päätepiste: /tapahtumapaikat/
-- Parametrit: ei parametreja.
-
-_Esimerkki:_
-GET /tapahtumatpaikat/
-
-_Vastaus:_
-
-```
-[
-  {
-    "tapahtumapaikkaId": 1,
-    "tapahtumapaikka": "Kulttuurikeskus",
-    "katuosoite": "Esimerkkikatu 12",
-    "puhnro": "0401234567",
-    "email": "info@kulttuuri.fi",
-    "kapasiteetti": 200,
-    "postinumero": {
-      "postinumero": "00100",
-      "paikkakunta": "Helsinki"
-    }
-  }
-]
-
-```
-
-Onnistunut pyyntö: Lista tapahtumapaikoista. 200 OK
-Jos tapahtumapaikkoja ei löydy: 404 Not Found
-
-###### Hae yksittäinen tapahtumapaikka tapahtumapaikkaId:llä
-
-Palauttaa yksittäisen tapahtumapaikan.
-
-_Pyyntö:_
-
-- HTTP-metodi: GET
-- Päätepiste: /tapahtumapaikat/{tapahtumapaikkaId}
-- Parametrit: ei parametreja.
-
-_Esimerkki:_
-GET /tapahtumatpaikat/1
-
-_Vastaus:_
-
-```
-{
-  "tapahtumapaikkaId": 1,
-  "tapahtumapaikka": "Kulttuurikeskus",
-  "katuosoite": "Esimerkkikatu 12",
-  "puhnro": "0401234567",
-  "email": "info@kulttuuri.fi",
-  "kapasiteetti": 200,
-  "postinumero": {
-    "postinumero": "00100",
-    "paikkakunta": "Helsinki"
-  }
-}
-```
-
-Onnistunut pyyntö: Tapahtumapaikan tiedot. 200 OK
-Jos tapahtumapaikkaa ei löydy: 404 Not Found
-
-###### Muokkaa tapahtumapaikkaa
-
-Muokkaa yksittäisen tapahtumapaikan tietoja.
-
-_Pyyntö:_
-
-- HTTP-metodi: PATCH
-- Päätepiste: /tapahtumapaikat/{tapahtumapaikkaId}
-- Otsikot: Content-Type: application/json
-- Body: Päivitettävät kentät JSON-muodossa (postinumeroa ei voi muuttaa)
-
-_Esimerkki:_
-PATCH /tapahtumatpaikat/1
-Content-Type: application/json
-
-```
-{
- "tapahtumapaikka": "Uusi Kulttuurikeskus",
- "kapasiteetti": 300
-}
-
-```
-
-_Vastaus:_
-
-```
-{
-  "tapahtumapaikkaId": 1,
-  "tapahtumapaikka": "Uusi Kulttuurikeskus",
-  "katuosoite": "Esimerkkikatu 12",
-  "puhnro": "0401234567",
-  "email": "info@kulttuuri.fi",
-  "kapasiteetti": 300,
-  "postinumero": {
-    "postinumero": "00100",
-    "paikkakunta": "Helsinki"
-  }
-}
-```
-
-Onnistunut pyyntö: 200 OK
-Jos tapahtumapaikkaa ei löydy: 404 Not Found
-
-###### Poista tapahtumapaikka
-
-Poistaa yksittäisen tapahtumapaikan.
-
-_Pyyntö:_
-
-- HTTP-metodi: DELETE
-- Päätepiste: /tapahtumapaikat/{tapahtumapaikkaId}
-- Parametrit: ei parametreja
-
-_Esimerkki:_
-DELETE /tapahtumatpaikat/1
-
-Onnistunut pyyntö: 204 No Content
-Jos tapahtumapaikkaa ei löydy: 404 Not Found
-
 ### Myyntiraportti
 
 ##### _Päätepisteet (endpoints)_
 
-###### Päiväkohtainen myyntiraportti
+##### Päiväkohtainen myyntiraportti
 
 Palauttaa tietyn päivämäärän myyntitapahtumat.
 
@@ -1561,7 +1561,7 @@ _Vastaus_
 
 Jos tapahtumia ei ole, palautetaan tyhjä JSON.
 
-###### Myyntiraportti tietyltä aikaväliltä
+##### Myyntiraportti tietyltä aikaväliltä
 
 Palauttaa myyntitapahtumat annetulta päivämääräväliltä.
 
@@ -1578,7 +1578,7 @@ _Vastaus_
 
 - Onnistunut pyyntö: HTTP-statuskoodi 200 (OK) ja listaus aikavälin myyntitapahtumista JSON-muodossa. Jos tapahtumia ei ole, palautetaan tyhjä JSON.
 
-###### Työntekijäkohtaiset raportit
+##### Työntekijäkohtaiset raportit
 
 Palauttaa tiettyyn myyjään liittyvät myyntitapahtumat.
 
@@ -1595,7 +1595,7 @@ _Vastaus_
 
 - Onnistunut pyyntö: HTTP-statuskoodi 200 (OK) ja listaus työntekijän kirjaamista myyntitapahtumista JSON-muodossa. Jos tapahtumia ei ole, palautetaan tyhjä JSON.
 
-###### Työntekijäkohtainen myyntiraportti aikaväliltä
+##### Työntekijäkohtainen myyntiraportti aikaväliltä
 
 Palauttaa tiettyyn työntekijään liittyvät myyntitapahtumat annetulta aikaväliltä.
 
@@ -1612,7 +1612,7 @@ _Vastaus_
 
 - Onnistunut pyyntö: HTTP-statuskoodi 200 (OK) ja listaus myyntitapahtumista JSON-muodossa. Jos tapahtumia ei ole, palautetaan tyhjä JSON.
 
-###### Tapahtumakohtainen myyntiraportti
+##### Tapahtumakohtainen myyntiraportti
 
 Palauttaa tiettyyn tapahtumaan liittyvät myyntitapahtumat.
 
@@ -1629,8 +1629,6 @@ _Vastaus_
 
 - Onnistunut pyyntö: HTTP-statuskoodi 200 (OK) ja listaus myyntitapahtumista JSON-muodossa. Jos myyntitapahtumia ei ole, palautetaan tyhjä JSON.
 - Jos tapahtumaId:tä ei löydy: HTTP-status 400 (Bad request) ja viesti "Invalid tapahtumaId".
-
-#### _Perus-URL (base URL)_
 
 ## Testaus:
 
