@@ -1521,11 +1521,11 @@ Vaihtaa lipun tarkistusarvon (true/false).
 _Pyyntö:_
 
 - HTTP-metodi: PATCH
-- Endpoint: /liput/{lippuId}
-- Polkuparametrit: {lippuId} (kokonaisluku, pakollinen): Lipun yksilöllinen tunniste
+- Endpoint: /liput/{tarkistuskoodi}
+- Polkuparametrit: {tarkistuskoodi} (merkkijono, pakollinen): Lipun yksilöllinen tunniste
 
 _Esimerkki:_
-PATCH /liput/123
+PATCH /liput/DEF01234
 
 _Vastaus:_
 
