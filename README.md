@@ -107,15 +107,17 @@ Lipunmyyntijärjestelmän käyttäjärooleja ovat myyjä, asiakas, lipuntarkasta
 
 > ### Tapahtumapaikat
 >
-> _Tapahtumapaikat-taulu sisältää tapahtumapaikkaan liittyvät tiedot: tapahtumapaikan osoitteen, postinumeron, tapahtumapaikan nimen ja kapasiteetin, paljonko tilaan mahtuu ihmisiä. Tapahtumapaikalla voi olla yksi postiosoite, sama postiosoite voi olla usealla tapahtumapaikalla._
+> _Tapahtumapaikat-taulu sisältää tapahtumapaikkaan liittyvät tiedot: tapahtumapaikan osoitteen, postinumeron, tapahtumapaikan nimen ja kapasiteetin, paljonko tilaan mahtuu ihmisiä. Tapahtumapaikalla voi olla yksi postinumero, sama postinumero voi olla usealla tapahtumapaikalla._
 >
-> | Kenttä             | Tyyppi      | Kuvaus                                                     |
-> | ------------------ | ----------- | ---------------------------------------------------------- |
-> | tapahtumapaikka_id | int PK      | Tapahtumapaikan id                                         |
-> | postinumero        | int FK      | Tapahtumapaikan postinumero, viittaus postinumero -tauluun |
-> | tapahtumapaikka    | varchar(50) | Tapahtumapaikan nimi                                       |
-> | katuosoite         | varchar(50) | Paikan katuosoite                                          |
-> | kapasiteetti       | int         | Paljonko ihmisiä tilaan mahtuu                             |
+> | Kenttä             | Tyyppi       | Kuvaus                                                     |
+> | ------------------ | -----------  | ---------------------------------------------------------- |
+> | tapahtumapaikka_id | int PK       | Tapahtumapaikan id                                         |
+> | postinumero        | int FK       | Tapahtumapaikan postinumero, viittaus postinumero -tauluun |
+> | tapahtumapaikka    | varchar(50)  | Tapahtumapaikan nimi                                       |
+> | katuosoite         | varchar(50)  | Paikan katuosoite                                          |
+> | kapasiteetti       | int          | Paljonko ihmisiä tilaan mahtuu                             |
+> | puhnro             | varchar(15)  | Tapahtumapaikan puhelinnumero                              |
+> | email              | varchar(254) | Tapahtumapaikan sähköpostiosoite                           |
 
 > ### Tapahtumat
 >
@@ -147,7 +149,7 @@ Lipunmyyntijärjestelmän käyttäjärooleja ovat myyjä, asiakas, lipuntarkasta
 
 > ### Liput
 >
-> _Liput-taulu sisältää lippuun liittyvät tiedot: LippuId, myyntiId, tapahtumalippuId ja tarkastuskoodin, jolla lippu voidaan tarkastaa tapahtumassa. Lipulla voi olla yksi postiosoite, sama postiosoite voi olla usealla tapahtumapaikalla._
+> _Liput-taulu sisältää lippuun liittyvät tiedot: LippuId, myyntiId, tapahtumalippuId ja tarkastuskoodin, jolla lippu voidaan tarkastaa tapahtumassa.
 >
 > | Kenttä            | Tyyppi     | Kuvaus                                              |
 > | ----------------- | ---------- | --------------------------------------------------- |
@@ -922,7 +924,7 @@ _Pyyntö_
 - Body: JSON-objekti, joka sisältää myyjän tiedot
 
 _Esimerkki_
-POST /asiakastyypit/
+GET /asiakastyypit/
 Content-Type: application/json
 
 _vastaus_
@@ -955,12 +957,12 @@ _vastaus_
 - Onnistunut vastaus: Asiakastyypin tiedot JSON-muodossa, HTTP-statuskoodi 200 (OK).
 - JSON-arvo puuttuu: Palauttaa 404 (Not Found) "Asiakastyyppiä ei löytynyt".
 
-##### Muokkaa asiakastyypiä
+##### Muokkaa asiakastyyppiä
 
 _Pyyntö_
 
 - HTTP-metodi: PATCH
-- Päätepiste: /asiakastyyppiId
+- Päätepiste: /asiakastyypit/{asiakastyyppiId}
 - Otsikot: Content-Type: application/json
 - Body: JSON-objekti, joka sisältää myyjän tiedot
 
@@ -1266,7 +1268,7 @@ _Vastaus:_
 
 - Onnistunut vastaus: Luodun myynnin tiedot JSON-muodossa, HTTP-statuskoodi 201 (Created).
 
-Muokkaa tapahtumaa
+##### Muokkaa tapahtumaa
 Päivittää olemassa olevan tapahtuman tietoja.
 
 Pyyntö:
@@ -1510,7 +1512,7 @@ DELETE /liput/123
 
 _Vastaus:_
 
-- Onnistunut poisto: Tyhjä vastaus, HTTP-statuskoodi 200 (OK)
+- Onnistunut poisto: Tyhjä vastaus, HTTP-statuskoodi 204 (No Content)
 - Jos lippua ei löydy: Virheviesti ja HTTP-statuskoodi 404 (Not Found)
 - Kun JPA ei pysty avaamaan EntityManager-yhteyttä tietokantaan: Virheviesti "Tietokantayhteys epäonnistui. Yritä uudelleen myöhemmin." ja HTTP-statuskoodi 503 (Service Unavailable).
 
