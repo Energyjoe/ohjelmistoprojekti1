@@ -22,6 +22,11 @@ public class TyontekijaResponseDTO {
         this.paikkakunta = t.getPostinumero().getPaikkakunta();
     }
 
+    public TyontekijaResponseDTO() {
+        // Tyhjä konstruktori testausta ja sarjallistamista varten
+        // (esim. JSON-muotoon muuntamista)
+    }
+
     public Long getTyontekijaId() {
         return tyontekijaId;
     }

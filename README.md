@@ -1652,15 +1652,33 @@ Käytössä olevana tietokantana PostqreSQL. Tietokanta ajetaan Rahdissa ja yhte
 
 Rahtiprojekti löytyy osoitteesta: https://ohjelmistoprojekti-1-git-oprojekti1.2.rahtiapp.fi
 
-Spring boot -projektista löytyy data.sql tiedosto jossa on projektin testaukseen sopivaa testidataa sisältävä SQL-skripti, joka on myös ajettu rahtiin.
+Spring boot -projektista löytyvät schema.sql (1), postinumerot.sql (2) ja data.sql (3) tiedostot joissa on projektin testaukseen sopivaa testidataa sisältävät SQL-skriptit, joka on myös ajettu rahtiin. Suorita skriptit annetussa järjestyksessä PostgreSQL-tietokantaan.
 
 Tietokantaa voidaan käyttää myös paikallisesti, jolloin käytetään application-dev.properties tiedostoa. application.properties tiedostossa on spring.profiles.active= johon tulee muuttaa rahti/dev riippuen kumpaa halutaan käyttää.
 
 ## Käynnistys- ja käyttöohje
 
-Tyypillisesti tässä riittää kertoa ohjelman käynnistykseen tarvittava URL sekä
-mahdolliset kirjautumiseen tarvittavat tunnukset. Jos järjestelmän
-käynnistämiseen tai käyttöön liittyy joitain muita toimenpiteitä tai toimintajärjestykseen liittyviä asioita, nekin kerrotaan tässä yhteydessä.
+### Backend-sovelluksen käynnistäminen
 
-Usko tai älä, tulet tarvitsemaan tätä itsekin, kun tauon jälkeen palaat
-järjestelmän pariin !
+1.  **Varmista, että olet projektin juurihakemistossa (`ohjelmistoprojekti1`).**
+2.  **Valitse oikea profiili** `application.properties`-tiedostosta (`dev` paikalliseen ajoon, `rahti` Rahti-ympäristöön).
+3.  **Käynnistä sovellus Mavenilla:**
+    ```bash
+    ./mvnw spring-boot:run
+    ```
+    Sovellus käynnistyy oletuksena porttiin `8080` (tai porttiin, joka on määritelty `application-<profiili>.properties`-tiedostossa `server.port`-asetuksella).
+
+### Sovelluksen käyttäminen
+
+1.  **API-rajapinta:**
+    *   Kun backend-sovellus on käynnissä, sen REST API -rajapinta on käytettävissä. Oletusosoite paikallisesti ajettaessa on `http://localhost:8080`.
+    *   Rajapinnan endpointit ja niiden käyttö on kuvattu tarkemmin [REST API -dokumentaatio](#rest-api--dokumentaatio) -osiossa.
+    *   Voit käyttää työkalua kuten Postman tai curl API-kutsujen tekemiseen.
+
+2.  **Kirjautuminen:**
+    *   Kaikki muut endpointit paitsi `/login` vaativat autentikoinnin JWT-tokenilla.
+    *   Saadaksesi tokenin, tee POST-pyyntö `/login`-endpointtiin sähköpostilla ja salasanalla. Esimerkkitunnukset testaukseen (jos `data.sql` on ajettu):
+        *   "email": "admin@oprojekti1.com"
+        *   "salasana": "salasana123"
+    *   Onnistunut kirjautuminen palauttaa JWT-tokenin, joka tulee liittää `Authorization: Bearer <token>` -otsakkeeseen seuraavissa pyynnöissä.
+

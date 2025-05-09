@@ -12,9 +12,8 @@ INSERT INTO asiakastyypit (asiakastyyppi_id, asiakastyyppi)
 VALUES (1, 'Opiskelija'),
     (2, 'Aikuinen'),
     (3, 'Eläkeläinen'),
-    (4, 'Lapsi');
+    (4, 'Lapsi'),
     (5, 'Ovilippu');
-
 -- Insert sample data into tapahtumapaikat
 INSERT INTO tapahtumapaikat (
         tapahtumapaikka_id,
@@ -102,9 +101,8 @@ VALUES (1, 1, 25.00),
     (3, 1, 30.00),
     (4, 1, 15.00),
     (1, 5, 80.00),
-    (2, 5, 120.00);
-    (1, 5, 0.00),
-    
+    (2, 5, 120.00),
+    (1, 5, 0.00);
 -- Insert sample data into tyontekijat
 INSERT INTO tyontekijat (
         tyontekija_id,
@@ -167,7 +165,12 @@ VALUES (
         'asiakas3@example.com'
     );
 -- Insert sample data into liput
-INSERT INTO liput (myynti_id, tapahtumalippu_id, tarkistuskoodi, tarkistettu)
+INSERT INTO liput (
+        myynti_id,
+        tapahtumalippu_id,
+        tarkistuskoodi,
+        tarkistettu
+    )
 VALUES (1, 1, 'ABCDEF01', false),
     (1, 2, 'BCDEF012', false),
     (2, 3, 'CDEF0123', false),
