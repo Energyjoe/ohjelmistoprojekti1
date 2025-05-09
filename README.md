@@ -574,7 +574,7 @@ _Pyyntö:_
 - Parametrit: ei parametreja.
 
 _Esimerkki:_
-GET /tapahtumatpaikat/
+GET /tapahtumapaikat/
 
 _Vastaus:_
 
@@ -610,7 +610,7 @@ _Pyyntö:_
 - Parametrit: ei parametreja.
 
 _Esimerkki:_
-GET /tapahtumatpaikat/1
+GET /tapahtumapaikat/1
 
 _Vastaus:_
 
@@ -644,7 +644,7 @@ _Pyyntö:_
 - Body: Päivitettävät kentät JSON-muodossa (postinumeroa ei voi muuttaa)
 
 _Esimerkki:_
-PATCH /tapahtumatpaikat/1
+PATCH /tapahtumapaikat/1
 Content-Type: application/json
 
 ```
@@ -686,7 +686,7 @@ _Pyyntö:_
 - Parametrit: ei parametreja
 
 _Esimerkki:_
-DELETE /tapahtumatpaikat/1
+DELETE /tapahtumapaikat/1
 
 Onnistunut pyyntö: 204 No Content
 Jos tapahtumapaikkaa ei löydy: 404 Not Found
